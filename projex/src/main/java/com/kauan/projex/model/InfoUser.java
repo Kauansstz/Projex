@@ -3,6 +3,7 @@ package com.kauan.projex.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -37,6 +38,9 @@ public class InfoUser {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
+
+    @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
+    private List<InforProject> projetos;
 
     @PrePersist
     protected void onCreate() {
