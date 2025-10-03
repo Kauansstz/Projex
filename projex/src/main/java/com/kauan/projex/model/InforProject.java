@@ -1,6 +1,7 @@
 package com.kauan.projex.model;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Data;
 
@@ -34,7 +35,8 @@ public class InforProject {
     )
     private List<Tecnologia> tecnologia;
 
-    private Instant dataConclusao;
+    private LocalDate dataConclusao;
+
 
     private Instant criadoEm;
 

@@ -2,15 +2,26 @@ package com.kauan.projex.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import com.kauan.projex.repository.TecnologiaRepository;
+
+import com.kauan.projex.model.InforProject;
 
 @Controller
 public class PageController {
+    private final TecnologiaRepository tecnologiaRepository;
+
+    public PageController(TecnologiaRepository tecnologiaRepository) {
+        this.tecnologiaRepository = tecnologiaRepository;
+    }
     @GetMapping("/")
     public String base(){
-        return "pages/base.html";
+        return "pages/base";
     }
     @GetMapping("/projetos")
-    public String project(){
-        return "pages/projectes.html";
+    public String project(Model model){
+        model.addAttribute("projeto", new InforProject());
+        model.addAttribute("tecnologias", tecnologiaRepository.findAll());
+        return "pages/newProject";
     }
 }
