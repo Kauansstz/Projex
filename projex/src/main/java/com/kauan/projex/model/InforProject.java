@@ -6,7 +6,6 @@ import java.util.List;
 import lombok.Data;
 
 import com.kauan.projex.model.utils.Tecnologia;
-import com.kauan.projex.model.InfoUser;
 import jakarta.persistence.*;
 
 @Data
@@ -57,4 +56,60 @@ public class InforProject {
     @ManyToOne
     private InfoUser dono;
 
-}
+
+    // Setter e Getter
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    public List<Tecnologia> getTecnologia() {
+        return tecnologia;
+    }
+
+    public void setTecnologia(List<Tecnologia> tecnologia) {
+        this.tecnologia = tecnologia;
+    }
+
+    public Instant getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(Instant criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    public Instant getAtualizadoEm() {
+        return atualizadoEm;
+    }
+
+    public void setAtualizadoEm(Instant atualizadoEm) {
+        this.atualizadoEm = atualizadoEm;
+    }
+    public Status getAStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    public InfoUser getDono() {
+        return dono;
+    }
+
+    public void setDono(InfoUser dono) {
+        this.dono = dono;
+    }
+
+
+    }
