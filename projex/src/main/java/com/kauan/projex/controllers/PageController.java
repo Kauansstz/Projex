@@ -18,11 +18,16 @@ public class PageController {
     public String base(){
         return "pages/base";
     }
-    @GetMapping("/projetos")
+    @GetMapping("/newprojetos")
     public String project(Model model){
         model.addAttribute("projeto", new InforProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
         model.addAttribute("pageTitle", "Cadastrar Projeto");
         return "pages/newProject";
+    }
+    @GetMapping("/panelProjetos")
+    public String panelProject(Model model){
+        model.addAttribute("pageTitle", "Projetos");
+        return "pages/projectes";
     }
 }
