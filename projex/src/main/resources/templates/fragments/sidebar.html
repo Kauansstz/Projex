@@ -1,51 +1,60 @@
 <aside th:fragment="sidebar" class="w-64 bg-[#1E293B] shadow-md min-h-screen text-gray-200 flex flex-col">
-            <!-- Cabeçalho -->
-            <div class="container mx-auto px-6 py-4 flex items-center">
-                <i class="bi bi-award-fill text-[#6366F1] text-2xl mr-2"></i>
-                <h1 class="text-xl font-bold text-white">Projex</h1>
-            </div>
+    <!-- Cabeçalho -->
+    <div class="container mx-auto px-6 py-4 flex items-center">
+        <i class="bi bi-award-fill text-[#6366F1] text-2xl mr-2"></i>
+        <h1 class="text-xl font-bold text-white">Projex</h1>
+    </div>
 
-            <!-- Navegação -->
-            <nav class="mt-6 flex-1">
-                <ul>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
-                            <i class="bi bi-house-fill text-[#6366F1] text-lg mr-3"></i>
-                            <span class="font-medium">Início</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{panelProjetos}" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
-                            <i class="bi bi-code-slash text-[#3B82F6] text-lg mr-3"></i>
-                            <span class="font-medium">Projetos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
-                            <i class="bi bi-search text-lg mr-3"></i>
-                            <span class="font-medium">Explorar</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
-                            <i class="bi bi-telephone-fill text-[#10B981] text-lg mr-3"></i>
-                            <span class="font-medium">Contato</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
-                            <i class="bi bi-question-circle text-[#F59E0B] text-lg mr-3"></i>
-                            <span class="font-medium">Sobre</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+    <!-- Navegação -->
+    <nav class="mt-6 flex-1">
+        <ul>
+            <li>
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
+                    <i class="bi bi-house-fill text-[#6366F1] text-lg mr-3"></i>
+                    <span class="font-medium">Início</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{panelProjetos}" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
+                    <i class="bi bi-code-slash text-[#3B82F6] text-lg mr-3"></i>
+                    <span class="font-medium">Projetos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
+                    <i class="bi bi-search text-lg mr-3"></i>
+                    <span class="font-medium">Explorar</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
+                    <i class="bi bi-telephone-fill text-[#10B981] text-lg mr-3"></i>
+                    <span class="font-medium">Contato</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center px-6 py-3 hover:bg-[#334155] transition rounded">
+                    <i class="bi bi-question-circle text-[#F59E0B] text-lg mr-3"></i>
+                    <span class="font-medium">Sobre</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
             <!-- Footer -->
-            <footer class="mt-auto  text-[15px] px-6 py-4">
-                <button class=" hover:text-[#3B82F6] cursor-pointer duration-300">
-                    <i class="bi bi-person-circle text-[20px]"></i>
-                    Kauan dos Santos de Souza
-                </button>
-            </footer>
-        </aside>
+    <footer class="mt-auto  text-[15px] px-6 py-4">
+        <button id="profileButton" class=" hover:text-[#3B82F6] cursor-pointer duration-300" >
+            <i class="bi bi-person-circle text-[20px]"></i>
+            Kauan dos Santos de Souza
+        </button>
+        <div id="profileMenu" class="flex bottom-full mb-2 left-0 bg-white border border-gray-200 shadow-lg rounded-lg w-50 hidden z-10">
+            <ul>
+                <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Perfil</li>
+                <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Configurações</li>
+                <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Sair</li>
+            </ul>
+        </div>
+    </footer>
+</aside>
+
+
