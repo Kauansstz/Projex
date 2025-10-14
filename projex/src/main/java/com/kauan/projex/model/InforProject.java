@@ -32,7 +32,7 @@ public class InforProject {
         joinColumns = @JoinColumn(name = "project_id"),
         inverseJoinColumns = @JoinColumn(name= "tecnologia_id")
     )
-    private List<Tecnologia> tecnologia;
+    private List<Tecnologia> tecnologias;
 
     private LocalDate dataConclusao;
 
@@ -74,11 +74,11 @@ public class InforProject {
         this.descricao = descricao;
     }
     public List<Tecnologia> getTecnologia() {
-        return tecnologia;
+        return tecnologias;
     }
 
     public void setTecnologia(List<Tecnologia> tecnologia) {
-        this.tecnologia = tecnologia;
+        this.tecnologias = tecnologia;
     }
 
     public Instant getCriadoEm() {
@@ -96,7 +96,7 @@ public class InforProject {
     public void setAtualizadoEm(Instant atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
-    public Status getAStatus() {
+    public Status getStatus() {
         return status;
     }
 

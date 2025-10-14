@@ -1,0 +1,67 @@
+<div class="flex flex-column justify-center items-center m-auto" th:fragment="createdProject">
+            <!-- Conteúdo principal -->
+        <div class="w-[56rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl ">
+                <!-- Título -->
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Cadastrar Projeto</h2>
+
+                <!-- Formulário -->
+                <form th:action="@{/projetos}" th:object="${projeto}" method="post" class="space-y-5">
+
+                    <!-- Título -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Título:</label>
+                        <input type="text" th:field="*{titulo}" placeholder="Digite o título"
+                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
+                        <textarea th:field="*{descricao}" rows="4" placeholder="Descrição detalhada"
+                                class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Status:</label>
+                        <select th:field="*{status}"
+                                class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                            <option value="EM_ANDAMENTO">Em andamento</option>
+                            <option value="CONCLUIDO">Concluído</option>
+                            <option value="CANCELADO">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <!-- Data de Conclusão -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
+                        <input type="date" th:field="*{dataConclusao}" 
+                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+                    </div>
+
+                    <!-- Tecnologias -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Tecnologias:</label>
+                        <select multiple th:field="*{tecnologias}" 
+                                class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-36 transition">
+                            <option th:each="tec : ${tecnologias}" th:value="${tec.id}" th:text="${tec.nome}"></option>
+                        </select>
+                    </div>
+                    
+                    
+                    <div class="flex justify-center gap-20">
+                        <!-- Botão de voltar -->
+                        <button onclick="history.back()"
+                                class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
+                            <i class="bi bi-arrow-left-circle"></i> Voltar
+                        </button>
+                        <!-- Botão Salvar -->
+                        <button type="submit" 
+                                class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
+                            <i class="bi bi-floppy"></i>Salvar
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+    </div>
