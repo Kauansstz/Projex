@@ -22,6 +22,7 @@ public class PageController {
     public String project(Model model){
         model.addAttribute("projeto", new InforProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
+        model.addAttribute("pageTitle", "Cadastrar Projeto");
         return "pages/newProject";
     }
 }

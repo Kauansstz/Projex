@@ -111,5 +111,13 @@ public class InforProject {
         this.dono = dono;
     }
 
+    public LocalDate getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public void setDataConclusao(LocalDate dataConclusao) {
+        this.dataConclusao = dataConclusao;
+    }
+
 
     }
