@@ -1,0 +1,44 @@
+<div class="flex flex-column  justify-center items-center m-auto" th:fragment="config">
+    <div class="w-[90rem] h-[55rem] p-8 bg-white rounded-2xl shadow-2xl ">
+                <!-- Título -->
+                 <div class="flex items-center justify-start gap-6">
+                    <!-- Botão de voltar -->
+                    <button onclick="history.back()" 
+                            class="text-black font-bold w-10 text-[32px] hover:bg-gray-200 hover:rounded-lg">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+
+                    <!-- Título -->
+                    <h2 class="text-3xl font-bold text-gray-900 m-auto">Perfil</h2>
+                </div>
+                <!-- Formulário -->
+                <form  method="post" class="space-y-5">
+
+                    <!-- Título -->
+                    <div class="flex flex-row gap-2 text-[30px] mt-[40px]">
+                        <i class="bi bi-person-circle"></i>
+                        <label class="mb-2 font-semibold text-gray-700">Kauan dos Santos de Souza</label>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
+                        <textarea  rows="4" placeholder="Descrição detalhada"
+                                class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
+                    </div>
+                    
+                    <!-- Tecnologias -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Tecnologias:</label>
+                        <select multiple 
+                                class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-36 transition">
+                            <option th:each="tec : ${tecnologias}" th:value="${tec.id}" th:text="${tec.nome}"></option>
+                        </select>
+                    </div>
+                    
+                    
+                    
+
+                </form>
+            </div>
+</div>

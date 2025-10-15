@@ -49,7 +49,9 @@
         </button>
         <div id="profileMenu" class="flex bottom-full mb-2 left-0 bg-white border border-gray-200 shadow-lg rounded-lg w-50 hidden z-10">
             <ul>
-                <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Perfil</li>
+                <a th:href="@{panelAccount}">
+                    <li  class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Perfil</li>
+                </a>
                 <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Configurações</li>
                 <li class="px-4 py-2 hover:bg-gray-100 hover:text-[#3B82F6]  hover:w-[205px] hover:border hover:border-black hover:rounded-lg text-black cursor-pointer">Sair</li>
             </ul>

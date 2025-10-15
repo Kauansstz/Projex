@@ -30,4 +30,9 @@ public class PageController {
         model.addAttribute("pageTitle", "Projetos");
         return "pages/projectes";
     }
+    @GetMapping("/panelAccount")
+    public String panelAccount(Model model){
+        model.addAttribute("pageTitle", "Perfil");
+        return "pages/account";
+    }
 }
