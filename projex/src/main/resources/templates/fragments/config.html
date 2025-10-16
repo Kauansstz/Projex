@@ -1,5 +1,8 @@
-<div class="flex flex-column  justify-center items-center m-auto" th:fragment="config">
-    <div class="w-[90rem] h-[55rem] p-8 bg-white rounded-2xl shadow-2xl ">
+<div class="flex flex-col justify-center items-center m-auto 
+            ml-0 lg:ml-[15rem] 2xl:ml-[20rem] min-w-[300px]" th:fragment="config">
+    <div class="w-full min-h-max max-w-[1440px] min-w-[300px]  xl:ml[5rem]
+                h-auto sm:h-[50rem] md:h-[55rem] p-8 
+                bg-white rounded-2xl shadow-2xl">
                 <!-- Título -->
                  <div class="flex items-center justify-start gap-6">
                     <!-- Botão de voltar -->
@@ -24,7 +27,7 @@
                     </label>
                 </div>
                 <div class="flex flex-col mt-10">
-                    <label class="mb-2 font-semibold text-gray-700">Sobre</label>
+                    <label class="mb-2 font-semibold text-gray-700 text-[20px]">Sobre</label>
                     <label  rows="4" class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </label>
@@ -32,13 +35,24 @@
                 
                     <!-- Tecnologias -->
                     <div class="flex flex-col mt-10">
-                        <label class="mb-2 font-semibold text-gray-700">Projetos</label>
+                        <div class="flex items-center justify-between">
+                            <label class="mb-2 font-semibold text-gray-700 text-[20px]">Projetos</label>
+                            <button class="text-gray-700 hover:text-blue-600">
+                                <i class="bi bi-pencil-square text-xl"></i>
+                            </button>
+                        </div>
                         <div th:replace="fragments/cards :: cards"></div>
                     </div>
-                    
-                    
-                    
 
+                    <div class="flex flex-col mt-10">
+                        <div class="flex items-center justify-between text-[20px]">
+                            <label class="mb-2 font-semibold text-gray-700">Experiência</label>
+                            <button class="text-gray-700 hover:text-blue-600">
+                                <i class="bi bi-pencil-square text-xl"></i>
+                            </button>
+                        </div>
+                        <div th:replace="fragments/certificate :: certificate"></div>
+                    </div>
                 </form>
             </div>
 </div>

@@ -18,7 +18,7 @@ public class PageController {
     public String base(){
         return "pages/base";
     }
-    @GetMapping("/newprojetos")
+    @GetMapping("/project")
     public String project(Model model){
         model.addAttribute("projeto", new InforProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
@@ -32,6 +32,8 @@ public class PageController {
     }
     @GetMapping("/panelAccount")
     public String panelAccount(Model model){
+        model.addAttribute("projeto", new InforProject());
+        model.addAttribute("tecnologias", tecnologiaRepository.findAll());
         model.addAttribute("pageTitle", "Perfil");
         return "pages/account";
     }
