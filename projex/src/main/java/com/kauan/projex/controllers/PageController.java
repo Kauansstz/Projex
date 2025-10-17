@@ -35,4 +35,11 @@ public class PageController {
         model.addAttribute("pageTitle", "Perfil");
         return "pages/account";
     }
+    @GetMapping("/editViewer")
+    public String editViewer(Model model){
+        model.addAttribute("projeto", new InforProject());
+        model.addAttribute("tecnologias", tecnologiaRepository.findAll());
+        model.addAttribute("pageTitle", "Editar Projeto");
+        return "pages/editViewer";
+    }
 }

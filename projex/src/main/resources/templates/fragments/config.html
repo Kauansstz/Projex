@@ -37,21 +37,21 @@
                     <div class="flex flex-col mt-10">
                         <div class="flex items-center justify-between">
                             <label class="mb-2 font-semibold text-gray-700 text-[20px]">Projetos</label>
-                            <button class="text-gray-700 hover:text-blue-600">
+                            <a class="text-gray-700 cursor-pointer hover:text-blue-600" th:href="@{/editViewer}">
                                 <i class="bi bi-pencil-square text-xl"></i>
-                            </button>
+                            </a>
                         </div>
-                        <div th:replace="fragments/cards :: cards"></div>
+                        <div th:replace="fragments/cards :: cards('ml-0')"></div>
                     </div>
 
                     <div class="flex flex-col mt-10">
                         <div class="flex items-center justify-between text-[20px]">
                             <label class="mb-2 font-semibold text-gray-700">Experiência</label>
-                            <button class="text-gray-700 hover:text-blue-600">
+                            <a class="text-gray-700 cursor-pointer hover:text-blue-600">
                                 <i class="bi bi-pencil-square text-xl"></i>
-                            </button>
+                            </a>
                         </div>
-                        <div th:replace="fragments/certificate :: certificate"></div>
+                        <div th:replace="fragments/certificate :: certificate" ></div>
                     </div>
                 </form>
             </div>
