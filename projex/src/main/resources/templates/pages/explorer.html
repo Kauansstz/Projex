@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head"></head>
+    <body class="bg-gray-100 font-sans  min-h-max"></body>
+        <header th:replace="fragments/search :: search"></header>
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+         <main class="flex-1 pt-[70px] ml-50 min-h-max h-10">
+             <div th:replace="fragments/user :: user('')"></div>
+        </main>
+
+   </body>
+</html>

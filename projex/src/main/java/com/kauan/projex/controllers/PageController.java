@@ -42,4 +42,9 @@ public class PageController {
         model.addAttribute("pageTitle", "Editar Projeto");
         return "pages/dashboardEdit";
     }
+    @GetMapping("/explore")
+    public String explore(Model model){
+        model.addAttribute("pageTitle", "Explorar");
+        return "pages/explorer";
+    }
 }
