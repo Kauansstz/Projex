@@ -77,8 +77,8 @@ public class InforProject {
         return tecnologias;
     }
 
-    public void setTecnologia(List<Tecnologia> tecnologia) {
-        this.tecnologias = tecnologia;
+    public void setTecnologia(List<Tecnologia> tecnologias) {
+        this.tecnologias = tecnologias;
     }
 
     public Instant getCriadoEm() {
