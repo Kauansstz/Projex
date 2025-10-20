@@ -75,4 +75,17 @@ public class Historico {
         return this.detalhes = detalhes;
     }
 
+    public String getEntidadeId(){
+        return entidadeId;
+    }
+    public String setEntidadeId(String entidadeId){
+        return this.entidadeId = entidadeId;
+    }
+    public String getIp(){
+        return ip;
+    }
+    public String setIp(String ip){
+        return this.ip = ip;
+    }
+
 }
