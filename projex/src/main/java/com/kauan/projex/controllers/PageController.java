@@ -14,10 +14,7 @@ public class PageController {
     public PageController(TecnologiaRepository tecnologiaRepository) {
         this.tecnologiaRepository = tecnologiaRepository;
     }
-    @GetMapping("/")
-    public String base(){
-        return "pages/base";
-    }
+
     @GetMapping("/project")
     public String project(Model model){
         model.addAttribute("projeto", new InforProject());
@@ -46,5 +43,10 @@ public class PageController {
     public String explore(Model model){
         model.addAttribute("pageTitle", "Explorar");
         return "pages/explorer";
+    }
+    @GetMapping("/")
+    public String dashboard(Model model){
+        model.addAttribute("pageTitle", "Dashboard");
+        return "pages/dashboard";
     }
 }

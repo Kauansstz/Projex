@@ -1,0 +1,85 @@
+<main class="ml-64 p-8 bg-gray-100 min-h-screen font-sans" th:fragment="inicio">
+  <!-- Header -->
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold text-gray-800">Bem-vindo de volta, Kauan 👋</h1>
+    <p class="text-gray-600 mt-2">Aqui está um resumo das suas atividades recentes e dos seus projetos.</p>
+  </div>
+
+  <!-- Cards: Tarefas Concluídas e Pendentes -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    <!-- Tarefas Concluídas -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+      <div class="text-green-600 mb-2">
+        <i class="fas fa-check-circle text-2xl"></i>
+      </div>
+      <p class="text-gray-500 text-sm">Projetos Concluídos</p>
+      <h2 class="text-2xl font-bold text-gray-800">18</h2>
+    </div>
+
+    <!-- Tarefas Pendentes -->
+    <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+      <div class="text-yellow-500 mb-2">
+        <i class="fas fa-tasks text-2xl"></i>
+      </div>
+      <p class="text-gray-500 text-sm">Projetos Pendentes</p>
+      <h2 class="text-2xl font-bold text-gray-800">6</h2>
+    </div>
+  </div>
+
+  <!-- Projetos Recentes -->
+  <div class="mb-10">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Projetos Recentes</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="font-semibold text-gray-800">Projeto Alpha</p>
+            <p class="text-sm text-gray-500">Atualizado há 2 dias</p>
+          </div>
+          <span class="text-sm text-green-600 font-medium">Em andamento</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="font-semibold text-gray-800">Projeto Beta</p>
+            <p class="text-sm text-gray-500">Atualizado há 5 dias</p>
+          </div>
+          <span class="text-sm text-yellow-500 font-medium">Em revisão</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="font-semibold text-gray-800">Projeto Gama</p>
+            <p class="text-sm text-gray-500">Atualizado há 1 semana</p>
+          </div>
+          <span class="text-sm text-red-500 font-medium">Atrasado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Atividades Recentes -->
+  <div class="mb-10">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Atividades Recentes</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <p class="text-gray-800"><strong>Kauan</strong> adicionou uma nova tarefa em <strong>Projeto Alpha</strong></p>
+        <p class="text-sm text-gray-500">Há 1 hora</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <p class="text-gray-800"><strong>Ana</strong> comentou no <strong>Projeto Beta</strong></p>
+        <p class="text-sm text-gray-500">Há 3 horas</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+        <p class="text-gray-800"><strong>Lucas</strong> marcou uma tarefa como concluída</p>
+        <p class="text-sm text-gray-500">Ontem</p>
+      </div>
+    </div>
+  </div>
+</main>
