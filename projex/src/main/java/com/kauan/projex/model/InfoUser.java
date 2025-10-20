@@ -18,6 +18,9 @@ public class InfoUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String senha;
+    
     @Column(length = 100, nullable = false)
     private String nome;
 
@@ -47,6 +50,8 @@ public class InfoUser {
         criadoEm = LocalDateTime.now();
     }
 
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
     // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

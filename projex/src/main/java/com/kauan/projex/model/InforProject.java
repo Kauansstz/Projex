@@ -3,9 +3,10 @@ package com.kauan.projex.model;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
-import lombok.Data;
 
-import com.kauan.projex.model.utils.Tecnologia;
+import com.kauan.projex.utils.Tecnologia;
+
+import lombok.Data;
 import jakarta.persistence.*;
 
 @Data

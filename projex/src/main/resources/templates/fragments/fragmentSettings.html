@@ -1,0 +1,135 @@
+<div class="max-w-5xl mx-auto p-8" th:fragment="config">
+  <h1 class="text-3xl font-bold mb-6">Configurações do Sistema</h1>
+
+  <!-- Menu de Abas -->
+  <div class="border-b border-gray-300 mb-6 flex space-x-6 text-gray-600">
+    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="geral">Geral</button>
+    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="notificacoes">Notificações</button>
+    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="integracoes">Integrações</button>
+    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="seguranca">Segurança</button>
+  </div>
+
+  <!-- Aba: Geral -->
+  <div id="geral" class="tab-content">
+    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Preferências Gerais</h2>
+
+      <div class="flex justify-between items-center">
+        <span>Modo Escuro</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="modoEscuro" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:h-5 after:w-5 after:rounded-full after:transition-all peer-checked:after:translate-x-full"></div>
+        </label>
+      </div>
+
+      <div>
+        <label class="text-sm font-medium">Idioma</label>
+        <select id="idioma" class="w-full border rounded-lg p-2 mt-1">
+          <option>Português (Brasil)</option>
+          <option>Inglês (EUA)</option>
+          <option>Espanhol</option>
+        </select>
+      </div>
+
+      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Salvar Alterações</button>
+    </div>
+  </div>
+
+  <!-- Aba: Notificações -->
+  <div id="notificacoes" class="tab-content hidden">
+    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Notificações</h2>
+      <div class="flex justify-between items-center">
+        <span>Notificações por E-mail</span>
+        <input type="checkbox" id="notifEmail" class="h-5 w-5">
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Notificações por WhatsApp</span>
+        <input type="checkbox" id="notifWhatsapp" class="h-5 w-5">
+      </div>
+      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Salvar Preferências</button>
+    </div>
+  </div>
+
+  <!-- Aba: Integrações -->
+  <div id="integracoes" class="tab-content hidden">
+    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Integrações</h2>
+      <div>
+        <label class="text-sm font-medium">E-mail principal</label>
+        <input type="email" id="email" class="w-full border rounded-lg p-2 mt-1" placeholder="exemplo@empresa.com">
+      </div>
+      <div>
+        <label class="text-sm font-medium">WhatsApp</label>
+        <input type="text" id="whatsapp" class="w-full border rounded-lg p-2 mt-1" placeholder="+55 (48) 99999-9999">
+      </div>
+      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Atualizar Integrações</button>
+    </div>
+  </div>
+
+  <!-- Aba: Segurança -->
+  <div id="seguranca" class="tab-content hidden">
+    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
+      <h2 class="text-xl font-semibold">Segurança</h2>
+      <div>
+        <label class="text-sm font-medium">Nova Senha</label>
+        <input type="password" id="senha" class="w-full border rounded-lg p-2 mt-1">
+      </div>
+      <div>
+        <label class="text-sm font-medium">Confirmar Senha</label>
+        <input type="password" id="confirmarSenha" class="w-full border rounded-lg p-2 mt-1">
+      </div>
+      <button onclick="atualizarSenha()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg">Atualizar Senha</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script th:inline="javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".tab-link");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("border-blue-600", "text-blue-600"));
+        tab.classList.add("border-blue-600", "text-blue-600");
+        contents.forEach(c => c.classList.add("hidden"));
+        document.getElementById(tab.dataset.tab).classList.remove("hidden");
+      });
+    });
+  });
+
+  function salvarConfiguracoes() {
+    const data = {
+      modoEscuro: document.getElementById("modoEscuro").checked,
+      idioma: document.getElementById("idioma").value,
+      notifEmail: document.getElementById("notifEmail")?.checked,
+      notifWhatsapp: document.getElementById("notifWhatsapp")?.checked,
+      email: document.getElementById("email")?.value,
+      whatsapp: document.getElementById("whatsapp")?.value
+    };
+
+    fetch("/api/configuracoes", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.ok ? alert("Configurações salvas com sucesso!") : alert("Erro ao salvar."))
+    .catch(() => alert("Erro ao salvar configurações."));
+  }
+
+  function atualizarSenha() {
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
+    if (senha !== confirmar) return alert("As senhas não coincidem!");
+
+    fetch("/api/configuracoes/senha", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ senha })
+    })
+    .then(res => res.ok ? alert("Senha atualizada com sucesso!") : alert("Erro ao atualizar senha."))
+    .catch(() => alert("Erro ao atualizar senha."));
+  }
+</script>

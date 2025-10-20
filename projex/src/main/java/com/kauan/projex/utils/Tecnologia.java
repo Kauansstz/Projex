@@ -1,4 +1,4 @@
-package com.kauan.projex.model.utils;
+package com.kauan.projex.utils;
 
 import jakarta.persistence.*;
 

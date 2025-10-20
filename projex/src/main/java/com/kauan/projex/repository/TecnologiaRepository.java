@@ -2,7 +2,8 @@ package com.kauan.projex.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.kauan.projex.model.utils.Tecnologia;
+
+import com.kauan.projex.utils.Tecnologia;
 
 @Repository
 public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long> {
