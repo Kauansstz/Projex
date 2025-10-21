@@ -53,6 +53,27 @@
                         </div>
                         <div th:replace="fragments/certificate :: certificate" ></div>
                     </div>
-                </form>
+                    <div class="flex flex-col mt-10">
+                        <div class="flex items-center justify-between text-[20px]">
+                            <label class="mb-2 font-semibold text-gray-700">Histórico</label>
+                        </div>
+                        <div class="flex flex-row gap-2">
+                            <div class="mb-10 flex justify-start">
+                                <a th:href="@{/historico}">
+                                    <button class=" bg-orange-500 text-white text-[20px] w-auto rounded-[5px] p-[8px] hover:bg-orange-600">
+                                        <span>Visualizar</span>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="mb-10 flex justify-start">
+                                <a href="/historico/api/v1/exportCSV">
+                                    <button class=" bg-green-500 text-white text-[20px] w-auto rounded-[5px] p-[8px] hover:bg-green-600">
+                                        <span>Exportar CSV</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
             </div>
 </div>

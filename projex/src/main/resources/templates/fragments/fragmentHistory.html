@@ -1,0 +1,39 @@
+ <div class="container mx-auto  p-6 bg-white rounded-2xl shadow-md" th:fragment="history">
+        <h1 class="text-2xl font-bold mb-4">Histórico de Ações</h1>
+
+        <table class="w-full border border-gray-300 text-sm">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-2 border">Usuário</th>
+                    <th class="p-2 border">Ação</th>
+                    <th class="p-2 border">Entidade</th>
+                    <th class="p-2 border">ID Entidade</th>
+                    <th class="p-2 border">Detalhes</th>
+                    <th class="p-2 border">IP</th>
+                    <th class="p-2 border">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="log : ${historicos}" class="hover:bg-gray-100">
+                    <td class="p-2 border" th:text="${log.usuario}"></td>
+                    <td class="p-2 border" th:text="${log.acao}"></td>
+                    <td class="p-2 border" th:text="${log.entidade}"></td>
+                    <td class="p-2 border" th:text="${log.entidadeId}"></td>
+                    <td class="p-2 border" th:text="${log.detalhes}"></td>
+                    <td class="p-2 border" th:text="${log.ip}"></td>
+                    <td class="p-2 border" th:text="${#temporals.format(log.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação simples -->
+        <div class="mt-4 flex justify-center gap-2">
+            <a th:if="${paginaAtual > 0}"
+               th:href="@{/historico(page=${paginaAtual - 1})}"
+               class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Anterior</a>
+
+            <a th:if="${paginaAtual + 1 < totalPaginas}"
+               th:href="@{/historico(page=${paginaAtual + 1})}"
+               class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Próxima</a>
+        </div>
+    </div>

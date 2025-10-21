@@ -3,16 +3,14 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "historico",
-        indexes= {
+@Table(name = "historico",indexes= {
             @Index(name="idx_historico_timestamp", columnList = "created_at"),
-            @Index(name = "idx_historico_usuario", columnList = "usuario")
-        }
-)
+            @Index(name = "idx_historico_usuario", columnList = "usuario")})
 public class Historico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     // quem realizou a ação (pode ser username, id ou sistema)
     @Column(nullable = false, length = 100)
     private String usuario;
@@ -87,5 +85,7 @@ public class Historico {
     public String setIp(String ip){
         return this.ip = ip;
     }
+
+    public OffsetDateTime getCreatedAt(){ return createdAt;}
 
 }
