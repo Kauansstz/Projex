@@ -2,6 +2,8 @@ package com.kauan.projex.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+
+import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +20,11 @@ public class InfoUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String senha;
-    
     @Column(length = 100, nullable = false)
     private String nome;
+
+    @Column(nullable = false)
+    private String senha;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -41,6 +43,40 @@ public class InfoUser {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadoEm;
+
+    @Column(nullable= false)
+    public Boolean ativo;
+    
+    @Column(nullable= false)
+    public Timestamp ultimo_login;
+    
+    @Column(nullable= false)
+     public Timestamp atualizadoEm;
+
+    @Column(nullable= false)
+    public Integer tentativasLogin;
+
+    @Column(nullable= false)
+    public String role;
+
+    @Column(nullable= false)
+    public String resetToken;
+
+    @Column(nullable= false)
+    public String resetTokenExpiracao;
+
+    @Column(nullable= false)
+    public String fotoPerfil;
+
+    @Column(nullable= false)
+    public String ipCriacao;
+
+    @Column(nullable= false)
+    public String ipUltimoLogin;
+
+    @Column(nullable= false)
+    public Boolean forcarTrocaSenha;
+
 
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     private List<InforProject> projetos;
@@ -70,6 +106,21 @@ public class InfoUser {
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public Boolean getAtivo() { return ativo; }
+    public void setAtivo(Boolean ativo) { this.ativo = ativo; }
+
+    public Timestamp getUltimo_login() { return ultimo_login; }
+    public void setUltimo_login(Timestamp ultimo_login) { this.ultimo_login = ultimo_login; }
+
+    public Timestamp getAtualizadoEm() { return atualizadoEm; }
+    public void setAtualizadoEm(Timestamp atualizadoEm) { this.atualizadoEm = atualizadoEm; }
+
+    public Integer getTentativasLogin() { return tentativasLogin; }
+    public void setTentativasLogin(Integer tentativasLogin) { this.tentativasLogin = tentativasLogin; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
     public LocalDateTime getCriadoEm() { return criadoEm; }
 
