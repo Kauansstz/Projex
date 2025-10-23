@@ -18,11 +18,14 @@ public class InitData {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                 .requestMatchers("/historico/api/v1/exprotCSV").hasRole("ADMIN") // Só admin pode exportar
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .permitAll()
             )
             .logout(logout -> logout.permitAll());
 
