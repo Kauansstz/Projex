@@ -1,22 +1,35 @@
-<div class="bg-white rounded-lg w-[40rem] h-[30rem] p-[15px]" th:fragment="login">
-    <div class="flex flex-col justify-center p-[60px]">
+<div class="flex flex-center bg-white rounded-lg w-[28rem] h-[38rem] p-[15px]" th:fragment="login">
+    <div class="flex flex-col justify-center p-[20px]">
         <h2 class="font-sans flex justify-center font-bold text-[45px]">Projex</h2>
-        <form th:action="@{/login}" method="post" class="grid-2 px-[40px] w-10">
+        <form th:action="@{/login}" method="post" class="flex justify-center w-10">
             <div class="flex flex-col justify-center space-y-4  w-[20px]">
                 <div class="flex flex-col">
                     <label class="font-sans text-[21px]">Usuário</label>
-                    <input class="w-[25rem] p-[5px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="text" name="username" required />
+                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="text" name="username" required />
                 </div>
                 <div class="flex flex-col">
                     <label class="font-sans text-[21px]">Senha</label>
-                    <input class="w-[25rem] p-[5px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="password" name="password" required />
+                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="password" name="password" required />
                 </div>
                 <div class="w-12">
                     <button type="submit" class="w-[5rem] bg-blue-500 p-[8px] text-white rounded-[5px]">Entrar</button>
                 </div>
             </div>
         </form>
-        <div class="mt-4 px-[40px]">
+        <div class="px-[10px] mt-4">
+            <a href="" class="text-[#1a73e8] hover:text-black duration-300">Esqueceu a senha?</a>
+        </div>
+        <div class="flex items-center my-4">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="mx-2 text-gray-500 font-semibold">ou</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+        <div class="flex justify-center  px-[80px] mt-5">
+            <a class="text-white w-[12rem] justify-center flex text-[1rem] bg-green-400 p-5 rounded-[5px] hover:bg-green-500 duration-300 cursor-pointer">
+                Cadastrar usuário
+            </a>
+        </div>
+        <div class="mt-8">
             <div th:if="${param.error}" class="alert bg-[#f8d7da] w-[25rem] text-[#da525d] p-[5px] rounded-[4px] transition-opacity duration-500">
                 <p style="color:red;">Usuário ou senha incorretos.</p>
             </div>
