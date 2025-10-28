@@ -16,14 +16,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 public class InitData {
  @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String[] publicPages = {"/login", "/cadastro"};
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                .requestMatchers(publicPages).permitAll()
                 .requestMatchers("/historico/api/v1/exprotCSV").hasRole("ADMIN") // Só admin pode exportar
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
                 .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
                 .failureUrl("/login?error=true")
                 .permitAll()
             )

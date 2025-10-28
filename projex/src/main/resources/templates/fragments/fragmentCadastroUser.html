@@ -1,0 +1,92 @@
+<div class="flex flex-center bg-white rounded-lg w-[28rem] h-[54.5rem] px-[15px]" th:fragment="cadastro">
+    <div class="flex flex-col px-[21px]">
+        <h2 class="font-sans flex justify-center font-bold text-[45px]">Projex</h2>
+        <form th:action="@{/login}" method="post" class="flex justify-center mt-[10px] w-10">
+            <div class="flex flex-col justify-center space-y-4  w-[40px]">
+                <div class="flex flex-col ">
+                    <label class="font-sans text-[18px] w-[10rem]">Nome Completo</label>
+                    <input placeholder="Digite o seu nome..." class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" type="text" name="username" required />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[10rem]">E-mail</label>
+                    <input 
+                    type="email"
+                    name="email" 
+                    placeholder="exemplo@dominio.com" 
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    required 
+                    autocomplete="email"
+                    pattern="^[a-zA-Z0-9._%+-]+@dominio\.com$"
+                    title="Digite um e-mail válido no formato: usuario@dominio.com"
+                    />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[10rem]">Telefone</label>
+                    <input 
+                    type="tel" 
+                    id="telefone"
+                    name="telefone" 
+                    placeholder="(11) 99999-9999" 
+                    pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+                    maxlength="15"
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    required />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[10rem]">CPF</label>
+                    <input 
+                    type="text" 
+                    name="cpf" 
+                    id="cpf"
+                    placeholder="000.000.000-00" 
+                    maxlength="14"
+                    title="Digite apenas números"
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    required
+                     />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[20rem]">Data de Nascimento</label>
+                    <input  class="w-[22.5rem] p-[15px] rounded-[4px] cursor-pointer border border-black outline-none focus:ring-1 focus:ring-black" type="date" name="data" required />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[10rem]">Senha</label>
+                    <input 
+                    name="password" 
+                    type="password" 
+                    id="senha"
+                    placeholder="Digite a sua senha..." 
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    autocomplete="new-password"
+                    required 
+                    />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-sans text-[18px] w-[15rem]">Confirmação de senha</label>
+                    <input 
+                    name="confirmaPassword" 
+                    type="password" 
+                    id="confirmaSenha" 
+                    placeholder="Confirme a sua senha" 
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    autocomplete="new-password"
+                    required />
+                </div>
+                <div class="flex flex-row w-[15rem] gap-[5px]">
+                    <input type="checkbox" class="text-[15px] w-[11px] text-[#269fe6] accent-purple-600 cursor-pointer">
+                    <label 
+                    class="font-sans text-[13px] w-[15rem]"
+                    >Aceito de 
+                    <a class="cursor-pointer text-[#269fe6] hover:text-[#2086c2]">termos</a> e 
+                    <a class="cursor-pointer text-[#269fe6] hover:text-[#2086c2]">políticas</a>
+                </label>
+                </div>
+                <div class="flex flex-row w-[22.5rem] justify-between ">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white p-[8px] w-[5rem] rounded-[5px] shadow-lg hover:shadow-xl transition duration-300 flex items-center">Cadastrar</button>
+                    <button onclick="history.back()" class="bg-purple-600 hover:bg-purple-700 text-white p-[8px] w-[5rem] rounded-[5px] shadow-lg hover:shadow-xl transition duration-300 flex flex-end">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
