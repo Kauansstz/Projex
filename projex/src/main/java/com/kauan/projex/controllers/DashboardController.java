@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class DashboardController {
-    @GetMapping("/")
+    @GetMapping("/home")
     public String dashboard(Model model){
         model.addAttribute("pageTitle", "Dashboard");
         return "pages/dashboard";

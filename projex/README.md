@@ -4,4 +4,4 @@
 # npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch
 
 # Rodar o projeto na máquina local
-# mvn spring-boot:run
+# mvn clean spring::boot
