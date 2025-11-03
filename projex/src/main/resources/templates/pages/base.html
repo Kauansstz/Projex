@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: head"></head>
+<head th:replace="~{fragments/head :: head}"></head>
 <body class="bg-[#F4F6FA] text-[#1F2937] font-sans">
 
     <div class="flex min-h-screen">
 
         <!-- Sidebar -->
-        <div th:replace="fragments/sidebar :: sidebar"></div>
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
         <!-- Aqui o conteúdo das páginas filhas será injetado -->
         <div class="flex-1 p-6" th:fragment="content">

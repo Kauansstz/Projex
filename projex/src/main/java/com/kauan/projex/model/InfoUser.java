@@ -1,105 +1,136 @@
 package com.kauan.projex.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class InfoUser {
-    
-    public enum Genero {
-        MASCULINO,
-        FEMININO,
-        OUTRO
+
+    public InfoUser() {
+        this.name = "";
     }
+
+    public enum Genero {
+        MASCULINO, FEMININO, OUTRO
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String nome;
+    @Column(name="NOME", length = 100, nullable = false)
+    @NotBlank(message = "O campo 'Nome' não pode estar vazio.")
+    private String name;
 
-    @Column(nullable = false)
-    private String senha;
+    @Column(name="DATA_NASC", nullable = false, updatable = false)
+    private LocalDate dataNasc;
+
+    @Column(name="SENHA", nullable = false)
+    private String password;
+
+    @Column(name="CONFIRM_PASSWORD", nullable = false)
+    private String confirmPassword;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name="GENERO", nullable = false)
     private Genero genero;
 
-    @Pattern(regexp = "\\d{11}", message = "CPF deve conter apenas 11 números")
-    @Column(length = 11, nullable = false, unique = true)
+    @Pattern(regexp = "[\\d\\-().\\s]+", message = "CPF deve conter apenas números")
+    @Column(name="CPF", length = 11, nullable = false, unique = true)
     private String cpf;
 
-    @Pattern(regexp = "\\d{10,15}", message = "Telefone deve conter apenas números")
-    @Column(length = 15)
+    @Pattern(regexp = "[\\d\\-().\\s]+", message = "Telefone deve conter apenas números")
+    @Column(name="TELEFONE", length = 15)
     private String telefone;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name="DESCRICAO", columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime criadoEm;
+    @Column(name="CRIADO_EM", nullable = false, updatable = false)
+    private Timestamp criadoEm;
 
-    @Column(nullable= false)
-    public Boolean ativo;
-    
-    @Column(nullable= false)
-    public Timestamp ultimo_login;
-    
-    @Column(nullable= false)
-     public Timestamp atualizadoEm;
+    @Column(name="ATIVO", nullable = false)
+    private Boolean ativo;
 
-    @Column(nullable= false)
-    public Integer tentativasLogin;
+    @Column(name="ULTIMO_LOGIN", nullable = false)
+    private Timestamp ultimoLogin;
 
-    @Column(nullable= false)
-    public String role;
+    @Column(name="ATUALIZADO_EM", nullable = false)
+    private Timestamp atualizadoEm;
 
-    @Column(nullable= false)
-    public String resetToken;
+    @Column(name="TENTATIVAS_LOGIN", nullable = false)
+    private Integer tentativasLogin;
 
-    @Column(nullable= false)
-    public String resetTokenExpiracao;
+    @Column(name="ROLE", nullable = false)
+    private String role;
 
-    @Column(nullable= false)
-    public String fotoPerfil;
+    @Column(name="TOKEN", nullable = false)
+    private String token;
 
-    @Column(nullable= false)
-    public String ipCriacao;
+    @Column(name="RESET_TOKEN_EXPIRACAO", nullable = false)
+    private String resetTokenExpiracao;
 
-    @Column(nullable= false)
-    public String ipUltimoLogin;
+    @Column(name="FOTO_PERFIL")
+    private String fotoPerfil;
 
-    @Column(nullable= false)
-    public Boolean forcarTrocaSenha;
+    @Column(name="IP_CRIACAO", nullable = false)
+    private String ipCriacao;
 
+    @Column(name="IP_ULTIMO_LOGIN", nullable = false)
+    private String ipUltimoLogin;
+
+    @Column(name="FORCAR_TROCA_SENHA", nullable = false)
+    private Boolean forcarTrocaSenha;
+
+    @Column(name="EMAIL", nullable = false)
+    private String email;
 
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
-    private List<InforProject> projetos;
+    private List<InforProject> projetos = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
-        criadoEm = LocalDateTime.now();
+        criadoEm = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
     // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getName() { return name; }
+    public void setName(String name) { 
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("O campo 'Nome' não pode estar vazio");
+        }
+        this.name = name;
+    }
+
+    public LocalDate getDataNasc() { return dataNasc; }
+    public void setDataNasc(LocalDate dataNasc) { this.dataNasc = dataNasc; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getConfirmPassword() { return confirmPassword; }
+    public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
 
     public Genero getGenero() { return genero; }
     public void setGenero(Genero genero) { this.genero = genero; }
 
     public String getCpf() { return cpf; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
+    public void setCpf(String cpf) { 
+        if (cpf == null || cpf.isBlank()) {
+            throw new IllegalArgumentException("O campo 'CPF' não pode estar vazio");
+        }
+        this.cpf = cpf.replaceAll("\\D", "");
+    }
 
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
@@ -107,11 +138,14 @@ public class InfoUser {
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
+    public Timestamp getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(Timestamp criadoEm) { this.criadoEm = criadoEm; }
+
     public Boolean getAtivo() { return ativo; }
     public void setAtivo(Boolean ativo) { this.ativo = ativo; }
 
-    public Timestamp getUltimo_login() { return ultimo_login; }
-    public void setUltimo_login(Timestamp ultimo_login) { this.ultimo_login = ultimo_login; }
+    public Timestamp getUltimoLogin() { return ultimoLogin; }
+    public void setUltimoLogin(Timestamp ultimoLogin) { this.ultimoLogin = ultimoLogin; }
 
     public Timestamp getAtualizadoEm() { return atualizadoEm; }
     public void setAtualizadoEm(Timestamp atualizadoEm) { this.atualizadoEm = atualizadoEm; }
@@ -122,18 +156,27 @@ public class InfoUser {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public LocalDateTime getCriadoEm() { return criadoEm; }
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
 
-    @Override
-    public String toString() {
-        return "InfoUser{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", genero=" + genero +
-                ", cpf='" + cpf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", criadoEm=" + criadoEm +
-                '}';
-    }
+    public String getResetTokenExpiracao() { return resetTokenExpiracao; }
+    public void setResetTokenExpiracao(String resetTokenExpiracao) { this.resetTokenExpiracao = resetTokenExpiracao; }
+
+    public String getFotoPerfil() { return fotoPerfil; }
+    public void setFotoPerfil(String fotoPerfil) { this.fotoPerfil = fotoPerfil; }
+
+    public String getIpCriacao() { return ipCriacao; }
+    public void setIpCriacao(String ipCriacao) { this.ipCriacao = ipCriacao; }
+
+    public String getIpUltimoLogin() { return ipUltimoLogin; }
+    public void setIpUltimoLogin(String ipUltimoLogin) { this.ipUltimoLogin = ipUltimoLogin; }
+
+    public Boolean getForcarTrocaSenha() { return forcarTrocaSenha; }
+    public void setForcarTrocaSenha(Boolean forcarTrocaSenha) { this.forcarTrocaSenha = forcarTrocaSenha; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public List<InforProject> getProjetos() { return projetos; }
+    public void setProjetos(List<InforProject> projetos) { this.projetos = projetos; }
 }

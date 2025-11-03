@@ -4,12 +4,12 @@
         <form th:action="@{/login}" method="post" class="flex justify-center w-10">
             <div class="flex flex-col justify-center space-y-4  w-[20px]">
                 <div class="flex flex-col">
-                    <label class="font-sans text-[21px]">Usuário</label>
-                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="text" name="username" required />
+                    <label class="font-sans text-[21px] w-[5rem]">E-mail</label>
+                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" type="email" name="username" required />
                 </div>
                 <div class="flex flex-col">
                     <label class="font-sans text-[21px]">Senha</label>
-                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border boder-black outline-none focus:ring-1 focus:ring-black" type="password" name="password" required />
+                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" type="password" name="password" required />
                 </div>
                 <div class="w-12">
                     <button type="submit" class="w-[5rem] bg-blue-500 p-[8px] text-white rounded-[5px]">Entrar</button>
