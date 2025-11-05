@@ -1,4 +1,4 @@
-<div class="flex flex-center bg-white rounded-lg w-[28rem] h-[64rem] px-[15px]" th:fragment="cadastro">
+<div class="flex flex-center bg-white rounded-lg w-[28rem] h-auto px-[15px] py-[18px]" th:fragment="cadastro">
     <div class="flex flex-col px-[21px]">
         <h2 class="font-sans flex justify-center font-bold text-[45px]">Projex</h2>
         <form th:action="@{/usuario/salvarUsuario}" th:object="${usuario}" method="post" class="flex justify-center mt-[10px] w-10">
@@ -92,7 +92,11 @@
                     required />
                 </div>
                 <div class="flex flex-row w-[15rem] gap-[5px]">
-                    <input type="checkbox" class="text-[15px] w-[11px] text-[#269fe6] accent-purple-600 cursor-pointer">
+                    <input 
+                    th:field="*{aceitarTermos}"
+                    type="checkbox" 
+                    id="aceitarTermos" 
+                    class="text-[15px] w-[11px] text-[#269fe6] accent-purple-600 cursor-pointer">
                     <span class="font-sans text-[13px] w-[15rem]">
                         Aceito os 
                         <a class="cursor-pointer text-[#269fe6] hover:text-[#2086c2]">termos</a> e 
@@ -106,13 +110,22 @@
             </div>
         </form>
 
-        <div th:if="${mensagemSucesso}" class="alert alert-success" role="alert">
-            <p th:text="${mensagemSucesso}"></p>
-        </div>
 
-        <div th:if="${mensagemErro}" class="alert alert-danger" role="alert">
-            <p th:text="${mensagemErro}"></p>
-        </div>
+        <!-- Mensagem de erro -->
+    <div th:if="${mensagemErro}" 
+     role="alert" 
+     id="alert"
+     class="alert bg-red-100 border border-red-400 text-red-800 px-4 py-3 mt-[20px] justify-center rounded-lg shadow-md flex items-center gap-2 fixed top-4 right-4 transition-all duration-500 ease-in-out">
+        <p th:text="${mensagemErro}" class="font-medium"></p>
+    </div>
+
+    <div th:if="${mensagemSucesso}" 
+        role="alert" 
+            id="alert-sucesso"
+            class="alert bg-green-100 border border-green-400 text-green-800 px-4 py-3 mt-[20px] justify-center rounded-lg shadow-md flex items-center gap-2 fixed top-4 right-4 transition-all duration-500 ease-in-out">
+        <p th:text="${mensagemSucesso}" class="font-medium"></p>
+    </div>
+
 
 
     </div>

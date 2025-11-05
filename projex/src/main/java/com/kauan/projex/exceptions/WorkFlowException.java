@@ -1,4 +1,4 @@
-package com.kauan.projex.utils;
+package com.kauan.projex.exceptions;
 
 public class WorkFlowException extends RuntimeException {
     public WorkFlowException(String message) { super(message); }

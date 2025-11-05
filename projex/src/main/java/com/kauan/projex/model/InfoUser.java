@@ -92,6 +92,9 @@ public class InfoUser {
     @Column(name="EMAIL", nullable = false)
     private String email;
 
+    @Column(name="ACEITAR_TERMOS", nullable = false)
+    private boolean aceitarTermos;
+
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     private List<InforProject> projetos = new ArrayList<>();
 
@@ -176,7 +179,10 @@ public class InfoUser {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-
+    
     public List<InforProject> getProjetos() { return projetos; }
     public void setProjetos(List<InforProject> projetos) { this.projetos = projetos; }
+    
+    public Boolean getAceitarTermos() { return aceitarTermos; }
+    public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }
 }
