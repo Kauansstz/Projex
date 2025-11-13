@@ -32,7 +32,7 @@ public class InfoUser {
     @Column(name="DATA_NASC", nullable = false, updatable = false)
     private LocalDate dataNasc;
 
-    @Column(name="SENHA", nullable = false)
+    @Column(name="PASSWORD", nullable = false)
     private String password;
 
     @Column(name="CONFIRM_PASSWORD", nullable = false)
@@ -185,4 +185,17 @@ public class InfoUser {
     
     public Boolean getAceitarTermos() { return aceitarTermos; }
     public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }
+
+    @Override
+    public String toString() {
+        return "InfoUser{" +
+                "\nID: " + id +
+                " | NOME: '" + name + '\'' +
+                " | E-MAIL: '" + email + '\'' +
+                " | ATIVO: " + ativo +
+                " | ROLE: '" + role + '\'' +
+                " | GENERO: " + genero +
+                " | CPF: '" + cpf + '\'' + "\n" +
+                '}';
+    }
 }

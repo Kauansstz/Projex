@@ -36,13 +36,13 @@ public class CadastroService {
         if (!usuario.getAceitarTermos()) {
             throw new IllegalArgumentException("Você precisa aceitar os Termos de Uso.");
         }
-        System.out.println(">>> Verificando CPF duplicado2: " + usuario.getCpf());
+        
 
         // Verificação de CPF duplicado
         if (repository.existsByCpf(usuario.getCpf())) {
             throw new DuplicateException("CPF já cadastrado: ", usuario.getCpf());
         }
-        System.out.println(">>> Verificando CPF duplicado2: " + usuario.getCpf());
+
 
         // Captura do IP
         String ip = request.getHeader("X-Forwarded-For");

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.kauan.projex.model.InfoUser;
@@ -26,7 +27,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
         String username = event.getAuthentication().getName();
         String ip = request.getRemoteAddr();
 
-        InfoUser usuario = usuarioRepository.findByEmail(username);
+        InfoUser usuario = usuarioRepository
+        .findByEmail(username)
+        .orElseThrow(() -> new UsernameNotFoundException("E-mail não encontrado: " + username));
+
 
         if (usuario != null) {
             usuario.setIpUltimoLogin(ip);

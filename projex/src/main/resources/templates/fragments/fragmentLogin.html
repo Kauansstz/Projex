@@ -1,15 +1,21 @@
 <div class="flex flex-center bg-white rounded-lg w-[28rem] h-[38rem] p-[15px]" th:fragment="login">
     <div class="flex flex-col justify-center p-[20px]">
         <h2 class="font-sans flex justify-center font-bold text-[45px]">Projex</h2>
-        <form th:action="@{/login}" method="post" class="flex justify-center w-10">
+        <form th:action="@{/login/Account}" th:object="${usuarioLogin}" method="post" class="flex justify-center w-10">
             <div class="flex flex-col justify-center space-y-4  w-[20px]">
                 <div class="flex flex-col">
                     <label class="font-sans text-[21px] w-[5rem]">E-mail</label>
-                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" type="email" name="username" required />
+                    <input 
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    type="email" 
+                    th:field="*{email}" required />
                 </div>
                 <div class="flex flex-col">
                     <label class="font-sans text-[21px]">Senha</label>
-                    <input class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" type="password" name="password" required />
+                    <input 
+                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
+                    type="password" th:field="*{password}" 
+                    required />
                 </div>
                 <div class="w-12">
                     <button type="submit" class="w-[5rem] bg-blue-500 p-[8px] text-white rounded-[5px]">Entrar</button>
@@ -29,15 +35,13 @@
                 Cadastrar usuário
             </a>
         </div>
-        <div class="mt-8">
-            <div th:if="${param.error}" class="alert bg-[#f8d7da] w-[25rem] text-[#da525d] p-[5px] rounded-[4px] transition-opacity duration-500">
-                <p style="color:red;">Usuário ou senha incorretos.</p>
-            </div>
-            <div th:if="${param.logout}" class="bg-[#f8d7da] w-[25rem] text-[#da525d] p-[5px] rounded-[4px]">
-                <p style="color:green;">Logout realizado com sucesso.</p>
-            </div>
+       <div th:if="${mensagemErro}" role="alert" id="alert">
+            <p th:text="${mensagemErro}" class="font-medium text-[red] hidden"></p>
         </div>
-    </div>
-    
 
+        <div th:if="${mensagemSucesso}" role="alert-sucesso">
+            <p th:text="${mensagemSucesso}" class="font-medium text-[red] hidden"></p>
+        </div>
+
+    </div>
 </div>

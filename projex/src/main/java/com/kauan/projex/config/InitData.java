@@ -2,64 +2,26 @@ package com.kauan.projex.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 public class InitData {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String[] publicPages = {"/login", "/cadastro", "/usuario/salvarUsuario"};
-
         http
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**") // H2 console sem CSRF
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            )
-            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())) // H2 console
+            .csrf(csrf -> csrf.disable()) // 🔥 Desativa proteção CSRF (necessário se faz login via POST manual)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers(publicPages).permitAll()
-                .requestMatchers("/historico/api/v1/exprotCSV").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() // 🔥 Libera todas as rotas
             )
-            .formLogin(login -> login
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/home", true)
-                .failureUrl("/login?error=true")
-                .permitAll()
-            )
-            .logout(logout -> logout.permitAll());
+            .formLogin(form -> form.disable()) // Desativa login automático do Spring
+            .httpBasic(httpBasic -> httpBasic.disable()) // Desativa autenticação básica
+            .logout(logout -> logout.disable()); // Desativa logout padrão
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("12345"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user = User.builder()
-                .username("user")
-                .password(encoder.encode("12345"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
     }
 
     @Bean
