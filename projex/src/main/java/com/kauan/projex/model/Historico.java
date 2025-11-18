@@ -1,6 +1,7 @@
 package com.kauan.projex.model;
 import jakarta.persistence.*;
-import java.time.OffsetDateTime;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "historico",indexes= {
@@ -34,7 +35,10 @@ public class Historico {
     private String ip;
 
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
+
+    @Column(name = "updateAt", nullable = false)
+    private LocalDateTime updateAt;
 
     public Historico(){}
 
@@ -45,47 +49,57 @@ public class Historico {
         this.entidadeId = entidadeId;
         this.detalhes = detalhes;
         this.ip = ip;
-        this.createdAt = OffsetDateTime.now();
+        this.updateAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public String getUsuario(){
         return usuario;
     }
-    public String setUsuario(String usuario){
-        return this.usuario = usuario;
+    public void setUsuario(String usuario){
+        this.usuario = usuario;
     }
     public String getAcao(){
         return acao;
     }
-    public String setAcao(String acao){
-        return this.acao = acao;
+    public void setAcao(String acao){
+        this.acao = acao;
+    }
+    public LocalDateTime getUpdateAt(){
+        return updateAt;
+    }
+    public void setUpdateAt(String acao){
+        this.updateAt = LocalDateTime.now();
     }
     public String getEntidade(){
         return entidade;
     }
-    public String setEntidade(String entidade){
-        return this.entidade = entidade;
+    public void setEntidade(String entidade){
+        this.entidade = entidade;
     }
     public String getDetalhes(){
         return detalhes;
     }
-    public String setDetalhes(String detalhes){
-        return this.detalhes = detalhes;
+    public void setDetalhes(String detalhes){
+        this.detalhes = detalhes;
     }
 
     public String getEntidadeId(){
         return entidadeId;
     }
-    public String setEntidadeId(String entidadeId){
-        return this.entidadeId = entidadeId;
+    public void setEntidadeId(String entidadeId){
+        this.entidadeId = entidadeId;
     }
     public String getIp(){
         return ip;
     }
-    public String setIp(String ip){
-        return this.ip = ip;
+    public void setIp(String ip){
+        this.ip = ip;
     }
 
-    public OffsetDateTime getCreatedAt(){ return createdAt;}
+    public LocalDateTime getCreatedAt(){ return createdAt;}
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt = createdAt;
+    }
 
 }
