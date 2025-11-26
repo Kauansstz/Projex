@@ -1,47 +1,59 @@
 package com.kauan.projex.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Historico;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.model.InforProject;
 
+import com.kauan.projex.repository.ProjectRepository;
+
 @Service
 public class DashBoardService {
+    @Autowired
+    private final ProjectRepository projectRepository;
     
-    public String  validarCamposDashBoard(InfoUser usuarioLogado, InforProject project, Historico history, String tempo){
-       if (usuarioLogado == null) {
-        throw new WorkFlowException("Nenhum usuário encontrado");
+    public DashBoardService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
     }
 
-    StringBuilder body = new StringBuilder();
-
-    if (project == null) {
-        return "<span class='block font-semibold text-gray-800'>Nenhum projeto selecionado</span>";
+    public List<InforProject> buscarUltimosProjetos(int limti){
+        return projectRepository.findTop3ByOrderByAtualizadoEmDesc();
     }
-    // ---- HISTÓRICO ----
-    if (history == null || history.getUpdateAt() == null) {
-        body.append("<span class='block text-sm text-gray-500'>Nenhuma atualização</span>");
+    public String mensagemProjetos(boolean tem) {
+    if (!tem) {
+        return "<span class='bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition'>Nenhum projeto selecionado</span>";
     }
+    return ""; // vazio para quando tem projetos
+}
 
-    // ---- STATUS DO PROJETO ----
-    if (project.getStatus() == InforProject.Status.EM_ANDAMENTO) {
-        body.append("<span class='block text-sm text-yellow-500'>Pendente</span>");
-    } 
-    else if (project.getStatus() == InforProject.Status.CONCLUIDO) {
-        body.append("<span class='block text-sm text-green-600'>Concluído</span>");
-    } 
-    else if (project.getStatus() == InforProject.Status.CANCELADO) {
-        body.append("<span class='block text-sm text-red-600'>Cancelado</span>");
-    } else{
-        body.append("<span class='block text-sm text-gray-500'>-</span>");
-    }
-    System.out.println("Body do Dashboard: "+body.toString());
+    public String validarCamposDashBoard(InfoUser usuarioLogado, InforProject project, Historico history, String tempo) {
 
-    return body.toString().trim();
-        
-        
+        if (usuarioLogado == null) {
+            throw new WorkFlowException("Nenhum usuário encontrado");
+        }
+
+        StringBuilder body = new StringBuilder();
+        if (project == null) {
+            body.append("<span class='block font-semibold text-gray-800'>Nenhum projeto selecionado</span>");
+            return body.toString();
+        }
+        // ------ STATUS DO PROJETO ------
+        switch (project.getStatus()) {
+            case EM_ANDAMENTO -> 
+                body.append("<span class='block text-sm text-yellow-500'>Pendente</span>");
+            case CONCLUIDO -> 
+                body.append("<span class='block text-sm text-green-600'>Concluído</span>");
+            case CANCELADO -> 
+                body.append("<span class='block text-sm text-red-600'>Cancelado</span>");
+            default ->
+                body.append("<span class='block text-sm text-gray-500'>-</span>");
+        }
+
+        return body.toString().strip();
     }
 }

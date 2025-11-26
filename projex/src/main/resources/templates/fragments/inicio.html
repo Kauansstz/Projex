@@ -28,43 +28,54 @@
   <!-- Projetos Recentes -->
   <div class="mb-10">
     <h2 class="text-xl font-semibold text-gray-700 mb-4">Projetos Recentes</h2>
-    <div class="space-y-4">
-      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
-        <div class="flex flex-col space-y-1">
-
-          <div>
-            <p class="!block font-semibold text-gray-800">
-              <span th:utext="${titulo != null ? titulo: html}">Project</span>
-            </p>
-            <p class="!block text-sm text-gray-500 ml-10" th:if="${atualizadoEm != null}">
-              <span th:utext="${atualizadoEm}">Atualizado Em</span>
-            </p>
+    <div class="space-y-4" th:if="${temProjetos}">
+      <div th:each="projeto : ${ultimosProjetos}">
+        <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+          <div class="flex flex-col space-y-1">
+            
+            <div>
+              <p class="!block font-semibold text-gray-800">
+                <span th:utext="${projeto.titulo != null ? projeto.titulo: html}">Project</span>
+              </p>
+              <p class="!block text-sm text-gray-500 ml-10" th:if="${projeto.atualizadoEm != null}">
+                <span th:utext="${projeto.atualizadoEm}">Atualizado Em</span>
+              </p>
+            </div>
+            
+            <span class="text-sm text-green-600 font-medium" th:if="${projeto.status != null} " th:utext="${projeto.status}"></span>
           </div>
-
-          <span class="text-sm text-green-600 font-medium" th:if="${status != null} " th:utext="${status}"></span>
         </div>
       </div>
+
+      
     </div>
+    <div th:unless="${temProjetos}" th:utext="${msgProjetos}"></div>
+
   </div>
 
   <!-- Atividades Recentes -->
   <div class="mb-10">
     <h2 class="text-xl font-semibold text-gray-700 mb-4">Atividades Recentes</h2>
     <div class="space-y-4">
-      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
-        <p class="text-gray-800"><strong>Kauan</strong> adicionou uma nova tarefa em <strong>Projeto Alpha</strong></p>
-        <p class="text-sm text-gray-500">Há 1 hora</p>
-      </div>
+      <div th:each="atividades : ${ultimasAtividades}">
 
-      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
-        <p class="text-gray-800"><strong>Ana</strong> comentou no <strong>Projeto Beta</strong></p>
-        <p class="text-sm text-gray-500">Há 3 horas</p>
+        <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
+          <p class="text-gray-800"th:utext="${#strings.isEmpty(atividades.acaoHistory) ? atividades.acaoHistory : html}"></p>
+          <p th:utext="${atividades.userHistory != null and !atividades.userHistory.isEmpty() ? atividades.acaoHistory : html }">
+            <strong th:utext="${atividades.userHistory}">Usuário</strong>
+            <span th:if="${atividades.entidade != null }">
+              adicionou uma nova tarefa em 
+              <strong th:utext="${atividades.entidade}"></strong>
+            </span>
+          </p>
+          <p class="text-sm text-gray-500"
+          th:if="${atividades.updateHistory != null and !atividades.updateHistory.isEmpty()}"
+          th:utext="${atividades.updateHistory}">
+        </p>
+  
       </div>
-
-      <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-50 transition">
-        <p class="text-gray-800"><strong>Lucas</strong> marcou uma tarefa como concluída</p>
-        <p class="text-sm text-gray-500">Ontem</p>
-      </div>
+    </div>
+    <div th:unless="${temAtividades}" th:utext="${msgAtividades}"></div>
     </div>
   </div>
 </main>
