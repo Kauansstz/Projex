@@ -1,15 +1,17 @@
-<!-- Header fixo -->
-<header class="absolute top-[10px] left-64 w-[calc(100%-16rem)] flex justify-center py-4 z-50 " 
-        th:fragment="search">
-  <div class="relative w-[560px]">
+<header 
+  class="absolute top-[10px] left-[28rem] flex justify-center items-center 
+         py-4 z-40 w-fit max-lg:left-0 max-lg:w-full px-4"
+  th:fragment="search">
+
+  <div class="relative w-[560px] max-w-full">
     <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600"></i>
+
     <input
       type="search"
       placeholder="Pesquisar..."
-      class="w-[35rem] px-4 py-2 pl-10 text-gray-800 bg-white border border-black rounded-[5px] outline-none focus:ring-1 focus:ring-black"
+      class="w-full px-4 py-2 pl-10 text-gray-800 bg-white border border-black rounded-[5px] 
+             outline-none focus:ring-1 focus:ring-black"
     />
   </div>
-  
-</header>
 
-<!-- Espaço para empurrar o conteúdo -->
+</header>
