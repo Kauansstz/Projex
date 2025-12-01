@@ -5,3 +5,5 @@
 
 # Rodar o projeto na máquina local
 # mvn clean spring::boot
+# ou
+# mvn spring-boot:run
