@@ -1,7 +1,7 @@
 package com.kauan.projex.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+
 import jakarta.validation.constraints.Pattern;
 
 import java.sql.Timestamp;
@@ -26,7 +26,6 @@ public class InfoUser {
     private Long id;
 
     @Column(name="NOME", length = 100, nullable = false)
-    @NotBlank(message = "O campo 'Nome' não pode estar vazio.")
     private String name;
 
     @Column(name="DATA_NASC", nullable = false, updatable = false)

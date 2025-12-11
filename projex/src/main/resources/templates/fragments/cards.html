@@ -2,10 +2,10 @@
     th:fragment="cards(extraClass)"
     th:class="'flex-1 h-screen overflow-auto rounded-lg p-6 bg-[#F4F6FA] ml-64' + ${extraClass}">
     <div class="flex justify-end items-center">
-        <button
+        <a th:href="@{/createdProject}"
             class="bg-green-500 shadow-md cursor-pointer rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
             Criar
-        </button>
+        </a>
     </div>
     <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
         <!-- Card 1 -->
