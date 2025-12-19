@@ -61,4 +61,16 @@
         </button>
 
     </div>
+    <div th:if="${mensagemErro}" 
+            role="alert" 
+            id="alert"
+            >
+            <p th:text="${mensagemErro}" class="font-medium"></p>
+        </div>
+            
+        <div th:if="${mensagemSucesso}" 
+            role="alert" 
+            id="alert-sucesso">
+            <p th:text="${mensagemSucesso}" class="font-medium"></p>
+        </div>
 </main>
