@@ -1148,6 +1148,10 @@ video {
   gap: 5px;
 }
 
+.gap-16 {
+  gap: 4rem;
+}
+
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -1406,6 +1410,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1));
+}
+
 .p-10 {
   padding: 2.5rem;
 }
@@ -1542,6 +1551,10 @@ video {
 
 .pt-\[70px\] {
   padding-top: 70px;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-left {

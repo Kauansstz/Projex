@@ -1,76 +1,60 @@
-<main class="flex-1 h-screen overflow-auto  ml-64 rounded-lg p-6 bg-[#F4F6FA]" 
-    th:fragment="cards(extraClass)"
-    th:class="'flex-1 h-screen overflow-auto rounded-lg p-6 bg-[#F4F6FA] ml-64' + ${extraClass}">
+<main
+    th:fragment="cards(cards, extraClass)"
+    class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA]"
+    th:classappend="${extraClass}">
+
     <div class="flex justify-end items-center">
         <a th:href="@{/createdProject}"
-            class="bg-green-500 shadow-md cursor-pointer rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
+           class="bg-green-500 shadow-md cursor-pointer rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
             Criar
         </a>
     </div>
-    <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <button class="bg-white shadow-md rounded-lg p-4 w-auto text-left border border-gray-200
-                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <div class="flex flex-col space-y-2">
-                <div class="nome_certificado text-lg font-semibold text-[#1F2937]">
-                    Gestor de Pix
-                </div>
-                <div class="flex flex-row gap-2">
-                    <div class="gap-1 flex text-sm font-medium text-[#6366F1] w-55 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        <i class="bi bi-person-circle"></i>Nome do usuário |
-                    </div>
-                    <div class="category text-sm font-medium text-[#6366F1] w-8 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        Software
-                    </div>
-                </div>
-            </div>
-        </button>
 
-        <!-- Card 2 -->
-        <button class="bg-white shadow-md rounded-lg p-4 w-auto text-left border border-gray-200
-                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
+
+        <!-- CARD -->
+        <a
+            th:each="card : ${cards}"
+            th:href="@{/panelProjetos/{id}/editar(id=${card.id})}"
+            class="bg-white shadow-md rounded-lg p-4 w-auto text-left cursor-pointer border border-gray-200
+                   transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+
             <div class="flex flex-col space-y-2">
-                <div class="nome_certificado text-lg font-semibold text-[#1F2937]">
-                    Pokedex
+
+                <!-- TÍTULO -->
+                <div class="nome_certificado text-lg font-semibold text-[#1F2937]"
+                     th:text="${card.titulo}">
                 </div>
-                <div class="flex flex-row gap-2">
-                    <div class="gap-1 flex text-sm font-medium text-[#6366F1] w-55 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        <i class="bi bi-person-circle"></i>Nome do usuário |
+
+                <!-- DONO + STATUS -->
+                <div class="flex flex-row gap-2 text-sm font-medium text-[#6366F1]">
+
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-person-circle"></i>
+                        <span th:text="${card.dono != null ? card.dono.name : 'Sem dono'}"></span>
+                        |
                     </div>
-                    <div class="category text-sm font-medium text-[#6366F1] w-8 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        Software
-                    </div>
+
+                    <div th:text="${card.status}"></div>
+
                 </div>
+
+                <!-- TECNOLOGIAS -->
+                <div class="text-sm text-gray-500"
+                     th:if="${card.tecnologiasText != null}"
+                     th:text="${card.tecnologiasText}">
+                </div>
+
             </div>
-        </button>
-        <button class="bg-white shadow-md rounded-lg p-4 w-auto text-left border border-gray-200
-                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <div class="flex flex-col space-y-2">
-                <div class="nome_certificado text-lg font-semibold text-[#1F2937]">
-                    Jogo do Mario
-                </div>
-                <div class="flex flex-row gap-2">
-                    <div class="gap-1 flex text-sm font-medium text-[#6366F1] w-55 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        <i class="bi bi-person-circle"></i>Nome do usuário |
-                    </div>
-                    <div class="category text-sm font-medium text-[#6366F1] w-8 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        Game
-                    </div>
-                </div>
-            </div>
-        </button>
+
+        </a>
 
     </div>
-    <div th:if="${mensagemErro}" 
-            role="alert" 
-            id="alert"
-            >
-            <p th:text="${mensagemErro}" class="font-medium"></p>
-        </div>
-            
-        <div th:if="${mensagemSucesso}" 
-            role="alert" 
-            id="alert-sucesso">
-            <p th:text="${mensagemSucesso}" class="font-medium"></p>
-        </div>
+
+    <!-- SEM RESULTADOS -->
+    <div th:if="${#lists.isEmpty(cards)}"
+         class="mt-6 text-center text-gray-500">
+        Nenhum projeto encontrado.
+    </div>
+
 </main>
