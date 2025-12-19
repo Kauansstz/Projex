@@ -21,7 +21,7 @@ public class UserService {
             throw new IllegalArgumentException("Todos os campos obrigatórios devem ser preenchidos!");
         }
         InfoUser foundUser = usuarioRepository.findByEmailAndPassword(email, password).orElseThrow(() -> new WorkFlowException("Usuário ou senha incorretos."));
-        System.out.println("🔎 Resultado da busca no banco: " + foundUser);
+        System.out.println("Resultado da busca no banco: " + foundUser);
         
         String token = UUID.randomUUID().toString();
         foundUser.setToken(token);

@@ -9,6 +9,7 @@ import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import com.kauan.projex.exceptions.WorkFlowException;
 @Controller
@@ -33,14 +34,16 @@ public class LoginController {
 
         try {
             InfoUser user = usuarioService.authenticator(email, password);
-            System.out.println(user);
+            HttpSession session = request.getSession();
+
+            System.out.println("Usuário: "+user);
+            System.out.println("LOGIN SESSION ID: " + session.getId());
             request.getSession().setAttribute("usuarioLogado", user);
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Login realizado com sucesso!");
             return "redirect:/home";
 
         } catch (IllegalArgumentException | WorkFlowException e) {
             redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-            System.out.println("Teste");
             return "redirect:/login";
         }
     }

@@ -95,7 +95,7 @@ public class InfoUser {
     private boolean aceitarTermos;
 
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
-    private List<InforProject> projetos = new ArrayList<>();
+    private List<InfoProject> projetos = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -179,8 +179,8 @@ public class InfoUser {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     
-    public List<InforProject> getProjetos() { return projetos; }
-    public void setProjetos(List<InforProject> projetos) { this.projetos = projetos; }
+    public List<InfoProject> getProjetos() { return projetos; }
+    public void setProjetos(List<InfoProject> projetos) { this.projetos = projetos; }
     
     public Boolean getAceitarTermos() { return aceitarTermos; }
     public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }

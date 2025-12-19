@@ -15,10 +15,12 @@ import com.kauan.projex.repository.UsuarioRepository;
 import com.kauan.projex.service.CreatedCardService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import com.kauan.projex.exceptions.DuplicateException;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.InfoUser;
-import com.kauan.projex.model.InforProject;
+import com.kauan.projex.model.InfoProject;
 
 
 @Controller
@@ -35,7 +37,7 @@ public class NewProjectController {
 
 
     @PostMapping("/projetos")
-    public String salvarProjeto(@ModelAttribute InforProject projeto,  HttpServletRequest request,RedirectAttributes redirectAttributes) {
+    public String salvarProjeto(@ModelAttribute InfoProject projeto,  HttpServletRequest request,RedirectAttributes redirectAttributes) {
         System.out.println("Fora do Try");
         try{ 
         repositoryService.salvar(projeto);
@@ -57,39 +59,32 @@ public class NewProjectController {
 
 
     @PostMapping("/projetos/createdCard")
-    public String cadastrarCard(@ModelAttribute InforProject project,
+    public String cadastrarCard(@ModelAttribute InfoProject project,
                                 HttpServletRequest request, 
                                 Model model, 
                                 RedirectAttributes redirectAttributes){
-        System.out.println("Fora do Try do Cadastrar Card");
-        System.out.println("Request: " + request);
-        System.out.println("");
-        System.out.println("Model: " + model);
-        System.out.println("");
-        System.out.println("Redirect Attributes: " + redirectAttributes);
         try{
-
-            String tecnologiasText = project.getTecnologiasText();
+            HttpSession session = request.getSession(false);
+            System.out.println("Card Session ID: " + (session != null ? session.getId(): "Sem sessão"));
+            String tecnologiasText = project.getTecnologiasText();  
             if (tecnologiasText != null) {
                 String texto = project.getTecnologiasText();
-                
                 System.out.println("DEBUG FRONT: " + texto);
-                List<String> listaTecnologias = Arrays.stream(tecnologiasText.split(";"))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .distinct()
+                List<String> listaTecnologias = Arrays.stream(tecnologiasText.split(";")).map(String::trim).filter(s -> !s.isEmpty()).distinct()
                 .toList();
-                
                 project.setTecnologiasText(String.join(";", listaTecnologias));
-                
             }
-            String emailLogado = (String) request.getSession().getAttribute("email");
-            InfoUser dono = user.findByEmail(emailLogado)
-            .orElseThrow(() -> new WorkFlowException("Usuário não encontrado."));
+            InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+            if (dono == null) {
+                System.out.println("Usuário não autenticado: " + (dono != null ? dono.getEmail() : "null"));
+                throw new WorkFlowException("Usuário não autenticado.");
+            }
+            System.out.println("Usuário autenticado: " + dono.getEmail());
+
             project.setDono(dono);
-            System.out.println("Debug emailLogado: " + emailLogado);
             repositoryService.infoCard(project);
-            return "redirect:/dashboard";
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Card cadastrado com sucesso!");
+            return "redirect:/panelProjetos";
 
         } catch(Exception e){
             redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
@@ -99,7 +94,7 @@ public class NewProjectController {
 
     @GetMapping("/createdProject")
     public String exibirCard(Model model){
-        model.addAttribute("projeto", new InforProject());
+        model.addAttribute("projeto", new InfoProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
         model.addAttribute("pageTitle", "Cadastrar Projeto");
         return "pages/newProject";

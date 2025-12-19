@@ -1,7 +1,7 @@
 package com.kauan.projex.controllers;
 
 import org.springframework.ui.Model;
-import com.kauan.projex.model.InforProject;
+import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.repository.TecnologiaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ public class EditProject {
     }
     @GetMapping("/editProject")
     public String dashboardEdit(Model model){
-        model.addAttribute("projeto", new InforProject());
+        model.addAttribute("projeto", new InfoProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
         model.addAttribute("pageTitle", "Editar Projeto");
         return "pages/panelEditProject";

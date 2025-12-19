@@ -6,14 +6,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kauan.projex.model.InforProject;
-import com.kauan.projex.model.InforProject.Status;
+import com.kauan.projex.model.InfoProject;
+import com.kauan.projex.model.InfoProject.Status;
 
 @Repository
-public interface CreatedCardRepository extends JpaRepository<InforProject, Long> {
+public interface CreatedCardRepository extends JpaRepository<InfoProject, Long> {
     boolean existsByTitulo(String titulo);
-    Optional<InforProject> findByTitulo(String titulo);
-    Optional<InforProject> findByDescricao(String descricao);
-    List<InforProject> findByStatus(Status status);
-    List<InforProject> findByDataConclusao(LocalDate dataConclusao); 
+    Optional<InfoProject> findByTitulo(String titulo);
+    Optional<InfoProject> findByDescricao(String descricao);
+    List<InfoProject> findByStatus(Status status);
+    List<InfoProject> findByDataConclusao(LocalDate dataConclusao); 
 }

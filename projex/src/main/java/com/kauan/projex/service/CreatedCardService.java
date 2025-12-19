@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 
 import com.kauan.projex.exceptions.DuplicateException;
 import com.kauan.projex.exceptions.WorkFlowException;
-import com.kauan.projex.model.InforProject;
+import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.repository.CreatedCardRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class CreatedCardService {
     }
 
 
-    public InforProject infoCard(InforProject project) {
+    public InfoProject infoCard(InfoProject project) {
 
         validarCamposObrigatorios(project);
         validarDuplicidade(project.getTitulo());
@@ -27,7 +27,7 @@ public class CreatedCardService {
     }
 
 
-    private void validarCamposObrigatorios(InforProject project) {
+    private void validarCamposObrigatorios(InfoProject project) {
 
         if (!StringUtils.hasText(project.getTitulo())) {
             throw new WorkFlowException("O título é obrigatório.");
@@ -63,7 +63,7 @@ public class CreatedCardService {
         }
     }
 
-    public InforProject salvar(InforProject project) {
+    public InfoProject salvar(InfoProject project) {
         return repository.save(project);
     }
 

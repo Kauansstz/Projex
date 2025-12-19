@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,12 +22,13 @@ public class GlobalExceptionHandler {
         ));
     }
     @ExceptionHandler(WorkFlowException.class)
-    public ResponseEntity<Map<String, Object>> handlerError(WorkFlowException ex){
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(
-            "status",401,
-            "error", "Falha na autenticação",
-            "message", ex.getMessage(),
-            "timestamp", LocalDateTime.now().toString()
-        ));
+    public String handleWorkflow(
+            WorkFlowException ex,
+            RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute(
+            "mensagemErro",
+            ex.getMessage()
+        );
+        return "redirect:/login";
     }
 }

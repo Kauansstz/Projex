@@ -83,11 +83,12 @@
         <p th:text="${mensagemErro}" class="font-medium"></p>
     </div>
     
-    <div th:if="${mensagemSucesso}" 
-    role="alert" 
-    id="alert-sucesso">
-    <p th:text="${mensagemSucesso}" class="font-medium"></p>
-</div>
+        <div th:if="${mensagemSucesso}" 
+        role="alert" 
+        id="alert-sucesso"
+        th:text="${mensagemSucesso}">
+        
+    </div>
 
 </div>
     <script src="/js/tags.js"></script>

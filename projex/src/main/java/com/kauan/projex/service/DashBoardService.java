@@ -1,15 +1,12 @@
 package com.kauan.projex.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.kauan.projex.exceptions.WorkFlowException;
+import com.kauan.projex.exceptions.UnauthorizedException;
 import com.kauan.projex.model.Historico;
 import com.kauan.projex.model.InfoUser;
-import com.kauan.projex.model.InforProject;
-
+import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.repository.ProjectRepository;
 
 @Service
@@ -21,7 +18,7 @@ public class DashBoardService {
         this.projectRepository = projectRepository;
     }
 
-    public List<InforProject> buscarUltimosProjetos(int limti){
+    public List<InfoProject> buscarUltimosProjetos(int limti){
         return projectRepository.findTop3ByOrderByAtualizadoEmDesc();
     }
     public String mensagemProjetos(boolean tem) {
@@ -31,10 +28,10 @@ public class DashBoardService {
     return ""; // vazio para quando tem projetos
 }
 
-    public String validarCamposDashBoard(InfoUser usuarioLogado, InforProject project, Historico history, String tempo) {
+    public String validarCamposDashBoard(InfoUser usuarioLogado, InfoProject project, Historico history, String tempo) {
 
         if (usuarioLogado == null) {
-            throw new WorkFlowException("Nenhum usuário encontrado");
+            throw new UnauthorizedException("Nenhum usuário encontrado");
         }
 
         StringBuilder body = new StringBuilder();

@@ -2,15 +2,17 @@ package com.kauan.projex.controllers;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Historico;
 import com.kauan.projex.model.InfoUser;
-import com.kauan.projex.model.InforProject;
+import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.service.DashBoardService;
 import com.kauan.projex.service.HistoricoService;
 import com.kauan.projex.utils.FormatarTempoRelativo;
@@ -24,12 +26,12 @@ public class DashboardController {
     @Autowired
     private HistoricoService historicoService;
     @GetMapping("/home")
-    public String dashboard(Model model, HttpServletRequest request) {
+    public String dashboard(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-        InforProject project = (InforProject) request.getSession().getAttribute("project");
+        InfoProject project = (InfoProject) request.getSession().getAttribute("project");
         Historico history = (Historico) request.getSession().getAttribute("history"); 
         String tempo = null;
-        List<InforProject> ultimosProjetos = dashBoardService.buscarUltimosProjetos(3);
+        List<InfoProject> ultimosProjetos = dashBoardService.buscarUltimosProjetos(3);
         List<Historico> ultimasAtividades = historicoService.buscarUltimasAtividades(3);
         boolean temProjetos = ultimosProjetos != null && !ultimosProjetos.isEmpty();
         boolean temAtividades = ultimasAtividades != null && !ultimasAtividades.isEmpty();
@@ -45,7 +47,10 @@ public class DashboardController {
         if (history != null && history.getUpdateAt() != null) {
             tempo = FormatarTempoRelativo.formatar(history.getUpdateAt());
         }
-
+        if (usuarioLogado == null) {
+            redirectAttributes.addFlashAttribute("Sessão foi encerrada");
+            return "redirect:/login";
+        }
 
         String htmlGerado = dashBoardService.validarCamposDashBoard(usuarioLogado, project, history, tempo);
         model.addAttribute("nome", usuarioLogado.getName());
