@@ -13,13 +13,20 @@ public class InitData {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desativa proteção CSRF (necessário se faz login via POST manual)
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Libera todas as rotas
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().permitAll()
             )
-            .formLogin(form -> form.disable()) // Desativa login automático do Spring
-            .httpBasic(httpBasic -> httpBasic.disable()) // Desativa autenticação básica
-            .logout(logout -> logout.disable()); // Desativa logout padrão
+
+            // 🔴 ESSENCIAL PARA O H2 CONSOLE
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            )
+
+            .formLogin(form -> form.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .logout(logout -> logout.disable());
 
         return http.build();
     }
