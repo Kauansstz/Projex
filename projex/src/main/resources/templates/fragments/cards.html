@@ -15,7 +15,7 @@
         <!-- CARD -->
         <a
             th:each="card : ${cards}"
-            th:href="@{/panelProjetos/{id}/editar(id=${card.id})}"
+            th:href="@{/panelProjetos/editar/{id}(id=${card.id})}"
             class="bg-white shadow-md rounded-lg p-4 w-auto text-left cursor-pointer border border-gray-200
                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
 
@@ -35,7 +35,7 @@
                         |
                     </div>
 
-                    <div th:text="${card.status}"></div>
+                    <div th:text="${#strings.replace(card.status, '_', ' ')}"></div>
 
                 </div>
 

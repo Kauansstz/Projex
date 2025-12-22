@@ -125,6 +125,14 @@ public class InfoProject {
     public LocalDate getDataConclusao() {
         return dataConclusao;
     }
+    public Long getId() {
+    return id;
+}
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public void setDataConclusao(LocalDate dataConclusao) {
         this.dataConclusao = dataConclusao;
