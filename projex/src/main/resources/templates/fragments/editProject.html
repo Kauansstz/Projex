@@ -38,12 +38,22 @@
 
                 <!-- Tecnologias -->
                 <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Tecnologias:</label>
-                    <select multiple th:field="*{tecnologiasText}" 
-                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 h-36 transition">
-                        <option th:each="tec : ${tecnologiasText}" th:value="${tec.id}" th:text="${tec.nome}"></option>
-                    </select>
+                <label class="mb-2 font-semibold text-gray-700">Tecnologias:</label>
+
+                <!-- Container das TAGS + Input -->
+                <div id="tag-container"
+                     class="border border-gray-300 rounded-lg px-4 py-3 min-h-[48px] flex flex-wrap gap-2 cursor-text"
+                     onclick="document.getElementById('tag-input').focus()">
+
+                    <input id="tag-input" type="text"
+                           placeholder="Digite e coloque ; para criar tags"
+                           class="outline-none flex-grow min-w-[120px]"/>
                 </div>
+
+                <!-- Campo hidden enviado ao backend -->
+                <input type="hidden" th:field="*{tecnologiasText}" id="tecnologiasText">
+
+            </div>
                 
                 
                 <div class="flex justify-center gap-20">
