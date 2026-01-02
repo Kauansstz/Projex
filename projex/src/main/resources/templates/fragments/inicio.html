@@ -42,7 +42,7 @@
               </p>
             </div>
             
-            <span class="text-sm text-green-600 font-medium" th:if="${projeto.status != null} " th:utext="${projeto.status}"></span>
+            <span class="text-sm text-green-600 font-medium" th:if="${projeto.status != null} " th:text="${#strings.replace(projeto.status, '_', ' ')}"></span>
           </div>
         </div>
       </div>
