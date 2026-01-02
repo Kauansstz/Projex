@@ -71,4 +71,56 @@
             </form>
         </div>
 </div>
+<script>
+    const container = document.getElementById("tag-container");
+    const input = document.getElementById("tag-input");
+    const hiddenInput = document.getElementById("tecnologiasText");
+
+    function createTag(text) {
+        const tag = document.createElement("span");
+        tag.className = "bg-purple-600 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2";
+        tag.textContent = text;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "×";
+        removeBtn.className = "ml-2 font-bold";
+        removeBtn.onclick = () => {
+            tag.remove();
+            updateHiddenInput();
+        };
+
+        tag.appendChild(removeBtn);
+        container.insertBefore(tag, input);
+    }
+
+    function updateHiddenInput() {
+        const tags = Array.from(container.querySelectorAll("span"))
+            .map(tag => tag.firstChild.textContent.trim());
+
+        hiddenInput.value = tags.join(";");
+    }
+
+    // Criar tag ao digitar ;
+    input.addEventListener("keyup", (e) => {
+        if (e.key === ";") {
+            const value = input.value.replace(";", "").trim();
+            if (value) {
+                createTag(value);
+                updateHiddenInput();
+            }
+            input.value = "";
+        }
+    });
+
+    // 🔥 PRECARREGAR TAGS NO EDIT
+    document.addEventListener("DOMContentLoaded", () => {
+        if (hiddenInput.value) {
+            hiddenInput.value.split(";").forEach(t => {
+                if (t.trim()) {
+                    createTag(t.trim());
+                }
+            });
+        }
+    });
+</script>
 
