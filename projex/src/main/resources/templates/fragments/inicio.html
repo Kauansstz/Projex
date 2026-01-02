@@ -37,12 +37,19 @@
               <p class="!block font-semibold text-gray-800">
                 <span th:utext="${projeto.titulo != null ? projeto.titulo: html}">Project</span>
               </p>
-              <p class="!block text-sm text-gray-500 ml-10" th:if="${projeto.atualizadoEm != null}">
-                <span th:utext="${projeto.atualizadoEm}">Atualizado Em</span>
-              </p>
+              
             </div>
-            
-            <span class="text-sm text-green-600 font-medium" th:if="${projeto.status != null} " th:text="${#strings.replace(projeto.status, '_', ' ')}"></span>
+            <div class="flex flex-1 text-sm font-medium justify-between">
+              <div
+              th:if="${projeto.status != null}" 
+              th:text="${projeto.status.label}"
+              th:classappend="${projeto.status.cssClass}"></div>
+              <div>
+                <p class=" text-sm text-gray-500 ml-10" th:if="${projeto.atualizadoEm != null}">
+                  <span th:utext="${#temporals.format(projeto.atualizadoEm, 'dd/MM/yyyy')}">Atualizado Em</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

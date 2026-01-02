@@ -35,7 +35,8 @@
                         |
                     </div>
 
-                    <div th:text="${#strings.replace(card.status, '_', ' ')}"></div>
+                    <div th:text="${card.status.label}" 
+                    th:classappend="${card.status.cssClass}"></div>
 
                 </div>
 
