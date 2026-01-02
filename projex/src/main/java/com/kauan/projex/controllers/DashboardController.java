@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Historico;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.model.InfoProject;

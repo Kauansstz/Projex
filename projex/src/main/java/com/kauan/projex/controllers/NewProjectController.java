@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import com.kauan.projex.repository.TecnologiaRepository;
-import com.kauan.projex.repository.UsuarioRepository;
 import com.kauan.projex.service.CreatedCardService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,12 +26,12 @@ import com.kauan.projex.model.InfoProject;
 public class NewProjectController {
     private final TecnologiaRepository tecnologiaRepository;
     private final CreatedCardService repositoryService;
-    private final UsuarioRepository user;
 
-    public NewProjectController(TecnologiaRepository tecnologiaRepository, CreatedCardService repositoryService, UsuarioRepository user) {
+
+    public NewProjectController(TecnologiaRepository tecnologiaRepository, CreatedCardService repositoryService) {
         this.tecnologiaRepository = tecnologiaRepository;
         this.repositoryService = repositoryService;
-        this.user = user;
+
     }
 
 
