@@ -39,13 +39,6 @@ public class ProjectController {
         return "pages/projectes";
     }
 
-    // VISUALIZAR
-    @GetMapping("/{id}")
-    public String visualizar(@PathVariable Long id, Model model) {
-        InfoProject projeto = cardService.buscarPorId(id);
-        model.addAttribute("projeto", projeto);
-        return "pages/panelViewProject";
-    }
 
     // EDITAR (TELA)
     @GetMapping("/editar/{id}")
