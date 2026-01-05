@@ -13,33 +13,48 @@
     <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
 
         <!-- CARD -->
-        <a
+        <div
             th:each="card : ${cards}"
-            th:href="@{/panelProjetos/editar/{id}(id=${card.id})}"
-            class="bg-white shadow-md rounded-lg p-4 w-auto text-left cursor-pointer border border-gray-200
+            
+            class="bg-white shadow-md rounded-lg p-4 w-auto text-left  border border-gray-200
                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
 
             <div class="flex flex-col space-y-2">
                 <div class="flex items-center justify-between relative">
 
-                <!-- TÍTULO -->
-                <div class="text-lg font-semibold text-[#1F2937]"
-                    th:text="${card.titulo}">
-                </div>
+                    <!-- TÍTULO -->
+                    <a th:href="@{/panelProjetos/editar/{id}(id=${card.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
+                         th:text="${card.titulo}">
+                    </a>
 
-                <!-- MENU -->
-                <details class="relative">
-                    <summary class="list-none cursor-pointer p-2 rounded-full hover:bg-gray-100">
-                    <i class="bi bi-three-dots-vertical text-xl"></i>
-                    </summary>
+                    <!-- MENU -->
+                    <details class="relative" onclick="event.stopPropagation();">
+                        <summary class="list-none cursor-pointer p-2 rounded-full hover:bg-gray-100">
+                            <i class="bi bi-three-dots-vertical text-xl"></i>
+                        </summary>
 
-                    <div class="absolute right-0 mt-2 w-40 rounded-lg bg-white shadow-lg z-100">
-                    <ul class="py-1 text-sm">
-                        <li class="px-4 py-2 hover:bg-gray-100">Editar</li>
-                        <li class="px-4 py-2 text-red-600 hover:bg-red-50">Excluir</li>
-                    </ul>
-                    </div>
-                </details>
+                        <div class="absolute right-0 mt-2 w-40 rounded-lg bg-white shadow-lg z-50">
+                            <ul class="py-1 text-sm">
+                                <li class="px-4 py-2 hover:bg-gray-100">
+                                    Editar
+                                </li>
+
+                                <li class="px-4 py-2 text-red-600 hover:bg-red-50">
+                                    <form th:action="@{/panelProjetos/{id}/deletar(id=${card.id})}"
+                                          method="post">
+
+                                        <button
+                                            type="button"
+                                            th:attr="onclick=|openDeleteModal('/panelProjetos/${card.id}/deletar')|"
+                                            class="w-full text-left py-2 text-red-600 hover:bg-red-50">
+                                            Excluir
+                                        </button>
+
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
 
                 </div>
 
@@ -52,8 +67,9 @@
                         |
                     </div>
 
-                    <div th:text="${card.status.label}" 
-                    th:classappend="${card.status.cssClass}"></div>
+                    <div th:text="${card.status.label}"
+                         th:classappend="${card.status.cssClass}">
+                    </div>
 
                 </div>
 
@@ -65,7 +81,7 @@
 
             </div>
 
-        </a>
+        </div>
 
     </div>
 

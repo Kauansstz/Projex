@@ -2,8 +2,10 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
 <body class="bg-gray-100 font-sans flex items-center  min-h-screen">
+    <script src="/js/confirmDelete.js"></script>
     <div th:replace="~{fragments/sidebar :: sidebar}"></div>
     <div th:replace="~{fragments/search :: search('/panelProjetos')}"></div>
     <div th:replace="~{fragments/cards :: cards(${cards}, '')}"></div>
+    <div th:replace="~{fragments/confirmDelete :: deleteModal}"></div>
 </body>
 </html>

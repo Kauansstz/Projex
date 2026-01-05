@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.service.CardService;
@@ -62,9 +63,14 @@ public class ProjectController {
     }
 
     // EXCLUIR
-    @PostMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id) {
-        cardService.deletar(id);
+    @PostMapping("/{id}/deletar")
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try{
+            cardService.deletar(id);
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "Projeto excluído com sucesso!");
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao excluir o projeto");
+        }
         return "redirect:/panelProjetos";
     }
 }
