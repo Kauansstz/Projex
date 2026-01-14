@@ -21,9 +21,10 @@ public class ExplorerController {
     @GetMapping
     public String listar(Model model, @RequestParam(required = false) String search ){
         if (search != null && !search.isBlank()) {
-            model.addAttribute("explore",exploreService.buscarPorNome(search));
+            model.addAttribute("explorer",exploreService.buscarPorNome(search));
+            model.addAttribute("tecnologia", exploreService.buscarPorTecnologia(search));
         }else{
-            model.addAttribute("explore", exploreService.listarTodos());
+            model.addAttribute("explorer", exploreService.listarTodos());
         }
         model.addAttribute("search",search);
         model.addAttribute("pageTitle", "Explorar");

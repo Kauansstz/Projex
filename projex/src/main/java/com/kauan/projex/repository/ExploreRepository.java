@@ -1,7 +1,6 @@
 package com.kauan.projex.repository;
 
 import org.springframework.stereotype.Repository;
-
 import com.kauan.projex.model.InfoUser;
 
 import java.util.List;

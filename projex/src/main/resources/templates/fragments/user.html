@@ -1,22 +1,22 @@
 <main class="flex-1 min-h-max h-auto overflow-auto  ml-64 rounded-lg p-6 bg-[#F4F6FA]" 
     th:fragment="user(explore, extraClass)"
-    th:class="${extraClass}">
+    th:class="${extraClass}" >
     <div class="grid grid-cols-3  w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
 
         <!-- Card 1 -->
         <button class="bg-white shadow-md rounded-lg p-4 w-auto text-left border border-gray-200
-                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" th:each="explore : ${explorer}">
             <div class="flex flex-col space-y-2">
                     <div class="gap-1 flex text-sm text-[30px] text-[#6366F1] w-55 hover:text-[#3B82F6] cursor-pointer duration-300">
                         <i class="bi bi-person-circle text-[20px]"></i>
-                        <span class="text-[20px]">
+                        <span class="text-[20px]" th:text="${explore.name}">
                             Nome do usuário
                         </span>
                     </div>
                     <div class="flex gap-2 text-sm  font-medium text-black  ">
-                        <span class="flex justify-center bg-gray-200 rounded-lg w-auto px-2 hover:text-[#3B82F6] cursor-pointer duration-300 text-[12px]">Java</span>
-                        <span class="flex justify-center bg-gray-200 rounded-lg w-auto px-2 hover:text-[#3B82F6] cursor-pointer duration-300 text-[12px]">Python</span>
-                        <span class="flex justify-center bg-gray-200 rounded-lg w-auto px-2 hover:text-[#3B82F6] cursor-pointer duration-300 text-[12px]">C#</span>
+                        <span class="flex justify-center bg-gray-200 rounded-lg w-auto px-2 hover:text-[#3B82F6] cursor-pointer duration-300 text-[12px]" 
+                        th:text="${explore.tecnologia}">Tecnologia</span>
+                        
                     </div>
             </div>
         </button>

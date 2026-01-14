@@ -1,0 +1,45 @@
+<main
+    th:fragment="cardsGrid(cards)"
+    class="flex-1 h-screen overflow-auto ml-34 rounded-lg p-6 bg-[#F4F6FA]"
+    th:classappend="${extraClass}">
+
+
+    <div class="grid grid-cols-3 mt-5 w-[70rem] md:grid-cols-3 lg:grid-cols-3 gap-6">
+
+        <!-- CARD -->
+        <div
+            th:each="card : ${cards}"
+            
+            class="bg-white shadow-md rounded-lg p-4 w-auto text-left  border border-gray-200
+                   transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+            <div class="flex flex-col space-y-2">
+                <div class="flex items-center justify-between relative">
+
+                    <!-- TÍTULO -->
+                    <a th:href="@{/panelProjetos/editar/{id}(id=${card.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
+                         th:text="${card.titulo}">
+                    </a>
+
+
+                </div>
+
+                <!-- TECNOLOGIAS -->
+                <div class="text-sm text-gray-500"
+                     th:if="${card.tecnologiasText != null}"
+                     th:text="${card.tecnologiasText}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SEM RESULTADOS -->
+    <div th:if="${#lists.isEmpty(cards)}"
+         class="mt-6 text-center text-gray-500">
+        Nenhum projeto encontrado.
+    </div>
+
+</main>

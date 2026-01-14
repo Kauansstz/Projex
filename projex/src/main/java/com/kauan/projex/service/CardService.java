@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.InfoProject;
+import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CardRepository;
 
 @Service
 public class CardService {
 
     private final CardRepository cardRepository;
-
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
@@ -22,6 +22,10 @@ public class CardService {
 
     public List<InfoProject> buscarPorTitulo(String titulo) {
         return cardRepository.findByTituloContainingIgnoreCase(titulo);
+    }
+
+    public List<InfoProject> buscarUltimos3Projetos(InfoUser usuario) {
+        return cardRepository.findTop3ByDonoOrderByCriadoEmDesc(usuario);
     }
 
     public InfoProject buscarPorId(Long id) {

@@ -10,5 +10,5 @@ import com.kauan.projex.model.Tecnologia;
 @Repository
 public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long> {
     // Aqui você pode colocar métodos personalizados se quiser, ex:
-    List<Tecnologia> findByNomeContaining(String nome);
+    List<Tecnologia> findByNomeContainingIgnoreCase(String nome);
 }

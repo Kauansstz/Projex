@@ -73,6 +73,10 @@ public class InfoUser {
     @Column(name="TOKEN", nullable = false)
     private String token;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="tecnologia_id")
+    private Tecnologia tecnologia;
+
     @Column(name="RESET_TOKEN_EXPIRACAO", nullable = false)
     private String resetTokenExpiracao;
 
@@ -96,6 +100,8 @@ public class InfoUser {
 
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     private List<InfoProject> projetos = new ArrayList<>();
+
+    
 
     @PrePersist
     protected void onCreate() {
@@ -185,6 +191,9 @@ public class InfoUser {
     public Boolean getAceitarTermos() { return aceitarTermos; }
     public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }
 
+    public Tecnologia getTecnologia(){return tecnologia;}
+    public void setTecnologia(Tecnologia tecnologia){this.tecnologia = tecnologia;}
+
     @Override
     public String toString() {
         return "InfoUser{" +
@@ -195,6 +204,7 @@ public class InfoUser {
                 " | ROLE: '" + role + '\'' +
                 " | GENERO: " + genero +
                 " | CPF: '" + cpf + '\'' + "\n" +
+                " | TECNOLOGIA: '" + tecnologia + '\'' + "\n" +
                 '}';
     }
 }
