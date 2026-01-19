@@ -1,0 +1,141 @@
+<div class="flex flex-column justify-end items-center m-auto" th:fragment="certificateCreate">
+    <!-- Conteúdo principal -->
+    <div class="ml-[10rem] w-[59rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl">
+
+        <!-- Título -->
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Cadastrar Certificado</h2>
+
+        <!-- Formulário -->
+        <form th:action="@{/projetos/createdCertificate}" th:object="${certificate}" method="post" class="space-y-5">
+
+            <!-- Título -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Título:</label>
+                <input type="text" th:field="*{titulo}" placeholder="Digite o título"
+                       class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+            </div>
+            <div class="flex flex-col autocomplete-container">
+                <label class="mb-2 font-semibold text-gray-700">Instituição:</label>
+                <input type="text" th:field="*{Instituicao}" placeholder="Digite a Instituição" name="instituicao" id="instituicaoInput" autocomplete="off"
+                       class="border
+                       border-gray-300 
+                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+                       
+                <ul id="instituicaoList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
+                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
+
+                </ul>
+            </div>
+            <div class="flex flex-col autocomplete-container">
+                <label class="mb-2 font-semibold text-gray-700">Tipo de Certificação:</label>
+                <input type="text" th:field="*{typeCertificate}" placeholder="Digite o Tipo do certificado" name="certificado" id="TypeInput" autocomplete="off"
+                       class="border
+                       border-gray-300 
+                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+                       
+                <ul id="TypeList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
+                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
+
+                </ul>
+            </div>
+
+            <!-- Descrição -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
+                <textarea th:field="*{descricao}" rows="4" placeholder="Descrição detalhada"
+                          class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
+            </div>
+
+            <!-- Status -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Status:</label>
+                <select th:field="*{status}"
+                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                    <option value="EM_ANDAMENTO">Em andamento</option>
+                    <option value="CONCLUIDO">Concluído</option>
+                    <option value="CANCELADO">Cancelado</option>
+                </select>
+            </div>
+
+            <!-- Data de Conclusão -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
+                <input type="date" th:field="*{dataConclusao}"
+                       class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Categoria:</label>
+
+                <div id="tag-container"
+                     class="border border-gray-300 rounded-lg px-4 py-3 min-h-[48px] flex flex-wrap gap-2 cursor-text"
+                     >
+
+                    <select name="categoria" id="categoria" required class="w-full  border-none outline-none focus:outline-none" >
+                        <option value="">Selecione a categoria</option>
+                        <option value="FINANCEIRO">Financeiro</option>
+                        <option value="CONTABIL">Contábil</option>
+                        <option value="JURIDICO">Jurídico</option>
+                        <option value="COMPRAS">Compras</option>
+                        <option value="ADMINISTRATIVO">Administrativo</option>
+                        <option value="RH">Recursos Humanos</option>
+                        <option value="DEPARTAMENTO_PESSOAL">Departamento Pessoal</option>
+                        <option value="TREINAMENTO">Treinamento</option>
+                        <option value="HARDWARE">Hardware</option>
+                        <option value="SOFTWARE">Software</option>
+                        <option value="INFRAESTRUTURA">Infraestrutura</option>
+                        <option value="REDES">Redes</option>
+                        <option value="SEGURANCA_DA_INFORMACAO">Segurança da Informação</option>
+                        <option value="SUPORTE_TI">Suporte de TI</option>
+                        <option value="DESENVOLVIMENTO">Desenvolvimento</option>
+                        <option value="MARKETING">Marketing</option>
+                        <option value="DESIGN">Design</option>
+                        <option value="UX_UI">UX / UI</option>
+                        <option value="MIDIAS_SOCIAIS">Mídias Sociais</option>
+                        <option value="COMERCIAL">Comercial</option>
+                        <option value="VENDAS">Vendas</option>
+                        <option value="POS_VENDA">Pós-venda</option>
+                        <option value="ATENDIMENTO_CLIENTE">Atendimento ao Cliente</option>
+                        <option value="LOGISTICA">Logística</option>
+                        <option value="OPERACIONAL">Operacional</option>
+                        <option value="MANUTENCAO">Manutenção</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="flex justify-center gap-20">
+
+                <!-- Botão de voltar -->
+                <button onclick="history.back()"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
+                    <i class="bi bi-arrow-left-circle"></i> Voltar
+                </button>
+
+                <!-- Botão Salvar -->
+                <button type="submit"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
+                    <i class="bi bi-floppy"></i>Salvar
+                </button>
+            </div>
+
+        </form>
+
+        <div th:if="${mensagemErro}" 
+        role="alert" 
+        id="alert"
+        >
+        <p th:text="${mensagemErro}" class="font-medium"></p>
+    </div>
+    
+        <div th:if="${mensagemSucesso}" 
+        role="alert" 
+        id="alert-sucesso"
+        th:text="${mensagemSucesso}">
+        
+    </div>
+
+</div>
+    <script src="/js/tags.js"></script>
+</div>
+
