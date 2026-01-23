@@ -1,16 +1,22 @@
 package com.kauan.projex.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.utils.Status;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 
 public class CertificatedRequest {
 
@@ -26,15 +32,18 @@ public class CertificatedRequest {
 
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    private String anexo;
+    private MultipartFile  anexo;
 
     private String category;
 
-    private LocalDateTime dataConclusao = LocalDateTime.now();
+    private LocalDate dataConclusao;
 
     private LocalDateTime update = LocalDateTime.now();
+
+    private LocalDateTime criadoEm;
 
     @ManyToOne
     @JoinColumn(name = "dono_id")
@@ -42,6 +51,11 @@ public class CertificatedRequest {
     private InfoUser dono;
 
     // GETTERS E SETTERS
+
+    @PrePersist
+    protected void onCreate() {
+        this.criadoEm = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -82,11 +96,11 @@ public class CertificatedRequest {
         this.descricao = descricao;
     }
 
-    public String getAnexo() {
+    public MultipartFile  getAnexo() {
         return anexo;
     }
 
-    public void setAnexo(String anexo) {
+    public void setAnexo(MultipartFile  anexo) {
         this.anexo = anexo;
     }
 
@@ -98,11 +112,11 @@ public class CertificatedRequest {
         this.category = category;
     }
 
-    public LocalDateTime getDataConclusao() {
+    public LocalDate getDataConclusao() {
         return dataConclusao;
     }
 
-    public void setDataConclusao(LocalDateTime dataConclusao) {
+    public void setDataConclusao(LocalDate dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
 
@@ -127,5 +141,13 @@ public class CertificatedRequest {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }
