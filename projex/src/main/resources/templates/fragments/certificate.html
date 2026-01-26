@@ -66,8 +66,9 @@
                 </div>
                 
             </div>
-            <a class="flex flex-row gap-2 text-sm cursor-pointer w-[15rem] font-medium text-[#1E3A8A] hover:text-[black] duration-300 transform transition-transform " 
+            <a class="flex flex-row gap-1 text-sm cursor-pointer w-[15rem] font-medium text-[#0D6EFD] hover:text-[black] duration-300 transform transition-transform " 
             th:href="@{/panelCertificados(search=${search}, category=${cert.category})}">
+                <i class="bi bi-layers-fill"></i>
                 <span th:text="${cert.category.label}"></span>
             </a>
 
