@@ -1,0 +1,17 @@
+<body th:fragment="form">
+
+    <h1>Cadastro</h1>
+
+    <select name="categoria">
+
+        <option value="">Selecione a categoria</option>
+
+        <option th:each="cat : ${categorias}"
+                th:value="${cat.name()}"
+                th:text="${cat.label}">
+        </option>
+
+    </select>
+
+</body>
+

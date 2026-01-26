@@ -61,12 +61,15 @@
                         <span th:text="${cert.dono != null ? cert.dono.name : 'Sem dono'}"></span>
                         |
                     </div>
-
                     <div th:text="${cert.status.label}"
-                         th:classappend="${cert.status.cssClass}">
-                    </div>
-
+                    th:classappend="${cert.status.cssClass}">
                 </div>
+                
+            </div>
+            <a class="flex flex-row gap-2 text-sm cursor-pointer w-[15rem] font-medium text-[#1E3A8A] hover:text-[black] duration-300 transform transition-transform " 
+            th:href="@{/panelCertificados(search=${search}, category=${cert.category})}">
+                <span th:text="${cert.category.label}"></span>
+            </a>
 
             </div>
 

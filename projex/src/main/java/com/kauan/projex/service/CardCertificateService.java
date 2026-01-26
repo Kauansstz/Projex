@@ -2,16 +2,20 @@ package com.kauan.projex.service;
 
 
 import java.util.List;
+
+
 import org.springframework.stereotype.Service;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CardCertificateRepository;
+import com.kauan.projex.utils.Category;
 
 @Service
 public class CardCertificateService {
 
     private final CardCertificateRepository cardCertificateRepository;
+
     public CardCertificateService(CardCertificateRepository cardCertificateRepository) {
         this.cardCertificateRepository = cardCertificateRepository;
     }
@@ -46,4 +50,18 @@ public class CardCertificateService {
     public boolean existePorId(Long id) {
         return cardCertificateRepository.existsById(id);
     }
+
+    public List<Certificated> filtrar(String search, Category category){
+        if (search != null && !search.isBlank() && category != null) {
+            return cardCertificateRepository.findByTituloContainingIgnoreCaseAndCategory(search, category);
+        } 
+        if (search != null && !search.isBlank()) {
+            return cardCertificateRepository.findByTituloContainingIgnoreCase(search);
+        }
+        if (category != null) {
+            return cardCertificateRepository.findByCategory(category);
+        }
+        return cardCertificateRepository.findAll();
+    }
+
 }

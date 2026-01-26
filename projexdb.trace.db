@@ -4454,3 +4454,39 @@ DROP TABLE infor_project [90107-232]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:493)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-01-26 13:55:45.874027-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'REDES' (CERTIFICATED_COPY_3_0: ""CATEGORY"" TINYINT)"; SQL statement:
+INSERT INTO "PUBLIC"."CERTIFICATED_COPY_3_0"("ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM") OVERRIDING SYSTEM VALUE SELECT "ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM" FROM "PUBLIC"."CERTIFICATED" [22018-232]
+2026-01-26 13:55:59.411781-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'REDES' (CERTIFICATED_COPY_3_0: ""CATEGORY"" TINYINT)"; SQL statement:
+INSERT INTO "PUBLIC"."CERTIFICATED_COPY_3_0"("ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM") OVERRIDING SYSTEM VALUE SELECT "ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM" FROM "PUBLIC"."CERTIFICATED" [22018-232]
+2026-01-26 13:56:10.458667-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'REDES' (CERTIFICATED_COPY_3_0: ""CATEGORY"" TINYINT)"; SQL statement:
+INSERT INTO "PUBLIC"."CERTIFICATED_COPY_3_0"("ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM") OVERRIDING SYSTEM VALUE SELECT "ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM" FROM "PUBLIC"."CERTIFICATED" [22018-232]
+2026-01-26 13:56:13.072578-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 13:56:59.290766-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 13:57:00.043768-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 13:57:00.625959-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 13:57:00.954394-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 14:00:49.211913-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 14:00:50.247083-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 14:01:17.827822-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'REDES' (CERTIFICATED_COPY_3_0: ""CATEGORY"" TINYINT)"; SQL statement:
+INSERT INTO "PUBLIC"."CERTIFICATED_COPY_3_0"("ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM") OVERRIDING SYSTEM VALUE SELECT "ID", "ANEXO", "CATEGORY", "DATA_CONCLUSAO", "DESCRICAO", "INSTITUICAO", "STATUS", "TITULO", "TYPE_CERTIFICATE", "UPDATE", "DONO_ID", "CRIADO_EM" FROM "PUBLIC"."CERTIFICATED" [22018-232]
+2026-01-26 14:01:22.473042-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 14:01:52.478731-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "REDES" [22018-232]
+2026-01-26 14:02:17.384578-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CERTIFICATED" not found; SQL statement:
+select c1_0.id,c1_0.anexo,c1_0.category,c1_0.criado_em,c1_0.data_conclusao,c1_0.descricao,c1_0.dono_id,c1_0.instituicao,c1_0.status,c1_0.titulo,c1_0.type_certificate,c1_0.update from certificated c1_0 [42102-232]
+2026-01-26 14:02:31.084649-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CERTIFICATED" not found; SQL statement:
+select c1_0.id,c1_0.anexo,c1_0.category,c1_0.criado_em,c1_0.data_conclusao,c1_0.descricao,c1_0.dono_id,c1_0.instituicao,c1_0.status,c1_0.titulo,c1_0.type_certificate,c1_0.update from certificated c1_0 [42102-232]

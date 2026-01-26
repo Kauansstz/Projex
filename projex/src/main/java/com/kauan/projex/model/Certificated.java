@@ -3,7 +3,9 @@ package com.kauan.projex.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,7 +37,7 @@ private Status status;
 
 private String typeCertificate;
 
-private String category;
+private Category category;
 
 private LocalDate dataConclusao;
 
@@ -109,11 +111,11 @@ public void setTypeCertificate(String typeCertificate) {
     this.typeCertificate = typeCertificate;
 }
 
-public String getCategory() {
+public Category getCategory() {
     return category;
 }
 
-public void setCategory(String category) {
+public void setCategory(Category category) {
     this.category = category;
 }
 

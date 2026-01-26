@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.model.InfoUser;
+import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
 
 import jakarta.persistence.EnumType;
@@ -37,7 +38,7 @@ public class CertificatedRequest {
 
     private MultipartFile  anexo;
 
-    private String category;
+    private Category category;
 
     private LocalDate dataConclusao;
 
@@ -104,11 +105,11 @@ public class CertificatedRequest {
         this.anexo = anexo;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

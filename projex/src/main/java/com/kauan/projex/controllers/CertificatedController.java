@@ -1,5 +1,9 @@
 package com.kauan.projex.controllers;
 
+
+
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.service.CardCertificateService;
+import com.kauan.projex.utils.Category;
 
 @Controller
 @RequestMapping("/panelCertificados")
@@ -25,15 +30,14 @@ public class CertificatedController {
     // LISTAR + BUSCAR
     @GetMapping
     public String listar(Model model,
-                         @RequestParam(required = false) String search) {
+                         @RequestParam(required = false) String search, @RequestParam(required = false) Category category) {
 
-        if (search != null && !search.isBlank()) {
-            model.addAttribute("certificados", cardCertificateService.buscarPorTitulo(search));
-        } else {
-            model.addAttribute("certificados", cardCertificateService.listarTodos());
-        }
+        List<Certificated> certificados = cardCertificateService.filtrar(search, category);
 
+        model.addAttribute("certificados", certificados);
         model.addAttribute("search", search);
+        model.addAttribute("category", category);
+        model.addAttribute("categorias", Category.values());
         model.addAttribute("pageTitle", "Certificado");
         return "pages/panelCertificados";
     }

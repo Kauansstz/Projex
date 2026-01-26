@@ -12,6 +12,7 @@ import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.CreatedCertificateService;
+import com.kauan.projex.utils.Category;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -125,6 +126,8 @@ public String salvarCertificado(
     @GetMapping("/certificateCreate")
     public String exibirFormulario(Model model){
         model.addAttribute("certificate", new CertificatedRequest());
+        model.addAttribute("categorias", Category.values());
+
         model.addAttribute("pageTitle", "Cadastrar Certificado");
         return "pages/newCertificate";
     }
