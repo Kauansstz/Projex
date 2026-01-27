@@ -37,6 +37,7 @@ private Status status;
 
 private String typeCertificate;
 
+@Enumerated(EnumType.STRING)
 private Category category;
 
 private LocalDate dataConclusao;

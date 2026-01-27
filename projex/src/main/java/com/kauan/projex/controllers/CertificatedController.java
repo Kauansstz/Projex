@@ -47,14 +47,15 @@ public class CertificatedController {
     public String editar(@PathVariable Long id, Model model) {
         Certificated certificado = cardCertificateService.buscarPorId(id);
         model.addAttribute("certificado", certificado);
-        return "pages/panelEditCertificado";
+        model.addAttribute("categorias", Category.values());
+        return "pages/panelEditCertificate";
     }
 
     // EDITAR (POST)
     @PostMapping("/editar")
     public String atualizar(Certificated certificado) {
         cardCertificateService.salvar(certificado);
-        return "redirect:/panelCertificados";
+        return "redirect:/panelEditCertificate";
     }
 
     // EXCLUIR
