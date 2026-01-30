@@ -23,7 +23,7 @@
                 <div class="flex items-center justify-between relative">
 
                     <!-- TÍTULO -->
-                    <a th:href="@{/panelCertificados/editar/{id}(id=${cert.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
+                    <a th:href="@{/panelCertificados/{id}/editar(id=${cert.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
                          th:text="${cert.titulo}">
                     </a>
 
@@ -86,5 +86,18 @@
         
 
     </div>
+    <div th:if="${mensagemErro}" 
+                role="alert" 
+                id="alert"
+                >
+                <p th:text="${mensagemErro}" class="font-medium"></p>
+            </div>
+            
+                <div th:if="${mensagemSucesso}" 
+                role="alert" 
+                id="alert-sucesso"
+                th:text="${mensagemSucesso}">
+                
+            </div>
 
 </main>

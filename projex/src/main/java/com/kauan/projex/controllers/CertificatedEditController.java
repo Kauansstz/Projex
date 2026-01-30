@@ -28,20 +28,21 @@ public class CertificatedEditController {
     }
 
     @PostMapping("/{id}/editar")
-    public String editProject(@ModelAttribute Certificated certificado, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
+    public String editProject(@PathVariable Long id ,@ModelAttribute Certificated certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
         try{
-
             InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
             if (dono == null) {
                 throw new WorkFlowException("Usuário não autenticado.");
             }
+            certificado.setId(id);
             certificado.setDono(dono);
             certService.infoCertificateEdit(certificado);
+            
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Card alterado com sucesso!");
-            return "redirect:/panelCertificate";
-        }catch(Exception e){
+            return "redirect:/panelCertificados";
+        }catch(WorkFlowException e){
             redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-            return "redirect:/panelCertificate";
+            return "redirect:/panelCertificados/{id}/editar";
         }
     }
 
@@ -56,7 +57,7 @@ public class CertificatedEditController {
             return "pages/panelEditCertificate";
         } catch (WorkFlowException e) {
             redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-            return "redirect:/panelCertificate";
+            return "redirect:/panelCertificados";
         }
     }
 }

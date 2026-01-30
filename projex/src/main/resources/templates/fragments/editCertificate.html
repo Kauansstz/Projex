@@ -1,155 +1,134 @@
-
 <div class="flex flex-column justify-center items-center m-auto" th:fragment="editCertificate">
-    <div class="w-[56rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl ">
-            
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Editar Certificado</h2>
+    <div class="w-[56rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl">
 
-            <form th:action="@{/panelCertificados/{id}/editar(id=${certificado?.id})}" th:object="${certificado}" method="post" class="space-y-5">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">
+            Editar Certificado
+        </h2>
 
-                <input type="hidden" th:field="*{id}">
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Título:</label>
-                    <input type="text" th:field="*{titulo}" placeholder="Digite o título"
-                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                </div>
+        <form th:action="@{/panelCertificados/{id}/editar(id=${certificado.id})}"
+              th:object="${certificado}"
+              method="post"
+              class="space-y-5">
 
-                <div class="flex flex-col autocomplete-container">
+            <!-- ID -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- TÍTULO -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Título:</label>
+                <input type="text"
+                       th:field="*{titulo}"
+                       placeholder="Digite o título"
+                       class="border border-gray-300 rounded-lg px-4 py-3"/>
+            </div>
+
+            <!-- INSTITUIÇÃO -->
+            <div class="flex flex-col autocomplete-container">
                 <label class="mb-2 font-semibold text-gray-700">Instituição:</label>
-                <input type="text" th:field="*{Instituicao}" placeholder="Digite a Instituição" name="instituicao" id="instituicaoInput" autocomplete="off"
-                       class="border
-                       border-gray-300 
-                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                       
-                <ul id="instituicaoList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
-                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
+                <input type="text"
+                       th:field="*{instituicao}"
+                       placeholder="Digite a Instituição"
+                       id="instituicaoInput"
+                       autocomplete="off"
+                       class="border border-gray-300 rounded-lg px-4 py-3"/>
 
+                <ul id="instituicaoList"
+                    class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
                 </ul>
             </div>
+
+            <!-- TIPO CERTIFICADO -->
             <div class="flex flex-col autocomplete-container">
                 <label class="mb-2 font-semibold text-gray-700">Tipo de Certificação:</label>
-                <input type="text" th:field="*{typeCertificate}" placeholder="Digite o Tipo do certificado" name="certificado" id="TypeInput" autocomplete="off"
-                       class="border
-                       border-gray-300 
-                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                       
-                <ul id="TypeList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
-                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
+                <input type="text"
+                       th:field="*{typeCertificate}"
+                       placeholder="Digite o Tipo do certificado"
+                       id="TypeInput"
+                       autocomplete="off"
+                       class="border border-gray-300 rounded-lg px-4 py-3"/>
 
+                <ul id="TypeList"
+                    class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
                 </ul>
             </div>
 
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
-                    <textarea th:field="*{descricao}" rows="4" placeholder="Descrição detalhada"
-                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
-                </div>
-
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Status:</label>
-                    <select th:field="*{status}"
-                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                        <option value="EM_ANDAMENTO">Em andamento</option>
-                        <option value="CONCLUIDO">Concluído</option>
-                        <option value="CANCELADO">Cancelado</option>
-                    </select>
-                </div>
-
-                <!-- Data de Conclusão -->
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
-                    <input type="date" th:field="*{dataConclusao}" 
-                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                </div>
-
-                <!-- Tecnologias -->
-                <div class="flex flex-col ">
-                <label class="mb-2 font-semibold text-gray-700">Categoria:</label>
-                    <div id="tag-container" class="border border-gray-300 rounded-lg px-4 py-3 min-h-[48px] flex flex-wrap gap-2 cursor-text">
-                        <select name="categoria" 
-                                id="categoria" 
-                                th:field="*{category}" 
-                                required 
-                                class="w-full  border-none outline-none focus:outline-none " >
-                            <option value="">Selecione a categoria</option>
-                            <option 
-                                th:each="cat : ${categorias}"
-                                th:value="${cat.name()}"
-                                th:text="${cat.label}">---</option>
-                        </select>
-                    </div>
-                    
-                </div>
-
-          
-
-                <div class="flex justify-center gap-20">
-                    <!-- Botão de voltar -->
-                    <a th:href="@{/panelProjetos}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                        <i class="bi bi-arrow-left-circle"></i> Cancelar
-                    </a>
-                    <!-- Botão Salvar -->
-                    <button type="submit" 
-                            class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                        <i class="bi bi-floppy"></i>Salvar
-                    </button>
-                </div>
+            <!-- DESCRIÇÃO -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
+                <textarea th:field="*{descricao}"
+                          rows="4"
+                          placeholder="Descrição detalhada"
+                          class="border border-gray-300 rounded-lg px-4 py-3"></textarea>
             </div>
-                
-                
 
-            </form>
+            <!-- STATUS -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Status:</label>
+                <select th:field="*{status}"
+                        class="border border-gray-300 rounded-lg px-4 py-3">
+
+                    <option value="">Selecione</option>
+                    <option value="EM_ANDAMENTO">Em andamento</option>
+                    <option value="CONCLUIDO">Concluído</option>
+                    <option value="CANCELADO">Cancelado</option>
+                </select>
+            </div>
+
+            <!-- DATA -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
+                <input type="date"
+                       th:field="*{dataConclusao}"
+                       class="border border-gray-300 rounded-lg px-4 py-3"/>
+            </div>
+
+            <!-- CATEGORIA -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold text-gray-700">Categoria:</label>
+
+                <select id="categoria"
+                        th:field="*{category}"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3">
+
+                    <option value="">Selecione a categoria</option>
+
+                    <option th:each="cat : ${categorias}"
+                            th:value="${cat.name()}"
+                            th:text="${cat.label}">
+                    </option>
+
+                </select>
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="flex justify-center gap-20">
+
+                <a th:href="@{/panelProjetos}"
+                   class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl">
+                    Cancelar
+                </a>
+
+                <button type="submit"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl">
+                    Salvar
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- MENSAGENS -->
+        <div th:if="${mensagemErro}" 
+        role="alert" 
+        id="alert" 
+        th:utext="${mensagemErro}" 
+        class="font-medium"></div>
+
+        <div th:if="${mensagemSucesso}" 
+            role="alert" 
+            id="alert"
+            th:text="${mensagemSucesso}">
         </div>
+
+    </div>
 </div>
-<script>
-    const container = document.getElementById("tag-container");
-    const input = document.getElementById("tag-input");
-    const hiddenInput = document.getElementById("tecnologiasText");
-
-    function createTag(text) {
-        const tag = document.createElement("span");
-        tag.className = "bg-purple-600 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2";
-        tag.textContent = text;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "×";
-        removeBtn.className = "ml-2 font-bold";
-        removeBtn.onclick = () => {
-            tag.remove();
-            updateHiddenInput();
-        };
-
-        tag.appendChild(removeBtn);
-        container.insertBefore(tag, input);
-    }
-
-    function updateHiddenInput() {
-        const tags = Array.from(container.querySelectorAll("span"))
-            .map(tag => tag.firstChild.textContent.trim());
-
-        hiddenInput.value = tags.join(";");
-    }
-
-    // Criar tag ao digitar ;
-    input.addEventListener("keyup", (e) => {
-        if (e.key === ";") {
-            const value = input.value.replace(";", "").trim();
-            if (value) {
-                createTag(value);
-                updateHiddenInput();
-            }
-            input.value = "";
-        }
-    });
-
-    // 🔥 PRECARREGAR TAGS NO EDIT
-    document.addEventListener("DOMContentLoaded", () => {
-        if (hiddenInput.value) {
-            hiddenInput.value.split(";").forEach(t => {
-                if (t.trim()) {
-                    createTag(t.trim());
-                }
-            });
-        }
-    });
-</script>
-

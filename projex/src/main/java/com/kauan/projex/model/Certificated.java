@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,9 +27,13 @@ public class Certificated {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
+@Column(nullable = false, length = 100)
 private String titulo;
 
+@Column(nullable = false)
 private String instituicao;
+
+@Column(nullable = false)
 private String descricao;
 
 private String  anexo;
@@ -35,11 +41,14 @@ private String  anexo;
 @Enumerated(EnumType.STRING)
 private Status status;
 
+@Column(nullable = false)
 private String typeCertificate;
 
 @Enumerated(EnumType.STRING)
+@Column(nullable = false)
 private Category category;
 
+@Column(nullable = false)
 private LocalDate dataConclusao;
 
 private LocalDateTime update = LocalDateTime.now();
