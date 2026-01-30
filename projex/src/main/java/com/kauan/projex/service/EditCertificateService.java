@@ -54,7 +54,7 @@ public class EditCertificateService {
             throw new WorkFlowException( "O campo 'Tipo de Certificado' deve ser preenchido");
         }
         if (certificado.getDono() == null) {
-            throw new WorkFlowException("Ero ao encontrar o dono");
+            throw new WorkFlowException("Erro ao encontrar o dono");
         }
         if (certificado.getStatus() == null) {
             throw new WorkFlowException( "O campo 'Status' deve ser preenchido");

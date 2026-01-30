@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
-import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.EditCertificateService;
 import com.kauan.projex.utils.Category;
 
@@ -30,12 +29,7 @@ public class CertificatedEditController {
     @PostMapping("/{id}/editar")
     public String editProject(@PathVariable Long id ,@ModelAttribute Certificated certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
         try{
-            InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-            if (dono == null) {
-                throw new WorkFlowException("Usuário não autenticado.");
-            }
             certificado.setId(id);
-            certificado.setDono(dono);
             certService.infoCertificateEdit(certificado);
             
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Card alterado com sucesso!");
