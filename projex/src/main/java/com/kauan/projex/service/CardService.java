@@ -28,6 +28,10 @@ public class CardService {
         return cardRepository.findTop3ByDonoOrderByCriadoEmDesc(usuario);
     }
 
+    public List<InfoProject> buscarPorPublicado(Boolean isPublish){
+        return cardRepository.findByIsPublish(isPublish);
+    }
+
     public InfoProject buscarPorId(Long id) {
         return cardRepository.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
     }

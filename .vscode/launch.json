@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "JogoXadrezMovimentacao",
+            "request": "launch",
+            "mainClass": "JogoXadrezMovimentacao",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

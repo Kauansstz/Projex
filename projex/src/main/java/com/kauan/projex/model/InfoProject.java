@@ -43,6 +43,8 @@ public class InfoProject {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
+    private Boolean isPublish;
+
     private String tecnologiasText;
 
     @ManyToMany
@@ -98,6 +100,13 @@ public class InfoProject {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    public Boolean getIsPublish() {
+        return isPublish;
+    }
+
+    public void setIsPublish(Boolean isPublish) {
+        this.isPublish = isPublish;
     }
     public List<Tecnologia> getTecnologias() {
         return tecnologias;

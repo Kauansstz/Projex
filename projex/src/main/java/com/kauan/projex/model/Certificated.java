@@ -38,6 +38,8 @@ private String descricao;
 
 private String  anexo;
 
+private Boolean isPublish;
+
 @Enumerated(EnumType.STRING)
 private Status status;
 
@@ -87,6 +89,14 @@ public String getInstituicao() {
 
 public void setInstituicao(String instituicao) {
     this.instituicao = instituicao;
+}
+
+public Boolean getIsPublish() {
+        return isPublish;
+    }
+
+public void setIsPublish(Boolean isPublish) {
+    this.isPublish = isPublish;
 }
 
 public String getDescricao() {

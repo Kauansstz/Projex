@@ -75,43 +75,43 @@ public class InfoUser {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tecnologia_id")
-    private Tecnologia tecnologia;
-
+    private Tecnologia tecnologia;    
+    
     @Column(name="RESET_TOKEN_EXPIRACAO", nullable = false)
     private String resetTokenExpiracao;
-
+    
     @Column(name="FOTO_PERFIL")
     private String fotoPerfil;
-
+    
     @Column(name="IP_CRIACAO", nullable = false)
     private String ipCriacao;
-
+    
     @Column(name="IP_ULTIMO_LOGIN", nullable = false)
     private String ipUltimoLogin;
-
+    
     @Column(name="FORCAR_TROCA_SENHA", nullable = false)
     private Boolean forcarTrocaSenha;
-
+    
     @Column(name="EMAIL", nullable = false)
     private String email;
-
+    
     @Column(name="ACEITAR_TERMOS", nullable = false)
     private boolean aceitarTermos;
 
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     private List<InfoProject> projetos = new ArrayList<>();
-
+    
     
 
     @PrePersist
     protected void onCreate() {
         criadoEm = Timestamp.valueOf(LocalDateTime.now());
     }
-
+    
     // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
+    
     public String getName() { return name; }
     public void setName(String name) { 
         if (name == null || name.isBlank()) {
@@ -119,10 +119,8 @@ public class InfoUser {
         }
         this.name = name;
     }
-
     public LocalDate getDataNasc() { return dataNasc; }
     public void setDataNasc(LocalDate dataNasc) { this.dataNasc = dataNasc; }
-
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 

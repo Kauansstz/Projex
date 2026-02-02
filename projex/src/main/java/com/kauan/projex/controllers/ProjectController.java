@@ -1,5 +1,7 @@
 package com.kauan.projex.controllers;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +29,15 @@ public class ProjectController {
     @GetMapping
     public String listar(Model model,
                          @RequestParam(required = false) String search) {
-
+        
+        List<InfoProject> isPublish = cardService.buscarPorPublicado(true);
+        
         if (search != null && !search.isBlank()) {
-            model.addAttribute("cards", cardService.buscarPorTitulo(search));
+            isPublish = cardService.buscarPorTitulo(search);
         } else {
-            model.addAttribute("cards", cardService.listarTodos());
+            isPublish = cardService.listarTodos();
         }
-
+        model.addAttribute("cards", isPublish);
         model.addAttribute("search", search);
         model.addAttribute("pageTitle", "Projetos");
         return "pages/projectes";
