@@ -51,17 +51,12 @@ public class CardCertificateService {
         return cardCertificateRepository.existsById(id);
     }
 
-    public List<Certificated> filtrar(String search, Category category){
-        if (search != null && !search.isBlank() && category != null) {
-            return cardCertificateRepository.findByTituloContainingIgnoreCaseAndCategory(search, category);
-        } 
-        if (search != null && !search.isBlank()) {
-            return cardCertificateRepository.findByTituloContainingIgnoreCase(search);
-        }
-        if (category != null) {
-            return cardCertificateRepository.findByCategory(category);
-        }
-        return cardCertificateRepository.findAll();
+    public List<Certificated> buscarPublish(Boolean isPublish){
+        return cardCertificateRepository.findByIsPublish(isPublish);
+    }
+
+    public List<Certificated> filtrar(String search, Category category, Boolean isPublish){
+        return cardCertificateRepository.filtrar(search, category, isPublish);
     }
 
 }

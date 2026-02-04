@@ -36,6 +36,8 @@ public class CertificatedRequest {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Boolean isPublish;
+
     private MultipartFile  anexo;
 
     private Category category;
@@ -87,6 +89,13 @@ public class CertificatedRequest {
 
     public void setTypeCertificate(String typeCertificate) {
         this.typeCertificate = typeCertificate;
+    }
+    public Boolean getIsPublish() {
+        return isPublish;
+    }
+
+    public void setIsPublish(Boolean isPublish) {
+        this.isPublish = isPublish;
     }
 
     public String getDescricao() {

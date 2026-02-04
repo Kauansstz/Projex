@@ -37,9 +37,9 @@ public class CertificatedController {
     // LISTAR + BUSCAR
     @GetMapping
     public String listar(Model model,
-                         @RequestParam(required = false) String search, @RequestParam(required = false) Category category) {
+                         @RequestParam(required = false) String search, @RequestParam(required = false) Category category, Boolean isPublish) {
 
-        List<Certificated> certificados = cardCertificateService.filtrar(search, category);
+        List<Certificated> certificados = cardCertificateService.filtrar(search, category, isPublish);
 
         model.addAttribute("certificados", certificados);
         model.addAttribute("search", search);

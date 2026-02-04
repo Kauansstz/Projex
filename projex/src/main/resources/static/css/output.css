@@ -660,10 +660,6 @@ video {
   left: 0px;
 }
 
-.left-0\.5 {
-  left: 0.125rem;
-}
-
 .left-3 {
   left: 0.75rem;
 }
@@ -690,10 +686,6 @@ video {
 
 .top-0 {
   top: 0px;
-}
-
-.top-0\.5 {
-  top: 0.125rem;
 }
 
 .top-1 {
@@ -779,6 +771,10 @@ video {
   margin-left: 0.5rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .ml-64 {
   margin-left: 16rem;
 }
@@ -837,10 +833,6 @@ video {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.ml-4 {
-  margin-left: 1rem;
 }
 
 .\!block {
@@ -2291,11 +2283,6 @@ video {
 .focus\:ring-purple-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(168 85 247 / var(--tw-ring-opacity, 1));
-}
-
-.peer:checked ~ .peer-checked\:translate-x-6 {
-  --tw-translate-x: 1.5rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .peer:checked ~ .peer-checked\:bg-blue-600 {
