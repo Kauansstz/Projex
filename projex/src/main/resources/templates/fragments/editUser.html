@@ -1,0 +1,198 @@
+<div class="flex flex-col justify-center items-center m-auto" th:fragment="editUser">
+
+    <div class="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-2xl">
+
+        <!-- Título -->
+        <h1 class="text-3xl font-bold border-b pb-3 text-center text-gray-900 mb-10">
+            Central do Usuário
+        </h1>
+
+        <form method="post" class="space-y-14">
+
+            <!-- ================= DADOS PESSOAIS ================= -->
+            <div>
+
+                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
+                    👤 Dados Pessoais
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Foto -->
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="mb-2 font-semibold text-gray-700">Foto de perfil</label>
+                        <input type="file"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Nome -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Nome completo</label>
+                        <input type="text" placeholder="Digite seu nome completo"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Nome de usuário</label>
+                        <input type="text" placeholder="ex: kauan.dev"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Data -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Data de nascimento</label>
+                        <input type="date"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Gênero -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Gênero</label>
+                        <select class="border border-gray-300 rounded-lg px-4 py-3
+                        focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option>Selecione</option>
+                            <option>Masculino</option>
+                            <option>Feminino</option>
+                            <option>Outro</option>
+                            <option>Prefiro não informar</option>
+                        </select>
+                    </div>
+
+                    <!-- Cargo -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Cargo / Profissão</label>
+                        <input type="text" placeholder="Ex: Desenvolvedor Backend"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Empresa -->
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Empresa</label>
+                        <input type="text" placeholder="Onde você trabalha?"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="mb-2 font-semibold text-gray-700">Sobre</label>
+                        <textarea rows="4" placeholder="Fale um pouco sobre você"
+                                  class="border border-gray-300 rounded-lg px-4 py-3
+                                  focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= CONTATO ================= -->
+            <div>
+
+                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
+                    📞 Contato
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">E-mail</label>
+                        <input type="email"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Telefone</label>
+                        <input type="tel"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= SEGURANÇA ================= -->
+            <div>
+
+                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
+                    🔒 Segurança
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Nova senha</label>
+                        <input type="password"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 font-semibold text-gray-700">Confirmar senha</label>
+                        <input type="password"
+                               class="border border-gray-300 rounded-lg px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= LINKS ================= -->
+            <div>
+
+                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
+                    🌐 Links
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <input type="url" placeholder="GitHub"
+                           class="border border-gray-300 rounded-lg px-4 py-3
+                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+
+                    <input type="url" placeholder="LinkedIn"
+                           class="border border-gray-300 rounded-lg px-4 py-3
+                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+
+                    <input type="url" placeholder="Portfólio"
+                           class="border border-gray-300 rounded-lg px-4 py-3 md:col-span-2
+                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+
+                </div>
+
+            </div>
+
+            <!-- ================= BOTÕES ================= -->
+            <div class="flex justify-center gap-10 pt-4"> 
+                <!-- Cancelar --> 
+                <a th:href="@{/panelProjetos}" 
+                class="bg-gray-200 hover:bg-gray-300 
+                text-gray-800 font-bold px-8 py-3 rounded-xl 
+                shadow-md hover:shadow-lg transition duration-300 
+                flex items-center gap-2"> 
+                    <i class="bi bi-arrow-left-circle"></i> 
+                    Cancelar 
+                </a> 
+                <!-- Salvar -->
+                 <button type="submit" 
+                 class="bg-purple-600 hover:bg-purple-700 text-white 
+                 font-bold px-10 py-3 rounded-xl shadow-lg hover:shadow-xl 
+                 transition duration-300 flex items-center gap-2"> 
+                 <i class="bi bi-floppy"></i> 
+                 Salvar alterações 
+                </button>
+             </div>
+
+        </form>
+
+    </div>
+
+</div>
