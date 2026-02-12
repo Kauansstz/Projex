@@ -7,9 +7,13 @@
             Central do Usuário
         </h1>
 
-        <form method="post" class="space-y-14">
+        <form method="post"
+            th:action="@{/editUser/{id}(id=${user.id})}"
+             th:object="${user}" 
+             class="space-y-14"> 
 
-            <!-- ================= DADOS PESSOAIS ================= -->
+            <input type="hidden" th:field="*{id}">
+
             <div>
 
                 <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
@@ -21,7 +25,7 @@
                     <!-- Foto -->
                     <div class="flex flex-col md:col-span-2">
                         <label class="mb-2 font-semibold text-gray-700">Foto de perfil</label>
-                        <input type="file"
+                        <input type="file" th:field="*{fotoPerfil}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -30,6 +34,7 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Nome completo</label>
                         <input type="text" placeholder="Digite seu nome completo"
+                        th:field ="*{name}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -37,7 +42,8 @@
                     <!-- Username -->
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Nome de usuário</label>
-                        <input type="text" placeholder="ex: kauan.dev"
+                        <input type="text" placeholder="ex: joao.dev"
+                                th:field="*{nameUser}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -46,6 +52,7 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Data de nascimento</label>
                         <input type="date"
+                        th:field="*{dataNasc}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -54,12 +61,13 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Gênero</label>
                         <select class="border border-gray-300 rounded-lg px-4 py-3
-                        focus:outline-none focus:ring-2 focus:ring-purple-500">
-                            <option>Selecione</option>
-                            <option>Masculino</option>
-                            <option>Feminino</option>
-                            <option>Outro</option>
-                            <option>Prefiro não informar</option>
+                        focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        th:field="*{genero}">
+                            <option value="NAO_INFORMADO">Selecione</option>
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMININO">Feminino</option>
+                            <option value="OUTRO">Outro</option>
+                            <option value="PREFIRO_NAO_INFORMAR">Prefiro não informar</option>
                         </select>
                     </div>
 
@@ -91,7 +99,6 @@
 
             </div>
 
-            <!-- ================= CONTATO ================= -->
             <div>
 
                 <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">

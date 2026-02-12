@@ -4562,3 +4562,6 @@ drop from certificated [42001-232]
 2026-01-26 18:59:19.982981-03:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CERTIFICATED" not found; SQL statement:
 select c1_0.id,c1_0.anexo,c1_0.category,c1_0.criado_em,c1_0.data_conclusao,c1_0.descricao,c1_0.dono_id,c1_0.instituicao,c1_0.status,c1_0.titulo,c1_0.type_certificate,c1_0.update from certificated c1_0 [42102-232]
+2026-02-12 16:14:17.189777-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "INFOUSER" not found; SQL statement:
+select * from infoUser [42102-232]

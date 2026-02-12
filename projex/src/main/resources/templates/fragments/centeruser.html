@@ -1,0 +1,83 @@
+<main
+    th:fragment="centeruser"
+    class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA]"
+    th:classappend="${extraClass}">
+
+    <div class="flex justify-end items-center">
+        <a th:href="@{/createdProject}"
+           class="bg-green-500 shadow-md cursor-pointer rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
+            Criar
+        </a>
+    </div>
+
+    <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
+
+        <!-- CARD -->
+        <div
+            th:each="user : ${usuario}"
+            
+            class="bg-white shadow-md rounded-lg p-4 w-auto text-left  border border-gray-200
+                   transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+            <div class="flex flex-col space-y-2">
+                <div class="flex items-center justify-between relative">
+
+                    <!-- TÍTULO -->
+                    <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
+                         th:text="${user.name}">
+                    </a>
+
+                    <!-- MENU -->
+                    <details class="relative" onclick="event.stopPropagation();">
+                        <summary class="list-none cursor-pointer p-2 rounded-full hover:bg-gray-100">
+                            <i class="bi bi-three-dots-vertical text-xl"></i>
+                        </summary>
+
+                        <div class="absolute right-0 mt-2 w-40 rounded-lg bg-white shadow-lg z-50">
+                            <ul class="py-1 text-sm">
+                                <li class="px-4 py-2 hover:bg-gray-100">
+                                    Editar
+                                </li>
+
+                                <li class="px-4 py-2 text-red-600 hover:bg-red-50">
+                                    <form th:action="@{/panelProjetos/{id}/deletar(id=${user.id})}"
+                                          method="post">
+
+                                        <button
+                                            type="button"
+                                            th:attr="onclick=|openDeleteModal('/panelProjetos/${user.id}/deletar')|"
+                                            class="w-full text-left py-2 text-red-600 hover:bg-red-50">
+                                            Excluir
+                                        </button>
+
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+
+                </div>
+
+
+                <div class="flex flex-row gap-2 text-sm font-medium  ">
+
+                    <div class="bg-[#D9D9D9] rounded-lg py-[3px] px-[6px] ">
+                        <span th:text="${user.descricao}">Sem descrição</span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SEM RESULTADOS -->
+    <div th:if="${#lists.isEmpty(usuario)}"
+         class="mt-6 text-center text-gray-500">
+        Nenhum projeto encontrado.
+    </div>
+
+</main>

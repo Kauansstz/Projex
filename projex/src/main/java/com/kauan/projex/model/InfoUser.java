@@ -101,7 +101,11 @@ public class InfoUser {
     @OneToMany(mappedBy = "dono", fetch = FetchType.LAZY)
     private List<InfoProject> projetos = new ArrayList<>();
     
-    
+    public String nameUser;
+
+    public Long inativadoPor;
+
+    public LocalDateTime dataInativacao;
 
     @PrePersist
     protected void onCreate() {
@@ -138,6 +142,9 @@ public class InfoUser {
         this.cpf = cpf.replaceAll("\\D", "");
     }
 
+    public String getNameUser(){return nameUser;}
+    public void setNameUser(String nameUser){this.nameUser = nameUser;} 
+
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
 
@@ -146,6 +153,12 @@ public class InfoUser {
 
     public Timestamp getCriadoEm() { return criadoEm; }
     public void setCriadoEm(Timestamp criadoEm) { this.criadoEm = criadoEm; }
+
+    public Long getInativadoPor() { return inativadoPor; }
+    public void setInativadoPor(Long inativadoPor) { this.inativadoPor = inativadoPor; }
+
+    public LocalDateTime getDataInativacao() { return dataInativacao; }
+    public void setDataInativacao(LocalDateTime dataInativacao) { this.dataInativacao = dataInativacao; }
 
     public Boolean getAtivo() { return ativo; }
     public void setAtivo(Boolean ativo) { this.ativo = ativo; }
