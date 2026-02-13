@@ -11,8 +11,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.model.Tecnologia;
+import com.kauan.projex.utils.Genero;
 
 @Setter
 @Getter
@@ -22,9 +25,6 @@ public class InfoUserRequest {
             this.name = "";
         }
     
-        public enum Genero {
-            MASCULINO, FEMININO, OUTRO
-        }
     
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,7 +86,7 @@ public class InfoUserRequest {
         private String resetTokenExpiracao;
         
         @Column(name="FOTO_PERFIL")
-        private String fotoPerfil;
+        private MultipartFile  fotoPerfil;
         
         @Column(name="IP_CRIACAO", nullable = false)
         private String ipCriacao;

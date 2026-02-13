@@ -1,6 +1,5 @@
 package com.kauan.projex.security;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 
         if (usuario != null) {
             usuario.setIpUltimoLogin(ip);
-            usuario.setUltimoLogin(Timestamp.valueOf(LocalDateTime.now()));
+            usuario.setUltimoLogin(LocalDateTime.now());
             usuarioRepository.save(usuario);
         }
     }

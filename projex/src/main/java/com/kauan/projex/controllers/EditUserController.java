@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.EditUserService;
 
@@ -25,20 +24,54 @@ public class EditUserController {
     }
     
     @PostMapping("/editar/{id}")
-    public String editUser(@PathVariable Long id, @ModelAttribute InfoUser user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
-        user.setId(id);
-        try{
-            InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-            if (dono == null) {
-                throw new WorkFlowException("Usuário não autenticado.");
-            }
-            service.confirmInfo(user);
+    public String editUser(@PathVariable Long id,
+                        @ModelAttribute("user") InfoUser formUser,
+                        HttpServletRequest request,
+                        RedirectAttributes redirectAttributes) {
 
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Usuário alterado com sucesso!");
-            return "redirect:/panelProjetos";
-        }catch(Exception e){
-            redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-            return "redirect:/panelProjetos";
+        try {
+
+            InfoUser usuarioBanco = service.buscarPorId(id);
+
+            // Atualiza apenas os campos editáveis
+            usuarioBanco.setName(formUser.getName());
+            usuarioBanco.setNameUser(formUser.getNameUser());
+            usuarioBanco.setEmail(formUser.getEmail());
+            usuarioBanco.setTelefone(formUser.getTelefone());
+            usuarioBanco.setCargo(formUser.getCargo());
+            usuarioBanco.setEmpresa(formUser.getEmpresa());
+            usuarioBanco.setDescricao(formUser.getDescricao());
+            usuarioBanco.setGenero(formUser.getGenero());
+            usuarioBanco.setDataNasc(formUser.getDataNasc());
+
+            // Atualiza links
+            usuarioBanco.getLink().clear();
+
+            if (formUser.getLink() != null) {
+                formUser.getLink().forEach(link -> {
+                    if (link.getTipoLink() != null &&
+                        link.getUrl() != null &&
+                        !link.getUrl().isBlank()) {
+
+                        link.setUsuario(usuarioBanco);
+                        usuarioBanco.getLink().add(link);
+                    }
+                });
+            }
+
+            service.salvar(usuarioBanco);
+
+            redirectAttributes.addFlashAttribute("mensagemSucesso",
+                    "Usuário alterado com sucesso!");
+
+            return "redirect:/panelUser";
+
+        } catch (Exception e) {
+
+            redirectAttributes.addFlashAttribute("mensagemErro",
+                    e.getMessage());
+
+            return "redirect:/panelUser";
         }
     }
 

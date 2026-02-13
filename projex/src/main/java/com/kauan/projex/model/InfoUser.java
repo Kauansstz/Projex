@@ -10,15 +10,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kauan.projex.utils.Genero;
+
 @Entity
 public class InfoUser {
 
     public InfoUser() {
         this.name = "";
-    }
-
-    public enum Genero {
-        MASCULINO, FEMININO, OUTRO
     }
 
     @Id
@@ -59,10 +57,10 @@ public class InfoUser {
     private Boolean ativo;
 
     @Column(name="ULTIMO_LOGIN", nullable = false)
-    private Timestamp ultimoLogin;
+    private LocalDateTime ultimoLogin;
 
     @Column(name="ATUALIZADO_EM", nullable = false)
-    private Timestamp atualizadoEm;
+    private LocalDateTime atualizadoEm;
 
     @Column(name="TENTATIVAS_LOGIN", nullable = false)
     private Integer tentativasLogin;
@@ -105,6 +103,13 @@ public class InfoUser {
 
     public Long inativadoPor;
 
+    public String cargo;
+
+    public String empresa;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<LinkUsuario> link = new ArrayList<>();
+
     public LocalDateTime dataInativacao;
 
     @PrePersist
@@ -131,6 +136,7 @@ public class InfoUser {
     public String getConfirmPassword() { return confirmPassword; }
     public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
 
+    @Enumerated(EnumType.STRING)
     public Genero getGenero() { return genero; }
     public void setGenero(Genero genero) { this.genero = genero; }
 
@@ -163,11 +169,11 @@ public class InfoUser {
     public Boolean getAtivo() { return ativo; }
     public void setAtivo(Boolean ativo) { this.ativo = ativo; }
 
-    public Timestamp getUltimoLogin() { return ultimoLogin; }
-    public void setUltimoLogin(Timestamp ultimoLogin) { this.ultimoLogin = ultimoLogin; }
+    public LocalDateTime getUltimoLogin() { return ultimoLogin; }
+    public void setUltimoLogin(LocalDateTime ultimoLogin) { this.ultimoLogin = ultimoLogin; }
 
-    public Timestamp getAtualizadoEm() { return atualizadoEm; }
-    public void setAtualizadoEm(Timestamp atualizadoEm) { this.atualizadoEm = atualizadoEm; }
+    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
 
     public Integer getTentativasLogin() { return tentativasLogin; }
     public void setTentativasLogin(Integer tentativasLogin) { this.tentativasLogin = tentativasLogin; }
@@ -190,6 +196,13 @@ public class InfoUser {
     public String getIpUltimoLogin() { return ipUltimoLogin; }
     public void setIpUltimoLogin(String ipUltimoLogin) { this.ipUltimoLogin = ipUltimoLogin; }
 
+
+    public String getEmpresa() { return empresa; }
+    public void setEmpresa(String empresa) { this.empresa = empresa; }
+
+    public String getCargo() { return cargo; }
+    public void setCargo(String cargo) { this.cargo = cargo; }
+
     public Boolean getForcarTrocaSenha() { return forcarTrocaSenha; }
     public void setForcarTrocaSenha(Boolean forcarTrocaSenha) { this.forcarTrocaSenha = forcarTrocaSenha; }
 
@@ -198,6 +211,9 @@ public class InfoUser {
     
     public List<InfoProject> getProjetos() { return projetos; }
     public void setProjetos(List<InfoProject> projetos) { this.projetos = projetos; }
+
+    public List<LinkUsuario> getLink() { return link; }
+    public void setLink(List<LinkUsuario> link) { this.link = link; }
     
     public Boolean getAceitarTermos() { return aceitarTermos; }
     public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }

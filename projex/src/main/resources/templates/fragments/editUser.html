@@ -8,7 +8,7 @@
         </h1>
 
         <form method="post"
-            th:action="@{/editUser/{id}(id=${user.id})}"
+            th:action="@{/panelUser/editar/{id}(id=${user.id})}"
              th:object="${user}" 
              class="space-y-14"> 
 
@@ -63,18 +63,19 @@
                         <select class="border border-gray-300 rounded-lg px-4 py-3
                         focus:outline-none focus:ring-2 focus:ring-purple-500"
                         th:field="*{genero}">
-                            <option value="NAO_INFORMADO">Selecione</option>
+                            <option value="">Selecione</option>
                             <option value="MASCULINO">Masculino</option>
                             <option value="FEMININO">Feminino</option>
                             <option value="OUTRO">Outro</option>
-                            <option value="PREFIRO_NAO_INFORMAR">Prefiro não informar</option>
                         </select>
+
                     </div>
 
                     <!-- Cargo -->
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Cargo / Profissão</label>
                         <input type="text" placeholder="Ex: Desenvolvedor Backend"
+                        th:field="*{cargo}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -83,6 +84,7 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Empresa</label>
                         <input type="text" placeholder="Onde você trabalha?"
+                            th:field="*{empresa}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -91,6 +93,7 @@
                     <div class="flex flex-col md:col-span-2">
                         <label class="mb-2 font-semibold text-gray-700">Sobre</label>
                         <textarea rows="4" placeholder="Fale um pouco sobre você"
+                        th:field="*{descricao}"
                                   class="border border-gray-300 rounded-lg px-4 py-3
                                   focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
                     </div>
@@ -110,6 +113,7 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">E-mail</label>
                         <input type="email"
+                        th:field="*{email}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -117,6 +121,7 @@
                     <div class="flex flex-col">
                         <label class="mb-2 font-semibold text-gray-700">Telefone</label>
                         <input type="tel"
+                        th:field="*{telefone}"
                                class="border border-gray-300 rounded-lg px-4 py-3
                                focus:outline-none focus:ring-2 focus:ring-purple-500"/>
                     </div>
@@ -125,32 +130,6 @@
 
             </div>
 
-            <!-- ================= SEGURANÇA ================= -->
-            <div>
-
-                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
-                    🔒 Segurança
-                </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Nova senha</label>
-                        <input type="password"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Confirmar senha</label>
-                        <input type="password"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
-                    </div>
-
-                </div>
-
-            </div>
 
             <!-- ================= LINKS ================= -->
             <div>
@@ -159,28 +138,44 @@
                     🌐 Links
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div th:each="link, stat : ${user.link}" 
+                    class="mb-2 font-semibold text-gray-700">
 
-                    <input type="url" placeholder="GitHub"
-                           class="border border-gray-300 rounded-lg px-4 py-3
-                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    <!-- ID do LinkUsuario -->
+                    <input type="hidden"
+                        th:field="*{link[__${stat.index}__].id}" />
 
-                    <input type="url" placeholder="LinkedIn"
-                           class="border border-gray-300 rounded-lg px-4 py-3
-                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                    <!-- Select do ENUM -->
+                    <select th:field="*{link[__${stat.index}__].tipoLink}"
+                            class=" rounded-lg px-2 py-3
+                                focus:outline-none focus:ring-2 focus:ring-purple-500 ">
 
-                    <input type="url" placeholder="Portfólio"
-                           class="border border-gray-300 rounded-lg px-4 py-3 md:col-span-2
-                           focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <option th:value="${null}">Selecione</option>
+
+                        <option th:each="tipo : ${tipoLink}"
+                                th:value="${tipo}"
+                                th:text="${tipo}">
+                        </option>
+                    </select>
+
+                    <!-- URL -->
+                    <input type="text"
+                        th:field="*{link[__${stat.index}__].url}"
+                        placeholder="Digite a URL"
+                        class="border border-gray-300 rounded-lg px-4 py-3
+                                focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"/>
 
                 </div>
 
             </div>
 
+
+
+
             <!-- ================= BOTÕES ================= -->
             <div class="flex justify-center gap-10 pt-4"> 
                 <!-- Cancelar --> 
-                <a th:href="@{/panelProjetos}" 
+                <a th:href="@{/panelUser}" 
                 class="bg-gray-200 hover:bg-gray-300 
                 text-gray-800 font-bold px-8 py-3 rounded-xl 
                 shadow-md hover:shadow-lg transition duration-300 
@@ -200,6 +195,18 @@
 
         </form>
 
+        
+    </div>
+    <div th:if="${mensagemErro}" 
+    role="alert" 
+    id="alert" 
+    th:utext="${mensagemErro}" 
+    class="font-medium"></div>
+
+    <div th:if="${mensagemSucesso}" 
+        role="alert" 
+        id="alert"
+        th:text="${mensagemSucesso}">
     </div>
 
 </div>

@@ -1,6 +1,5 @@
 package com.kauan.projex.service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -52,13 +51,13 @@ public class CadastroService {
         return salvarUsuario(usuario, ip);
     }
     public InfoUser salvarUsuario(InfoUser usuario, String ip) {
-        Timestamp agora = new Timestamp(System.currentTimeMillis());
+        LocalDateTime agora = LocalDateTime.now();
         usuario.setName(usuario.getName().trim());
         usuario.setCpf(usuario.getCpf().replaceAll("\\D", ""));
         usuario.setRole("USER");
         usuario.setAtivo(true);
         usuario.setTentativasLogin(0);
-        usuario.setUltimoLogin(Timestamp.valueOf(LocalDateTime.now()));
+        usuario.setUltimoLogin(LocalDateTime.now());
         usuario.setAtualizadoEm(agora);
         usuario.setForcarTrocaSenha(false);
         usuario.setDescricao("Descrição padrão");
