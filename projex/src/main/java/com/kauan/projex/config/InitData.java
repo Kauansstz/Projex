@@ -15,11 +15,10 @@ public class InitData {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/h2-console/**", "/uploads/**").permitAll()
                 .anyRequest().permitAll()
             )
 
-            // 🔴 ESSENCIAL PARA O H2 CONSOLE
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())
             )

@@ -38,7 +38,10 @@ public class CertificatedRequest {
 
     private Boolean isPublish;
 
-    private MultipartFile  anexo;
+    private MultipartFile anexo;
+
+    private String anexoNome;
+
 
     private Category category;
 
@@ -104,6 +107,13 @@ public class CertificatedRequest {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    public String getAnexoNome() {
+        return anexoNome;
+    }
+
+    public void setAnexoNome(String anexoNome) {
+        this.anexoNome = anexoNome;
     }
 
     public MultipartFile  getAnexo() {

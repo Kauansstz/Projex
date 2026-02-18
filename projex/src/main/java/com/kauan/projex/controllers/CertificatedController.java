@@ -7,12 +7,14 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kauan.projex.dto.CertificatedRequest;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
@@ -52,7 +54,7 @@ public class CertificatedController {
     // EDITAR (TELA)
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable Long id, Model model) {
-        Certificated certificado = cardCertificateService.buscarPorId(id);
+        CertificatedRequest certificado = editCardService.buscarPorId(id);
         model.addAttribute("certificado", certificado);
         model.addAttribute("categorias", Category.values());
         return "pages/panelEditCertificate";
@@ -60,22 +62,33 @@ public class CertificatedController {
 
     // EDITAR (POST)
     @PostMapping("/{id}/editar")
-    public String atualizar(@PathVariable Long id,Certificated certificado,RedirectAttributes redirectAttributes, HttpServletRequest request, Model model) {
-        try{
+    public String atualizar(
+            @PathVariable Long id,
+            @ModelAttribute CertificatedRequest certificado,
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
+
+        try {
             certificado.setId(id);
+
             InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
             if (dono == null) {
                 throw new WorkFlowException("Usuário não autenticado.");
             }
-            System.out.println("Usuário autenticado: " + dono.getEmail());
+
             certificado.setDono(dono);
+
             editCardService.infoCertificateEdit(certificado);
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Certificado atualizado com sucesso!");
+
+            redirectAttributes.addFlashAttribute("mensagemSucesso", 
+                "Certificado atualizado com sucesso!");
+
         } catch (WorkFlowException e) {
-                redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-                return "redirect:/panelCertificados/" + id + "/editar";
-            }
-    return "redirect:/panelCertificados";
+            redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
+            return "redirect:/panelCertificados/" + id + "/editar";
+        }
+
+        return "redirect:/panelCertificados";
     }
 
     // EXCLUIR

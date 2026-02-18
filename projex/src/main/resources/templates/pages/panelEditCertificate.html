@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{fragments/head :: head}"></head>
-    <body class="bg-gray-100 font-sans flex items-center  min-h-screen"></body>
+    <body class="bg-gray-100 font-sans flex items-center  min-h-screen">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <div th:replace="~{fragments/editCertificate :: editCertificate}"></div>
+
+         <script th:inline="javascript">
+            window.fileUploadConfigs = [{
+                inputId: 'fileInput',
+                fileNameId: 'fileName',
+                progressBarId: 'progressBar',
+                previewContainerId: 'previewContainer',
+                imagePreviewId: 'imagePreview',
+                pdfPreviewId: 'pdfPreview',
+                clearButtonId: 'clearFile',
+                defaultText: 'Anexar certificado'
+            }];
+        </script>
+
+        <script src="/js/fileUploadPreview.js"></script>
+
         <script src="/js/notificacao.js"></script>
         <script src="/js/autoCompleteInst.js"></script>
         <script src="/js/file-input.js"></script>
         <script src="/js/autoCompleteType.js"></script>
-        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-        <div th:replace="~{fragments/editCertificate :: editCertificate}"></div>
    </body>
 </html>

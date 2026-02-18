@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import org.springframework.stereotype.Service;
+
+import com.kauan.projex.dto.CertificatedRequest;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
@@ -32,8 +34,25 @@ public class CardCertificateService {
         return cardCertificateRepository.findTop3ByDonoOrderByCriadoEmDesc(usuario);
     }
 
-    public Certificated buscarPorId(Long id) {
-        return cardCertificateRepository.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
+    public CertificatedRequest buscarPorId(Long id) {
+
+        Certificated entidade = cardCertificateRepository.findById(id)
+            .orElseThrow(() -> new WorkFlowException("Certificado não encontrado"));
+
+        CertificatedRequest dto = new CertificatedRequest();
+
+        dto.setId(entidade.getId());
+        dto.setTitulo(entidade.getTitulo());
+        dto.setDescricao(entidade.getDescricao());
+        dto.setInstituicao(entidade.getInstituicao());
+        dto.setDataConclusao(entidade.getDataConclusao());
+        dto.setTypeCertificate(entidade.getTypeCertificate());
+        dto.setStatus(entidade.getStatus());
+        dto.setCategory(entidade.getCategory());
+        dto.setIsPublish(entidade.getIsPublish());
+        dto.setDono(entidade.getDono());
+
+        return dto;
     }
 
     public Certificated salvar(Certificated certificado) {

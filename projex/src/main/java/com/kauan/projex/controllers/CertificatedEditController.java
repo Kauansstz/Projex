@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.kauan.projex.dto.CertificatedRequest;
 import com.kauan.projex.exceptions.WorkFlowException;
-import com.kauan.projex.model.Certificated;
 import com.kauan.projex.service.EditCertificateService;
 import com.kauan.projex.utils.Category;
 
@@ -27,7 +28,7 @@ public class CertificatedEditController {
     }
 
     @PostMapping("/{id}/editar")
-    public String editProject(@PathVariable Long id ,@ModelAttribute Certificated certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String editProject(@PathVariable Long id ,@ModelAttribute CertificatedRequest certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
         try{
             certificado.setId(id);
             certService.infoCertificateEdit(certificado);
@@ -43,7 +44,7 @@ public class CertificatedEditController {
     @GetMapping("/{id}/editar")
     public String exibirCertificado(Model model, @PathVariable Long id, @RequestParam(required = false) Category category, RedirectAttributes redirectAttributes){
          try {
-            Certificated certificado = certService.buscarPorId(id);
+            CertificatedRequest certificado = certService.buscarPorId(id);
             model.addAttribute("certificado", certificado);
             model.addAttribute("category", category);
             model.addAttribute("categorias", Category.values());
