@@ -1,0 +1,99 @@
+<main
+    th:fragment="quests"
+    class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA]">
+
+    <!-- TÍTULO -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold text-[#1F2937]">
+            Central de Perguntas
+        </h1>
+        <p class="text-sm text-gray-500">
+            Selecione uma categoria para visualizar as perguntas.
+        </p>
+    </div>
+
+    <!-- CATEGORIAS -->
+    <div class="grid grid-cols-3 mt-5 w-auto gap-6">
+
+        <div
+            th:each="categoria : ${categorias}"
+            class="bg-white shadow-md rounded-lg p-4 border border-gray-200
+                   transform transition-transform duration-300 
+                   hover:-translate-y-1 hover:shadow-lg cursor-pointer"
+            th:onclick="'carregarPerguntas(' + '\'' + ${categoria.name()} + '\'' + ')'">
+
+            <div class="flex flex-col space-y-2">
+                <span class="text-lg font-semibold text-[#1F2937]"
+                      th:text="${categoria}">
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PERGUNTAS -->
+    <div id="perguntasContainer" class="mt-10">
+
+        <div class="text-center text-gray-500">
+            Nenhuma categoria selecionada.
+        </div>
+
+    </div>
+
+    <!-- ALERTAS -->
+    <div th:if="${mensagemErro}" 
+        role="alert" 
+        th:text="${mensagemErro}" 
+        class="font-medium mt-4 text-red-600">
+    </div>
+
+    <div th:if="${mensagemSucesso}" 
+        role="alert-sucesso"
+        th:text="${mensagemSucesso}"
+        class="mt-4 text-green-600">
+    </div>
+
+</main>
+
+
+<!-- SCRIPT -->
+<script>
+    function carregarPerguntas(categoria) {
+
+        const container = document.getElementById("perguntasContainer");
+
+        container.innerHTML = "<p class='text-gray-500'>Carregando...</p>";
+
+        fetch(`/perguntas/categoria/${categoria}`)
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.length === 0) {
+                    container.innerHTML =
+                        "<p class='text-gray-500'>Nenhuma pergunta encontrada.</p>";
+                    return;
+                }
+
+                let html = "<div class='space-y-4'>";
+
+                data.forEach(pergunta => {
+                    html += `
+                        <div class="bg-white p-4 rounded-lg shadow border">
+                            <p class="text-gray-800 font-medium">
+                                ${pergunta.enunciado}
+                            </p>
+                        </div>
+                    `;
+                });
+
+                html += "</div>";
+
+                container.innerHTML = html;
+            })
+            .catch(error => {
+                container.innerHTML =
+                    "<p class='text-red-500'>Erro ao carregar perguntas.</p>";
+            });
+    }
+</script>
