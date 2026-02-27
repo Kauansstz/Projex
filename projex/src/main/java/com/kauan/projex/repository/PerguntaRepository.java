@@ -10,5 +10,6 @@ import com.kauan.projex.utils.Category;
 public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
     boolean existsByCategoria(Category categoria);
     List<Pergunta> findByCategoriaAndAtivoTrue(Category categoria);
-
+    List<Pergunta> findByCategoria(Category categoria);
+    List<Pergunta> findByCategoriaAndNivel(Category categoria, String nivel);
 }

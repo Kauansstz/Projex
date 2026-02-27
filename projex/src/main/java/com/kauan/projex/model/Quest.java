@@ -1,6 +1,7 @@
 package com.kauan.projex.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kauan.projex.utils.NivelDificuldade;
@@ -44,8 +45,8 @@ public class Quest {
 
     private LocalDateTime publicadoEm;
 
-    @OneToMany(mappedBy = "quest")
-    private List<Pergunta> perguntas;
+    @OneToMany(mappedBy = "quest", fetch = FetchType.LAZY)
+    private List<Pergunta> perguntas = new ArrayList<>();
 
     // Getters e Setters
     public Long getId() { return id; }

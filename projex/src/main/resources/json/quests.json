@@ -1,0 +1,122 @@
+[
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é fluxo de caixa?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Controle de entradas e saídas financeiras", "correta": true, "ordem": 1 },
+      { "descricao": "Relatório de contratação", "correta": false, "ordem": 2 },
+      { "descricao": "Controle de estoque", "correta": false, "ordem": 3 },
+      { "descricao": "Plano de marketing", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "CONTABIL",
+    "nivel": "INTERMEDIARIO",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é ativo circulante?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Bens e direitos realizáveis no curto prazo", "correta": true, "ordem": 1 },
+      { "descricao": "Dívidas de longo prazo", "correta": false, "ordem": 2 },
+      { "descricao": "Capital social da empresa", "correta": false, "ordem": 3 },
+      { "descricao": "Despesas administrativas", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "JURIDICO",
+    "nivel": "INTERMEDIARIO",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que caracteriza um contrato válido?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Agente capaz, objeto lícito e forma permitida", "correta": true, "ordem": 1 },
+      { "descricao": "Apenas assinatura das partes", "correta": false, "ordem": 2 },
+      { "descricao": "Registro em cartório obrigatório", "correta": false, "ordem": 3 },
+      { "descricao": "Pagamento antecipado", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "COMPRAS",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "Qual é o principal objetivo do setor de compras?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Adquirir bens e serviços com melhor custo-benefício", "correta": true, "ordem": 1 },
+      { "descricao": "Controlar folha de pagamento", "correta": false, "ordem": 2 },
+      { "descricao": "Gerenciar contratos jurídicos", "correta": false, "ordem": 3 },
+      { "descricao": "Planejar campanhas de marketing", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "ADMINISTRATIVO",
+    "nivel": "INTERMEDIARIO",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "Qual é a principal função do setor administrativo?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Organizar e coordenar processos internos da empresa", "correta": true, "ordem": 1 },
+      { "descricao": "Desenvolver campanhas de marketing", "correta": false, "ordem": 2 },
+      { "descricao": "Realizar auditorias jurídicas", "correta": false, "ordem": 3 },
+      { "descricao": "Executar manutenção de equipamentos", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "LOGISTICA",
+    "nivel": "INTERMEDIARIO",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "Qual é o principal objetivo da logística?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Garantir que produtos cheguem ao destino corretamente", "correta": true, "ordem": 1 },
+      { "descricao": "Controlar folha de pagamento", "correta": false, "ordem": 2 },
+      { "descricao": "Criar campanhas de marketing", "correta": false, "ordem": 3 },
+      { "descricao": "Aumentar impostos", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "OPERACIONAL",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O setor operacional é responsável por:",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Executar as atividades do dia a dia da empresa", "correta": true, "ordem": 1 },
+      { "descricao": "Criar leis", "correta": false, "ordem": 2 },
+      { "descricao": "Administrar redes sociais", "correta": false, "ordem": 3 },
+      { "descricao": "Fazer auditorias fiscais", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "MANUTENCAO",
+    "nivel": "INTERMEDIARIO",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é manutenção preventiva?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 10,
+    "ordem": 1,
+    "respostas": [
+      { "descricao": "Ação programada para evitar falhas", "correta": true, "ordem": 1 },
+      { "descricao": "Correção após falha", "correta": false, "ordem": 2 },
+      { "descricao": "Venda de equipamento", "correta": false, "ordem": 3 },
+      { "descricao": "Processo jurídico", "correta": false, "ordem": 4 }
+    ]
+  }
+]

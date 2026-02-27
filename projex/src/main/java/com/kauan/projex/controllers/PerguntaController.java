@@ -1,27 +1,29 @@
 package com.kauan.projex.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import com.kauan.projex.model.Pergunta;
-import com.kauan.projex.service.PerguntaService;
-import com.kauan.projex.utils.Category;
-
+import com.kauan.projex.repository.PerguntaRepository;
+import org.springframework.ui.Model;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/perguntas")
 public class PerguntaController {
 
-    private final PerguntaService perguntaService;
+    private final PerguntaRepository perguntaRepository;
 
-    public PerguntaController(PerguntaService perguntaService) {
-        this.perguntaService = perguntaService;
+    public PerguntaController(PerguntaRepository perguntaRepository) {
+        this.perguntaRepository = perguntaRepository;
     }
 
-    @GetMapping("/categoria/{categoria}")
-    public List<Pergunta> listarPorCategoria(@PathVariable Category categoria) {
-        return perguntaService.listarPorCategoria(categoria);
-    }
+    @GetMapping
+    public String listarPerguntas(Model model) {
 
+        List<Pergunta> perguntas = perguntaRepository.findAll();
+
+        model.addAttribute("perguntas", perguntas);
+
+        return "pages/panelQuest";
+    }
 }
-
