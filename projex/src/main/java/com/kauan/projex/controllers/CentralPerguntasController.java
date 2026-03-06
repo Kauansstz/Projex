@@ -24,6 +24,6 @@ public class CentralPerguntasController {
         model.addAttribute("perguntas", perguntas);
         model.addAttribute("categorias", Category.values());
 
-        return "pages/panelQuest"; 
+        return "pages/panelCenterQuest"; 
     }
 }
