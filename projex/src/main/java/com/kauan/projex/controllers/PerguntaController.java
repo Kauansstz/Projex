@@ -31,6 +31,7 @@ public class PerguntaController {
         if (categoriaStr != null) {
         try {
             Category categoriaEnum = com.kauan.projex.utils.Category.valueOf(categoriaStr);
+            model.addAttribute("categoriaSelecionada", categoriaEnum);
             if (nivel != null) {
                 List<Pergunta> perguntas = perguntaRepository.findByCategoriaAndNivel(categoriaEnum, nivel);
                 List<Pergunta> respostas = perguntaRepository.findByCategoriaAndNivelAndRespostas(categoriaEnum, nivel, resposta);
@@ -44,7 +45,6 @@ public class PerguntaController {
                 }
                 model.addAttribute("perguntas", perguntas);
                 model.addAttribute("nivelSelecionado", nivel);
-                model.addAttribute("categoriaSelecionada", categoriaEnum);
 
                 System.out.println("Categoria selecionada: " + categoriaEnum);
                 System.out.println("Categoria selecionado: " + categoria);
