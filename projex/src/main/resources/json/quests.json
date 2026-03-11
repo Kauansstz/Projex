@@ -5,13 +5,148 @@
     "totalPerguntasCategoria": 10,
     "enunciado": "O que é fluxo de caixa?",
     "tipo": "MULTIPLA_ESCOLHA",
-    "pontuacao": 10,
+    "pontuacao": 1,
     "ordem": 1,
     "respostas": [
-      { "descricao": "Controle de entradas e saídas financeiras", "correta": true, "ordem": 1 },
-      { "descricao": "Relatório de contratação", "correta": false, "ordem": 2 },
+      { "descricao": "Relatório de contratação", "correta": false, "ordem": 1 },
+      { "descricao": "Controle de entradas e saídas financeiras", "correta": true, "ordem": 2 },
       { "descricao": "Controle de estoque", "correta": false, "ordem": 3 },
       { "descricao": "Plano de marketing", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é receita em uma empresa?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 2,
+    "respostas": [
+      { "descricao": "Valor que a empresa recebe pela venda de produtos ou serviços", "correta": true, "ordem": 1 },
+      { "descricao": "Valor gasto com funcionários", "correta": false, "ordem": 2 },
+      { "descricao": "Dinheiro utilizado para pagar impostos", "correta": false, "ordem": 3 },
+      { "descricao": "Controle de estoque da empresa", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que são despesas em uma empresa?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 3,
+    "respostas": [
+      { "descricao": "Gastos necessários para manter o funcionamento da empresa", "correta": true, "ordem": 1 },
+      { "descricao": "Lucro obtido nas vendas", "correta": false, "ordem": 2 },
+      { "descricao": "Dinheiro recebido de clientes", "correta": false, "ordem": 3 },
+      { "descricao": "Investimento em marketing apenas", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+  "categoria": "FINANCEIRO",
+  "nivel": "INICIANTE",
+  "totalPerguntasCategoria": 10,
+  "enunciado": "O que são contas a receber?",
+  "tipo": "MULTIPLA_ESCOLHA",
+  "pontuacao": 1,
+  "ordem": 4,
+  "respostas": [
+    { "descricao": "Valores que clientes ainda devem pagar à empresa", "correta": true, "ordem": 1 },
+    { "descricao": "Pagamentos que a empresa precisa fazer", "correta": false, "ordem": 2 },
+    { "descricao": "Dinheiro guardado no caixa físico", "correta": false, "ordem": 3 },
+    { "descricao": "Controle de produtos em estoque", "correta": false, "ordem": 4 }
+  ]
+},
+{
+  "categoria": "FINANCEIRO",
+  "nivel": "INICIANTE",
+  "totalPerguntasCategoria": 10,
+  "enunciado": "O que é capital de giro?",
+  "tipo": "MULTIPLA_ESCOLHA",
+  "pontuacao": 1,
+  "ordem": 5,
+  "respostas": [
+    { "descricao": "Dinheiro disponível para manter as operações do dia a dia da empresa", "correta": true, "ordem": 1 },
+    { "descricao": "Lucro obtido no final do ano", "correta": false, "ordem": 2 },
+    { "descricao": "Valor investido apenas em marketing", "correta": false, "ordem": 3 },
+    { "descricao": "Quantidade de produtos vendidos", "correta": false, "ordem": 4 }
+  ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que significa lucro?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 6,
+    "respostas": [
+      { "descricao": "Valor que sobra após pagar todas as despesas", "correta": true, "ordem": 1 },
+      { "descricao": "Total de vendas realizadas no mês", "correta": false, "ordem": 2 },
+      { "descricao": "Dinheiro guardado no banco", "correta": false, "ordem": 3 },
+      { "descricao": "Valor gasto com fornecedores", "correta": false, "ordem": 4 }
+      ]
+    },
+    {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é investimento em uma empresa?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 7,
+    "respostas": [
+      { "descricao": "Aplicação de dinheiro visando retorno futuro", "correta": true, "ordem": 1 },
+      { "descricao": "Pagamento de salários", "correta": false, "ordem": 2 },
+      { "descricao": "Controle de contas a pagar", "correta": false, "ordem": 3 },
+      { "descricao": "Registro de vendas no sistema", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que significa saldo financeiro?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 8,
+    "respostas": [
+      { "descricao": "Diferença entre o dinheiro que entrou e o que saiu", "correta": true, "ordem": 1 },
+      { "descricao": "Valor total de vendas realizadas", "correta": false, "ordem": 2 },
+      { "descricao": "Quantidade de produtos em estoque", "correta": false, "ordem": 3 },
+      { "descricao": "Valor pago em impostos", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que é orçamento?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 9,
+    "respostas": [
+      { "descricao": "Planejamento de receitas e despesas futuras", "correta": true, "ordem": 1 },
+      { "descricao": "Registro de funcionários da empresa", "correta": false, "ordem": 2 },
+      { "descricao": "Lista de produtos vendidos", "correta": false, "ordem": 3 },
+      { "descricao": "Controle de equipamentos da empresa", "correta": false, "ordem": 4 }
+    ]
+  },
+  {
+    "categoria": "FINANCEIRO",
+    "nivel": "INICIANTE",
+    "totalPerguntasCategoria": 10,
+    "enunciado": "O que são contas a pagar?",
+    "tipo": "MULTIPLA_ESCOLHA",
+    "pontuacao": 1,
+    "ordem": 10,
+    "respostas": [
+      { "descricao": "Obrigações financeiras que a empresa precisa pagar", "correta": true, "ordem": 1 },
+      { "descricao": "Valores que clientes devem à empresa", "correta": false, "ordem": 2 },
+      { "descricao": "Lucros obtidos nas vendas", "correta": false, "ordem": 3 },
+      { "descricao": "Dinheiro guardado no caixa", "correta": false, "ordem": 4 }
     ]
   },
   {

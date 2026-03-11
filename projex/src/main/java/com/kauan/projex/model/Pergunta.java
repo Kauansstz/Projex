@@ -28,18 +28,6 @@ public class Pergunta {
     private Integer ordem;
     private Boolean ativo;
 
-    // --- NOVOS CAMPOS PARA AS ALTERNATIVAS ---
-    @Column(columnDefinition = "TEXT")
-    private String alternativaA;
-
-    @Column(columnDefinition = "TEXT")
-    private String alternativaB;
-
-    @Column(columnDefinition = "TEXT")
-    private String alternativaC;
-
-    @Column(columnDefinition = "TEXT")
-    private String alternativaD;
 
     @Column(name = "nivel", length = 50)
     @JsonProperty("nivel")
@@ -86,17 +74,17 @@ public class Pergunta {
     public Quest getQuest() { return quest; }
     public void setQuest(Quest quest) { this.quest = quest; }
 
-    // --- NOVOS GETTERS E SETTERS ---
 
-    public String getAlternativaA() { return alternativaA; }
-    public void setAlternativaA(String alternativaA) { this.alternativaA = alternativaA; }
 
-    public String getAlternativaB() { return alternativaB; }
-    public void setAlternativaB(String alternativaB) { this.alternativaB = alternativaB; }
+    @Override
+    public String toString() {
+        return "Pergunta{" +
+                "id=" + id +
+                ", titulo='" + enunciado + '\'' +
+                ", nivel='" + nivel + '\'' +
+                ", categoria=" + categoria +
+                ", resposta=" + respostas +
+                '}';
+    }
 
-    public String getAlternativaC() { return alternativaC; }
-    public void setAlternativaC(String alternativaC) { this.alternativaC = alternativaC; }
-
-    public String getAlternativaD() { return alternativaD; }
-    public void setAlternativaD(String alternativaD) { this.alternativaD = alternativaD; }
 }

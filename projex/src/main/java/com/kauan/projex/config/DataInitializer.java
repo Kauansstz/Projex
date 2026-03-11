@@ -23,6 +23,7 @@ public class DataInitializer implements CommandLineRunner {
     public DataInitializer(PerguntaService perguntaService,
                         PerguntaRepository perguntaRepository,
                         ObjectMapper objectMapper) {
+                            System.out.println(">>>>>>>>DEBUG");
         this.perguntaService = perguntaService;
         this.perguntaRepository = perguntaRepository;
         this.objectMapper = objectMapper;

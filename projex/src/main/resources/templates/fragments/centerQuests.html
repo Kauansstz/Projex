@@ -5,11 +5,10 @@
         <p class="text-gray-500">Teste sua proficiência técnica selecionando um setor e nível.</p>
     </div>
 
-    <div id="hallCategorias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <div th:each="cat : ${categorias}" 
-             th:data-categoria="${cat}"
-             onclick="iniciarSelecao(this)"
-             class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group">
+    <div th:if="${categoriaSelecionada == null}" id="hallCategorias" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <a th:each="cat : ${categorias}" 
+           th:href="@{/perguntas(categoria=${cat})}"
+           class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group block">
             
             <div class="flex justify-between items-start mb-4">
                 <div class="p-3 bg-purple-100 rounded-lg text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -27,194 +26,89 @@
                 <span class="font-bold text-gray-800">10 Questões</span>
                 <span class="text-orange-600">15-30 min</span>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div id="secaoPerguntas" class="hidden">
-        <button onclick="voltarAoHall()" class="mb-6 flex items-center gap-2 text-purple-600 font-semibold hover:underline">
-            <i class="bi bi-arrow-left"></i> Voltar para o Hall
-        </button>
+    <div th:if="${categoriaSelecionada != null}" id="secaoPerguntas">
+        
+        <a th:href="${nivelSelecionado == null ? '/perguntas' : '/perguntas(categoria=' + categoriaSelecionada + ')'}" 
+           class="mb-6 inline-flex items-center gap-2 text-purple-600 font-semibold hover:underline">
+            <i class="bi bi-arrow-left"></i> <span th:text="${nivelSelecionado == null ? 'Voltar para o Hall' : 'Trocar Dificuldade'}"></span>
+        </a>
         
         <div id="headerSetor" class="mb-8">
-            <h2 id="tituloSetor" class="text-3xl font-bold text-gray-800">Setor selecionado</h2>
-            <p class="text-gray-500">Escolha a dificuldade desejada para as 10 questões.</p>
+            <h2 class="text-3xl font-bold text-gray-800" th:text="'Setor: ' + ${categoriaSelecionada}">Setor selecionado</h2>
+            <p class="text-gray-500" th:text="${nivelSelecionado == null ? 'Escolha a dificuldade desejada.' : 'Responda com atenção.'}"></p>
         </div>
 
-        <div id="niveisContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div onclick="iniciarDesafio('INICIANTE')" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-green-500 cursor-pointer shadow-sm hover:shadow-lg transition-all group text-center">
+        <div th:if="${perguntas == null}" id="niveisContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            
+            <a th:href="@{/perguntas(categoria=${categoriaSelecionada}, nivel='INICIANTE')}" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-green-500 shadow-sm hover:shadow-lg transition-all group text-center block">
                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
                     <span class="font-bold text-xl">1</span>
                 </div>
                 <h4 class="text-xl font-bold text-gray-800">Iniciante</h4>
-                <p class="text-sm text-gray-500 mt-2">Conceitos fundamentais e termos básicos.</p>
-            </div>
+                <p class="text-sm text-gray-500 mt-2">Conceitos fundamentais.</p>
+            </a>
 
-            <div onclick="iniciarDesafio('INTERMEDIARIO')" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-blue-500 cursor-pointer shadow-sm hover:shadow-lg transition-all group text-center">
+            <a th:href="@{/perguntas(categoria=${categoriaSelecionada}, nivel='INTERMEDIARIO')}" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-blue-500 shadow-sm hover:shadow-lg transition-all group text-center block">
                 <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <span class="font-bold text-xl">2</span>
                 </div>
                 <h4 class="text-xl font-bold text-gray-800">Intermediário</h4>
-                <p class="text-sm text-gray-500 mt-2">Processos e situações do dia a dia.</p>
-            </div>
+                <p class="text-sm text-gray-500 mt-2">Situações do dia a dia.</p>
+            </a>
 
-            <div onclick="iniciarDesafio('AVANCADO')" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-red-500 cursor-pointer shadow-sm hover:shadow-lg transition-all group text-center">
+            <a th:href="@{/perguntas(categoria=${categoriaSelecionada}, nivel='AVANCADO')}" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-red-500 shadow-sm hover:shadow-lg transition-all group text-center block">
                 <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
                     <span class="font-bold text-xl">3</span>
                 </div>
                 <h4 class="text-xl font-bold text-gray-800">Avançado</h4>
-                <p class="text-sm text-gray-500 mt-2">Análise estratégica e problemas complexos.</p>
-            </div>
+                <p class="text-sm text-gray-500 mt-2">Problemas complexos.</p>
+            </a>
         </div>
 
-        <div id="desafioAtivo" class="hidden pb-20">
+        <div th:if="${perguntas != null}" id="desafioAtivo" class="pb-20">
             <div class="flex justify-between items-center mb-10 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <div>
-                    <span id="tagNivel" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-purple-100 text-purple-700">INICIANTE</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-1">Responda com atenção</h3>
+                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-purple-100 text-purple-700" th:text="${nivelSelecionado}">NÍVEL</span>
+                    <h3 class="text-xl font-bold text-gray-800 mt-1">Questões Disponíveis</h3>
                 </div>
-                <button onclick="cancelarDesafio()" class="text-sm font-medium text-gray-400 hover:text-red-600 transition">Trocar Dificuldade</button>
             </div>
 
-            <div id="perguntasContainer" class="space-y-8 max-w-4xl mx-auto">
+            <form id="formRespostas" class="space-y-8 max-w-4xl mx-auto">
+                <div th:each="pergunta, stat : ${perguntas}" class="p-6 bg-white rounded-xl shadow-md border border-gray-200">
+                    <div class="mb-4">
+                        <span class="text-sm font-bold text-blue-600 uppercase" th:text="${pergunta.categoria}">Categoria</span>
+                        <h3 class="text-lg font-semibold text-gray-800" th:text="${stat.count + '. ' + pergunta.enunciado}"></h3>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label th:if="${pergunta.respostas[0]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.respostas[0].id}" th:value="${pergunta.respostas[0].id}" class="h-4 w-4 text-blue-600">
+                            <span class="ml-3 text-gray-700"><strong>A)</strong> <span th:text="${pergunta.respostas[0].descricao}"></span></span>
+                        </label>
+                        <label th:if="${pergunta.respostas[1]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" value="B" class="h-4 w-4 text-blue-600">
+                            <span class="ml-3 text-gray-700"><strong>B)</strong> <span th:text="${pergunta.respostas[1].descricao}"></span></span>
+                        </label>
+                        <label th:if="${pergunta.respostas[2]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" value="C" class="h-4 w-4 text-blue-600">
+                            <span class="ml-3 text-gray-700"><strong>C)</strong> <span th:text="${pergunta.respostas[2].descricao}"></span></span>
+                        </label>
+                        <label th:if="${pergunta.respostas[3]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" value="D" class="h-4 w-4 text-blue-600">
+                            <span class="ml-3 text-gray-700"><strong>D)</strong> <span th:text="${pergunta.respostas[3].descricao}"></span></span>
+                        </label>
+                    </div>
                 </div>
 
-            <div class="mt-12 flex flex-col items-center">
-                <button onclick="processarRespostas()" class="bg-purple-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-xl hover:bg-purple-700 hover:scale-105 transition-all">
-                    Finalizar Desafio
-                </button>
-                <p class="text-gray-400 text-sm mt-4 italic">Certifique-se de responder todas as questões antes de finalizar.</p>
-            </div>
+                <div class="mt-12 flex flex-col items-center">
+                    <button type="submit" class="bg-purple-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-xl hover:bg-purple-700 hover:scale-105 transition-all">
+                        Finalizar Desafio
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <script th:inline="javascript">
-        let setorAtualNomeTecnico = "";
-
-        function iniciarSelecao(elemento) {
-            setorAtualNomeTecnico = elemento.getAttribute('data-categoria');
-            const nomeAmigavel = elemento.querySelector('h3').innerText;
-            
-            document.getElementById('hallCategorias').classList.add('hidden');
-            document.getElementById('secaoPerguntas').classList.remove('hidden');
-            document.getElementById('niveisContainer').classList.remove('hidden');
-            document.getElementById('desafioAtivo').classList.add('hidden');
-            
-            document.getElementById('tituloSetor').innerText = "Setor: " + nomeAmigavel;
-        }
-
-        function iniciarDesafio(nivel) {
-    const container = document.getElementById("perguntasContainer");
-    const niveisDiv = document.getElementById("niveisContainer");
-    const desafioDiv = document.getElementById("desafioAtivo");
-    const tagNivel = document.getElementById("tagNivel");
-    
-    console.log("Iniciando desafio para nível:", nivel);
-
-    // 1. Mostra a área do desafio e esconde a seleção de níveis
-    niveisDiv.classList.add('hidden');
-    desafioDiv.classList.remove('hidden');
-    if(tagNivel) tagNivel.innerText = nivel;
-
-    container.innerHTML = "<p class='text-center'>Carregando...</p>";
-
-    fetch(`/api/perguntas/categoria/${setorAtualNomeTecnico}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log("--- DEBUG DE DADOS ---");
-        // Isso vai criar uma tabela linda no seu console para vermos o que tem no campo nivel
-        console.table(data.map(p => ({ id: p.id, enunciado: p.enunciado, nivel: p.nivel })));
-
-        // Filtro robusto:
-        // 1. p.nivel?.toString() -> garante que é string
-        // 2. .trim() -> remove espaços invisíveis
-        // 3. .toUpperCase() -> garante que tudo é maiúsculo
-        const filtradas = data.filter(p => {
-            const nivelPergunta = p.nivel ? p.nivel.toString().trim().toUpperCase() : "";
-            const nivelBusca = nivel.toString().trim().toUpperCase();
-            return nivelPergunta === nivelBusca;
-        });
-
-        console.log("Filtradas após normalização:", filtradas);
-
-        if (filtradas.length > 0) {
-            renderizarPerguntas(filtradas.slice(0, 10));
-        } else {
-            container.innerHTML = `
-                <div class="p-10 text-center bg-white rounded-xl border">
-                    <p class="text-gray-500">O sistema recebeu os dados, mas o nível <b>"${nivel}"</b> não bate com o que está no banco.</p>
-                    <p class="text-xs text-gray-400 mt-2">Dica: Verifique se no banco o nível está escrito exatamente como o botão.</p>
-                    <button onclick="cancelarDesafio()" class="mt-4 text-purple-600 underline">Voltar</button>
-                </div>`;
-        }
-    })
-        .catch(err => {
-            console.error("Erro no Fetch:", err);
-            container.innerHTML = "<p class='text-red-500'>Erro ao conectar com o servidor.</p>";
-        });
-}
-
-        function renderizarPerguntas(perguntas) {
-    const container = document.getElementById("perguntasContainer");
-    container.innerHTML = ""; // Limpa o container
-
-    if (perguntas.length === 0) {
-        container.innerHTML = "<p class='text-center'>Nenhuma pergunta encontrada para este nível.</p>";
-        return;
-    }
-
-    perguntas.forEach((pergunta, index) => {
-        const div = document.createElement("div");
-        div.className = "p-6 bg-white rounded-xl shadow-md mb-4 border border-gray-200";
-        
-        div.innerHTML = `
-            <div class="mb-4">
-                <span class="text-sm font-bold text-blue-600 uppercase">${pergunta.categoria || 'Geral'}</span>
-                <h3 class="text-lg font-semibold text-gray-800">${index + 1}. ${pergunta.enunciado}</h3>
-            </div>
-            
-            <div class="space-y-3">
-                ${renderizarAlternativa('A', pergunta.alternativaA)}
-                ${renderizarAlternativa('B', pergunta.alternativaB)}
-                ${renderizarAlternativa('C', pergunta.alternativaC)}
-                ${renderizarAlternativa('D', pergunta.alternativaD)}
-            </div>
-        `;
-        container.appendChild(div);
-    });
-}
-
-// Função auxiliar para não mostrar alternativas vazias
-function renderizarAlternativa(letra, texto) {
-    if (!texto) return ""; // Se a alternativa estiver nula no banco, não mostra nada
-    return `
-        <label class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-            <input type="radio" name="pergunta" class="h-4 w-4 text-blue-600">
-            <span class="ml-3 text-gray-700"><strong>${letra})</strong> ${texto}</span>
-        </label>
-    `;
-}
-
-        function criarAlternativa(perguntaId, letra, texto) {
-            return `
-                <label class="flex items-center gap-4 p-4 rounded-xl border-2 border-gray-50 cursor-pointer hover:border-purple-200 hover:bg-purple-50 transition-all group">
-                    <input type="radio" name="p_${perguntaId}" value="${letra}" class="w-5 h-5 text-purple-600 border-gray-300 focus:ring-purple-500">
-                    <span class="text-gray-700 font-medium"><strong class="text-purple-400 mr-2">${letra}</strong> ${texto}</span>
-                </label>
-            `;
-        }
-
-        function cancelarDesafio() {
-            document.getElementById('niveisContainer').classList.remove('hidden');
-            document.getElementById('desafioAtivo').classList.add('hidden');
-        }
-
-        function voltarAoHall() {
-            document.getElementById('hallCategorias').classList.remove('hidden');
-            document.getElementById('secaoPerguntas').classList.add('hidden');
-        }
-        
-        function processarRespostas() {
-            alert("Lógica de correção: Aqui você enviará o formulário para o Back-end!");
-        }
-    </script>
 </main>

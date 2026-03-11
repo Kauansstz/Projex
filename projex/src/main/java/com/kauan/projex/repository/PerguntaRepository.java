@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kauan.projex.model.Pergunta;
+import com.kauan.projex.model.Resposta;
 import com.kauan.projex.utils.Category;
 
 public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
@@ -12,4 +13,6 @@ public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
     List<Pergunta> findByCategoriaAndAtivoTrue(Category categoria);
     List<Pergunta> findByCategoria(Category categoria);
     List<Pergunta> findByCategoriaAndNivel(Category categoria, String nivel);
+    List<Pergunta> findByCategoriaAndNivelAndRespostas(Category categoria, String nivel, Resposta resposta);
+    
 }

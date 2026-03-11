@@ -43,5 +43,14 @@ public class Resposta {
 
     public Boolean getAtivo() { return ativo; }
     public void setAtivo(Boolean ativo) { this.ativo = ativo; }
+
+    @Override
+    public String toString() {
+        return "Resposta{" +
+                "texto='" + descricao + '\'' +
+                ", correta=" + correta +
+                ", ordem='" + ordem + '\''+
+                '}';
+    }
 }
 

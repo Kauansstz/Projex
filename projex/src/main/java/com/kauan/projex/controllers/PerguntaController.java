@@ -1,9 +1,13 @@
 package com.kauan.projex.controllers;
+import java.util.Collections;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.kauan.projex.model.Pergunta;
+import com.kauan.projex.model.Resposta;
 import com.kauan.projex.repository.PerguntaRepository;
+import com.kauan.projex.utils.Category;
+
 import org.springframework.ui.Model;
 import java.util.List;
 
@@ -18,12 +22,41 @@ public class PerguntaController {
     }
 
     @GetMapping
-    public String listarPerguntas(Model model) {
+    public String listarPerguntas(@RequestParam(value = "categoria", required = false) String categoriaStr,
+            @RequestParam(value = "categoria", required = false) String categoria,
+            @RequestParam(value = "nivel", required = false) String nivel,
+            @RequestParam(value = "resposta", required = false) Resposta resposta,
+            Model model) {
 
-        List<Pergunta> perguntas = perguntaRepository.findAll();
+        if (categoriaStr != null) {
+        try {
+            Category categoriaEnum = com.kauan.projex.utils.Category.valueOf(categoriaStr);
+            if (nivel != null) {
+                List<Pergunta> perguntas = perguntaRepository.findByCategoriaAndNivel(categoriaEnum, nivel);
+                List<Pergunta> respostas = perguntaRepository.findByCategoriaAndNivelAndRespostas(categoriaEnum, nivel, resposta);
+                Collections.shuffle(respostas);
 
-        model.addAttribute("perguntas", perguntas);
+               for (Pergunta p : perguntas) {
+                    List<Resposta> r = p.getRespostas();
+                    if (r != null && r.size() >= 4) {
+                        Collections.shuffle(r);
+                    }
+                }
+                model.addAttribute("perguntas", perguntas);
+                model.addAttribute("nivelSelecionado", nivel);
+                model.addAttribute("categoriaSelecionada", categoriaEnum);
 
-        return "pages/panelQuest";
+                System.out.println("Categoria selecionada: " + categoriaEnum);
+                System.out.println("Categoria selecionado: " + categoria);
+                System.out.println("Nivel selecionado: " + nivel);
+                System.out.println("Pergunta e respostas carregadas com sucesso");
+            }
+        } catch (IllegalArgumentException e) {
+            return "redirect:/perguntas"; 
+        }
     }
+
+        return "pages/panelCenterQuest";
+    }
+
 }

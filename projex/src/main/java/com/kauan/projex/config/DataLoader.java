@@ -3,6 +3,7 @@ package com.kauan.projex.config;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kauan.projex.model.Pergunta;
+import com.kauan.projex.model.Resposta;
 import com.kauan.projex.repository.PerguntaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,13 @@ public class DataLoader implements CommandLineRunner {
             // 3. O "Pulo do Gato" do vídeo: Converte o JSON diretamente numa lista de Perguntas
             List<Pergunta> perguntas = objectMapper.readValue(inputStream, new TypeReference<List<Pergunta>>(){});
 
-            // 4. Salva tudo no banco de uma vez
+            for (Pergunta pergunta : perguntas) {
+                if (pergunta.getRespostas() != null) {
+                    for (Resposta resposta : pergunta.getRespostas()) {
+                        resposta.setPergunta(pergunta); // IMPORTANTE: Vincula o "filho" ao "pai"
+                    }
+                }
+            }
             repository.saveAll(perguntas);
 
             System.out.println(">>> SUCESSO: " + perguntas.size() + " perguntas carregadas do JSON!");
