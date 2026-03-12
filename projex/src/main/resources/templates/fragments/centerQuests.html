@@ -31,7 +31,8 @@
 
     <div th:if="${categoriaSelecionada != null}" id="secaoPerguntas">
         
-        <a th:href="${nivelSelecionado == null ? '/perguntas' : '/perguntas(categoria=' + categoriaSelecionada + ')'}" 
+        <a th:href="${nivelSelecionado == null ? '/perguntas' : '/perguntas(categoria=' + categoriaSelecionada + ')'}"
+        onclick="window.history.back(); return false;" 
            class="mb-6 inline-flex items-center gap-2 text-purple-600 font-semibold hover:underline">
             <i class="bi bi-arrow-left"></i> <span th:text="${nivelSelecionado == null ? 'Voltar para o Hall' : 'Trocar Dificuldade'}"></span>
         </a>
