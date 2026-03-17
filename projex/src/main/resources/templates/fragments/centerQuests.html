@@ -86,7 +86,7 @@
                     
                     <div class="space-y-3">
                         <label th:if="${pergunta.respostas[0]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                            <input type="radio" th:name="'p' + ${pergunta.respostas[0].id}" th:value="${pergunta.respostas[0].id}" class="h-4 w-4 text-blue-600">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[0].id}" class="h-4 w-4 text-blue-600">
                             <span class="ml-3 text-gray-700"><strong>A)</strong> <span th:text="${pergunta.respostas[0].descricao}"></span></span>
                         </label>
                         <label th:if="${pergunta.respostas[1]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
