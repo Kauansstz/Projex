@@ -1,25 +1,50 @@
-<main class="flex-1 min-h-max h-auto overflow-auto  ml-64 rounded-lg p-6 bg-[#F4F6FA]" 
-    th:fragment="user(explore, extraClass)"
-    th:class="${extraClass}" >
-    <div class="grid grid-cols-3  w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
+<main th:fragment="user(explore, extraClass)" class="w-full" th:classappend="${extraClass}">
+    
+    <div class="mb-8">
+        <h1 class="text-2xl font-black text-gray-800 tracking-tight">Explorar Talentos</h1>
+        <p class="text-sm text-gray-500">Conecte-se com outros desenvolvedores da plataforma.</p>
+    </div>
 
-        <!-- Card 1 -->
-        <button class="bg-white shadow-md rounded-lg p-4 w-auto text-left border border-gray-200
-                    transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg" th:each="explore : ${explorer}">
-            <div class="flex flex-col space-y-2">
-                    <div class="gap-1 flex text-sm text-[30px] text-[#6366F1] w-55 hover:text-[#3B82F6] cursor-pointer duration-300">
-                        <i class="bi bi-person-circle text-[20px]"></i>
-                        <span class="text-[20px]" th:text="${explore.name}">
-                            Nome do usuário
-                        </span>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div th:each="explore : ${explorer}" 
+             class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer">
+            
+            <div class="flex flex-col gap-4">
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-[#6366F1]/10 text-[#6366F1] rounded-2xl flex items-center justify-center group-hover:bg-[#6366F1] group-hover:text-white transition-colors">
+                        <i class="bi bi-person-circle text-2xl"></i>
                     </div>
-                    <div class="flex gap-2 text-sm  font-medium text-black  ">
-                        <span class="flex justify-center bg-gray-200 rounded-lg w-auto px-2 hover:text-[#3B82F6] cursor-pointer duration-300 text-[12px]" 
-                        th:text="${explore.tecnologia}">Tecnologia</span>
-                        
+                    <div class="flex flex-col">
+                        <span class="font-bold text-gray-800 text-lg group-hover:text-[#6366F1] transition-colors leading-tight" 
+                              th:text="${explore.name}">Nome do Usuário</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Membro Projex</span>
                     </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-bold border border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-100 transition-all"
+                          th:text="${explore.tecnologia}">
+                        Tecnologia
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-lg bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-tighter border border-green-100">
+                        Disponível
+                    </span>
+                </div>
+
+                <div class="pt-4 mt-2 border-t border-gray-50 flex justify-between items-center">
+                    <span class="text-[10px] text-gray-300 font-medium italic">Ver perfil completo</span>
+                    <i class="bi bi-arrow-right text-gray-300 group-hover:text-[#6366F1] group-hover:translate-x-1 transition-all"></i>
+                </div>
+
             </div>
-        </button>
+        </div>
 
+    </div>
+
+    <div th:if="${#lists.isEmpty(explorer)}" class="text-center py-20">
+        <i class="bi bi-search text-5xl text-gray-200"></i>
+        <p class="mt-4 text-gray-400 font-medium">Nenhum desenvolvedor encontrado no momento.</p>
     </div>
 </main>

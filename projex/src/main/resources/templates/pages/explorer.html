@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragments/head :: head}"></head>
-    <body class="bg-gray-100 font-sans  min-h-max"></body>
-        <header th:replace="~{fragments/search :: search(@{/explore})}"></header>
+<head th:replace="~{fragments/head :: head}"></head>
+<body class="bg-[#F4F6FA] font-sans">
+    <header th:replace="~{fragments/search :: search(@{/explore})}"></header>
+    
+    <div class="flex">
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-         <main class="flex-1 pt-[70px] ml-50 min-h-max h-10">
-             <div th:replace="~{fragments/user :: user(${explore},'flex-1 h-auto  overflow-auto rounded-lg p-6 bg-[#F4F6FA] ml-64')}"></div>
+        
+        <main class="flex-1 ml-64 pt-[80px] p-6 min-h-screen">
+            <div th:replace="~{fragments/user :: user(${explorer}, '')}"></div>
         </main>
-
-   </body>
+    </div>
+</body>
 </html>
