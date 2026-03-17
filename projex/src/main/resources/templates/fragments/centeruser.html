@@ -3,75 +3,84 @@
     class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA]"
     th:classappend="${extraClass}">
 
-    <div class="flex justify-end items-center">
+    <div class="flex justify-end items-center gap-5 ">
         <a th:href="@{/createdProject}"
-           class="bg-green-500 shadow-md cursor-pointer rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
+        class="bg-green-500 shadow-md cursor-pointer text-center w-[10rem] rounded-lg px-10 py-2 border text-white hover:shadow-lg hover:bg-green-600">
+        <i class="bi bi-person-add bold "></i>
             Criar
         </a>
     </div>
 
-    <div class="grid grid-cols-3 mt-5 w-auto md:grid-cols-3 lg:grid-cols-3 gap-6">
+    <div th:if="${mensagemErro}" id="alert" role="alert" 
+         class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-r-xl shadow-sm">
+        <p th:utext="${mensagemErro}" class="font-medium text-sm"></p>
+    </div>
+    
+    <div th:if="${mensagemSucesso}" id="alert-sucesso" role="alert" 
+         class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-r-xl shadow-sm">
+        <p th:text="${mensagemSucesso}" class="font-medium text-sm"></p>
+    </div>
 
-        <!-- CARD -->
-        <div
-            th:each="user : ${usuario}"
+    <div th:if="${not #lists.isEmpty(usuario)}" 
+         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[2rem]">
+
+        <div th:each="user : ${usuario}"
+             class="group bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between border-b-4 hover:border-b-purple-400">
             
-            class="bg-white shadow-md rounded-lg p-4 w-auto text-left  border border-gray-200
-                   transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div>
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
+                            <i class="bi bi-person text-xl"></i>
+                        </div>
+                        <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
+                           class="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors leading-tight"
+                           th:text="${user.name}">
+                        </a>
+                    </div>
 
-            <div class="flex flex-col space-y-2">
-                <div class="flex items-center justify-between relative">
-
-                    <!-- TÍTULO -->
-                    <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" class="text-lg font-semibold text-[#1F2937] cursor-pointer hover:text-[#0D6EFD]"
-                         th:text="${user.name}">
-                    </a>
-
-                    <!-- MENU -->
                     <details class="relative" onclick="event.stopPropagation();">
-                        <summary class="list-none cursor-pointer p-2 rounded-full hover:bg-gray-100">
-                            <i class="bi bi-three-dots-vertical text-xl"></i>
+                        <summary class="list-none cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 text-gray-400">
+                            <i class="bi bi-three-dots-vertical text-lg"></i>
                         </summary>
 
-                        <div class="absolute right-0 mt-2 w-40 rounded-lg bg-white shadow-lg z-50">
-                            <ul class="py-1 text-sm">
-                                <li class="px-4 py-2 hover:bg-gray-100">
-                                    Editar
+                        <div class="absolute right-0 mt-2 w-44 rounded-xl bg-white shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                            <ul class="py-1 text-sm text-gray-600">
+                                <li>
+                                    <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
+                                       class="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 transition-colors">
+                                        <i class="bi bi-pencil"></i> Editar Perfil
+                                    </a>
                                 </li>
-
-                                <li class="px-4 py-2 text-red-600 hover:bg-red-50">
-                                    <form th:action="@{/panelProjetos/{id}/deletar(id=${user.id})}"
-                                          method="post">
-
-                                        <button
-                                            type="button"
+                                <li class="border-t border-gray-50">
+                                    <button type="button"
                                             th:attr="onclick=|openDeleteModal('/panelProjetos/${user.id}/deletar')|"
-                                            class="w-full text-left py-2 text-red-600 hover:bg-red-50">
-                                            Excluir
-                                        </button>
-
-                                    </form>
+                                            class="flex items-center gap-2 w-full text-left px-4 py-2.5 text-red-500 hover:bg-red-50 transition-colors">
+                                        <i class="bi bi-trash"></i> Excluir
+                                    </button>
                                 </li>
                             </ul>
                         </div>
                     </details>
-
                 </div>
 
-
-                <div class="flex flex-row gap-2 text-sm font-medium  ">
-
-                    <div class="bg-[#D9D9D9] rounded-lg py-[3px] px-[6px] ">
-                        <span th:text="${user.descricao}">Sem descrição</span>
+                <div class="mt-2">
+                    <label class="text-[10px] uppercase tracking-widest font-bold text-gray-400 block mb-1">Descrição</label>
+                    <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                        <p class="text-sm text-gray-600 line-clamp-2" th:text="${user.descricao != null ? user.descricao : 'Sem descrição cadastrada.'}">
+                        </p>
                     </div>
-
                 </div>
-
-
             </div>
 
+            <div class="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
+                 <span class="text-[10px] font-bold text-gray-300 uppercase tracking-tighter">ID: [[${user.id}]]</span>
+                 <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
+                    class="text-xs font-bold text-purple-500 hover:text-blue-700 transition-colors uppercase">
+                    Configurações →
+                 </a>
+            </div>
         </div>
-
     </div>
     
     <!-- SEM RESULTADOS -->
