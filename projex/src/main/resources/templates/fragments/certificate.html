@@ -54,18 +54,17 @@
                 </div>
 
                 <!-- DONO + STATUS -->
-                <div class="flex flex-row gap-2 text-sm font-medium text-[#6366F1]">
-
-                    <div class="flex items-center gap-1">
-                        <i class="bi bi-person-circle"></i>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span th:text="${cert.status.label}"
+                          class="text-[10px] uppercase bg-green-100 tracking-wider font-bold px-2.5 py-1 rounded-full shadow-sm"
+                          th:classappend="${cert.status.cssClass}">
+                    </span>
+                    
+                    <div class="flex items-center gap-1.5 text-sm text-gray-500">
+                        <i class="bi bi-person-circle text-purple-400"></i>
                         <span th:text="${cert.dono != null ? cert.dono.name : 'Sem dono'}"></span>
-                        |
                     </div>
-                    <div th:text="${cert.status.label}"
-                    th:classappend="${cert.status.cssClass}">
                 </div>
-                
-            </div>
             <a class="flex flex-row gap-1 text-sm cursor-pointer w-[15rem] font-medium text-[#0D6EFD] hover:text-[black] duration-300 transform transition-transform " 
             th:href="@{/panelCertificados(search=${search}, category=${cert.category})}">
                 <i class="bi bi-layers-fill"></i>
