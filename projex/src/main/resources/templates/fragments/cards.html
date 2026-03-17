@@ -59,25 +59,25 @@
                 </div>
 
                 <!-- DONO + STATUS -->
-                <div class="flex flex-row gap-2 text-sm font-medium text-[#6366F1]">
-
-                    <div class="flex items-center gap-1">
-                        <i class="bi bi-person-circle"></i>
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <div  class="flex items-center gap-1 text-gray-500 text-sm">
+                        <i class="bi bi-person-circle text-purple-400"></i>
                         <span th:text="${card.dono != null ? card.dono.name : 'Sem dono'}"></span>
-                        |
                     </div>
+                    <span th:text="${card.status.label}"
+                    class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700"
+                    th:classappend="${card.status.cssClass}">
+                    </span>
+            </div>
+                
 
-                    <div th:text="${card.status.label}"
-                         th:classappend="${card.status.cssClass}">
-                    </div>
-
+                <div class="flex flex-wrap gap-1.5 mt-2" th:if="${card.tecnologiasText != null}">
+                    <span th:each="tech : ${#strings.arraySplit(card.tecnologiasText, ';')}"
+                          th:text="${tech.trim()}"
+                          class="text-[11px] font-medium bg-gray-50 text-gray-500 border border-gray-200 px-2 py-0.5 rounded-md">
+                    </span>
                 </div>
-
-                <!-- TECNOLOGIAS -->
-                <div class="text-sm text-gray-500"
-                     th:if="${card.tecnologiasText != null}"
-                     th:text="${card.tecnologiasText}">
-                </div>
+            </div>
 
             </div>
 
