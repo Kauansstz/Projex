@@ -1,233 +1,157 @@
-<div class="flex flex-column justify-end items-center m-auto" th:fragment="certificateCreate">
-    <!-- Conteúdo principal -->
-    <div class="ml-[10rem] w-[59rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl">
-
-        <!-- Título -->
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Cadastrar Certificado</h2>
-
-        <!-- Formulário -->
-        <form th:action="@{/certificate/createdCertificate}" 
-                th:object="${certificate}" 
-                method="post" 
-                enctype="multipart/form-data"
-                class="space-y-5">
-
-            <!-- Título -->
-            <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Título:</label>
-                <input type="text" th:field="*{titulo}" placeholder="Digite o título"
-                       class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-            </div>
-            <div class="flex flex-col autocomplete-container">
-                <label class="mb-2 font-semibold text-gray-700">Instituição:</label>
-                <input type="text" th:field="*{Instituicao}" placeholder="Digite a Instituição" name="instituicao" id="instituicaoInput" autocomplete="off"
-                       class="border
-                       border-gray-300 
-                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                       
-                <ul id="instituicaoList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
-                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
-
-                </ul>
-            </div>
-            <div class="flex flex-col autocomplete-container">
-                <label class="mb-2 font-semibold text-gray-700">Tipo de Certificação:</label>
-                <input type="text" th:field="*{typeCertificate}" placeholder="Digite o Tipo do certificado" name="certificado" id="TypeInput" autocomplete="off"
-                       class="border
-                       border-gray-300 
-                       rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                       
-                <ul id="TypeList" class="absolute z-10 w-[24rem] bg-zinc-900 border border-zinc-700 
-                        rounded-md mt-[5rem] hidden max-h-48 overflow-y-auto">
-
-                </ul>
-            </div>
-
-            <!-- Descrição -->
-            <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
-                <textarea th:field="*{descricao}" rows="4" placeholder="Descrição detalhada"
-                          class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
-            </div>
-
-            <!-- Status -->
-            <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Status:</label>
-                <select th:field="*{status}"
-                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                    <option value="EM_ANDAMENTO">Em andamento</option>
-                    <option value="CONCLUIDO">Concluído</option>
-                    <option value="CANCELADO">Cancelado</option>
-                </select>
-            </div>
-
-            <!-- Data de Conclusão -->
-            <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
-                <input type="date" th:field="*{dataConclusao}"
-                       class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-            </div>
-
-            <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Categoria:</label>
-
-                <div id="tag-container"
-                     class="border border-gray-300 rounded-lg px-4 py-3 min-h-[48px] flex flex-wrap gap-2 cursor-text "
-                     >
-
-                    <select name="categoria" 
-                            id="categoria" 
-                            th:field="*{category}" 
-                            required 
-                            class="w-full  border-none outline-none focus:outline-none " >
-                        <option value="">Selecione a categoria</option>
-                        <option 
-                            th:each="cat : ${categorias}"
-                            th:value="${cat.name()}"
-                            th:text="${cat.label}">---</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="relative w-fit">
-
-                <label 
-                    for="fileInput"
-                    id="uploadBtn"
-                    class="relative inline-flex items-center gap-2 
-                        bg-gray-100 border border-gray-300 w-[24rem] justify-center
-                        px-4 py-2 rounded-lg cursor-pointer
-                        hover:bg-gray-200 transition
-                        overflow-hidden">
-
-                    <!-- PROGRESSO -->
-                    <div 
-                        id="progressBar"
-                        class="absolute inset-0 bg-purple-500 pointer-events-none hidden"
-                        style="width: 0%">
-                    </div>
-
-                    <!-- CONTEÚDO -->
-                    <div class="relative z-10 flex items-center gap-2">
-                        <i class="bi bi-card-image text-gray-500 text-[18px]" id="icon"></i>
-
-                        <span class="text-gray-600 text-[18px]" id="fileName">
-                            Anexar certificado
-                        </span>
-
-                        <button 
-                            type="button"
-                            id="clearFile"
-                            class="hidden text-gray-400 hover:text-red-500 transition ml-2">
-                            <i class="bi bi-x-lg"></i>
-                        </button>
-                    </div>
-
-                </label>
-
-                <!-- INPUT FILE FORA DO LABEL -->
-                <input 
-                    type="file" 
-                    name="anexo"
-                    id="fileInput"
-                    class="hidden"
-                    th:field="*{anexo}">
-
-
-                <div id="previewContainer" class="mt-4 hidden">
-                    <img id="imagePreview" class="rounded-lg max-h-60 hidden border" />
-                    
-                    <iframe id="pdfPreview" class="w-full h-60 rounded-lg border hidden"></iframe>
-                </div>
-
-            </div>
-
-            <div class="flex flex-col gap-2">
-            <span class="font-semibold text-gray-700">Publicar projeto</span>
-
-            <label class="relative inline-flex items-center cursor-pointer">
-
-                <input type="checkbox"
-                    th:field="*{isPublish}"
-                    class="sr-only peer">
-
-                <!-- Switch -->
-                <div
-                    class="w-12 h-6 bg-gray-300 rounded-full
-                        peer-checked:bg-purple-600
-                        transition-colors duration-300
-
-                        after:content-['']
-                        after:absolute
-                        after:top-[2px]
-                        after:left-[2px]
-                        after:bg-white
-                        after:w-5
-                        after:h-5
-                        after:rounded-full
-                        after:transition-all
-                        after:duration-300
-
-                        peer-checked:after:left-[26px]">
-                </div>
-
-                <span class="ml-4 text-sm text-gray-600 peer-checked:text-purple-600">
-                    Tornar público
-                </span>
-
-            </label>
-
-            <p class="text-xs text-gray-400">
-                Se ativado, seu projeto aparecerá na área de exploração.
-            </p>
+<div class="flex min-h-screen bg-slate-50 py-12 pl-0 md:pl-64 justify-center items-start font-sans" th:fragment="certificateCreate">
+    
+    <div class="w-full max-w-5xl bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mx-6">
+        
+        <div class="bg-gradient-to-r from-purple-700 to-indigo-600 px-8 py-10 text-white">
+            <h2 class="text-3xl font-extrabold tracking-tight">
+                Novo Certificado
+            </h2>
+            <p class="text-purple-100 mt-2">Preencha os dados abaixo para registrar sua conquista.</p>
         </div>
 
-            <div class="flex justify-center gap-20">
+        <form th:action="@{/certificate/createdCertificate}" 
+              th:object="${certificate}" 
+              method="post" 
+              enctype="multipart/form-data"
+              class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-12">
 
-                <!-- Botão de voltar -->
-                <button onclick="history.back()"
-                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                    <i class="bi bi-arrow-left-circle"></i> Voltar
-                </button>
+            <div class="md:col-span-7 space-y-6">
+                
+                <div class="border-b border-slate-100 pb-4 mb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="bi bi-info-circle text-purple-600"></i> Informações Gerais
+                    </h3>
+                </div>
 
-                <!-- Botão Salvar -->
-                <button type="submit"
-                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                    <i class="bi bi-floppy"></i>Salvar
-                </button>
+                <div class="flex flex-col">
+                    <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Título da Conquista</label>
+                    <input type="text" th:field="*{titulo}" placeholder="Ex: Especialista em Spring Boot"
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all placeholder:text-slate-400"/>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex flex-col autocomplete-container relative">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Instituição Emissora</label>
+                        <input type="text" th:field="*{Instituicao}" placeholder="Nome da escola/empresa" id="instituicaoInput" autocomplete="off"
+                               class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
+                        <ul id="instituicaoList" class="absolute z-20 w-full bg-slate-900 border border-slate-700 rounded-xl mt-20 hidden max-h-48 overflow-y-auto text-white shadow-xl"></ul>
+                    </div>
+
+                    <div class="flex flex-col autocomplete-container relative">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Tipo de Formação</label>
+                        <input type="text" th:field="*{typeCertificate}" placeholder="Ex: Bacharelado, Workshop" id="TypeInput" autocomplete="off"
+                               class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
+                        <ul id="TypeList" class="absolute z-20 w-full bg-slate-900 border border-slate-700 rounded-xl mt-20 hidden max-h-48 overflow-y-auto text-white shadow-xl"></ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Resumo ou Descrição</label>
+                    <textarea th:field="*{descricao}" rows="4" placeholder="O que você aprendeu neste curso?"
+                              class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all resize-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700">Status</label>
+                        <select th:field="*{status}" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 appearance-none cursor-pointer">
+                            <option value="EM_ANDAMENTO">Em andamento</option>
+                            <option value="CONCLUIDO">Concluído</option>
+                            <option value="CANCELADO">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700">Data de Conclusão</label>
+                        <input type="date" th:field="*{dataConclusao}" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer"/>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700">Categoria</label>
+                        <select id="categoria" th:field="*{category}" required class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer">
+                            <option value="">Selecione...</option>
+                            <option th:each="cat : ${categorias}" th:value="${cat.name()}" th:text="${cat.label}"></option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
+            <div class="md:col-span-5 flex flex-col space-y-6">
+                
+                <div class="border-b border-slate-100 pb-4 mb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="bi bi-file-earmark-arrow-up text-purple-600"></i> Documentação
+                    </h3>
+                </div>
+                
+                <div id="previewContainer" class="relative group flex flex-col items-center justify-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-3xl p-6 min-h-[300px] hover:border-purple-400 transition-colors hidden">
+                    <img id="imagePreview" class="rounded-xl max-h-72 object-contain shadow-xl mb-4 hidden ring-4 ring-white" />
+                    <iframe id="pdfPreview" class="w-full h-64 rounded-xl border-none hidden shadow-inner"></iframe>
+                </div>
+
+                <label for="fileInput" id="uploadBtn"
+                    class="group relative flex flex-col items-center justify-center gap-3 bg-purple-50 border-2 border-purple-200 w-full py-8 rounded-3xl cursor-pointer hover:bg-purple-100 transition-all border-dashed overflow-hidden">
+                    
+                    <div id="progressBar" class="absolute bottom-0 left-0 h-1.5 bg-purple-600 transition-all duration-300" style="width: 0%"></div>
+                    
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <i class="bi bi-cloud-upload text-2xl text-purple-600" id="icon"></i>
+                    </div>
+                    
+                    <div class="text-center">
+                        <span id="fileName" class="font-bold text-purple-900 block">Clique para anexar</span>
+                        <span class="text-xs text-purple-400">PDF, PNG ou JPG (Max. 5MB)</span>
+                    </div>
+
+                    <button type="button" id="clearFile" class="hidden absolute top-4 right-4 text-slate-400 hover:text-red-500 transition">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </label>
+                
+                <input type="file" id="fileInput" class="hidden" th:field="*{anexo}">
+
+                <div class="bg-indigo-900 p-6 rounded-3xl shadow-lg shadow-indigo-200 text-white space-y-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="font-bold block">Visibilidade Pública</span>
+                            <p class="text-xs text-indigo-200">Exibir este certificado no seu perfil público.</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" th:field="*{isPublish}" class="sr-only peer">
+                            <div class="w-14 h-7 bg-indigo-700/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-400"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-12 flex flex-col-reverse md:flex-row justify-end gap-4 border-t border-slate-100 pt-10 mt-6">
+                <button type="button" onclick="history.back()"
+                   class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-10 py-4 rounded-2xl transition active:scale-95">
+                    Cancelar
+                </button>
+                <button type="submit"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-14 py-4 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="bi bi-check-circle-fill"></i> Finalizar Cadastro
+                </button>
+            </div>
         </form>
 
-        <div th:if="${mensagemErro}" 
-        role="alert" 
-        id="alert"
-        >
-        <p th:text="${mensagemErro}" class="font-medium"></p>
-    </div>
-    
-        <div th:if="${mensagemSucesso}" 
-        role="alert" 
-        id="alert-sucesso"
-        th:text="${mensagemSucesso}">
-        
+        <div class="px-8 pb-8">
+            <div th:if="${mensagemErro}" role="alert" class="p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3 animate-pulse">
+                <i class="bi bi-exclamation-octagon-fill"></i>
+                <p th:text="${mensagemErro}" class="font-semibold text-sm"></p>
+            </div>
+            <div th:if="${mensagemSucesso}" role="alert" class="p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl flex items-center gap-3">
+                <i class="bi bi-check-all text-xl"></i>
+                <p th:text="${mensagemSucesso}" class="font-semibold text-sm"></p>
+            </div>
+        </div>
     </div>
 
-    <!-- IMAGE MODAL -->
-    <div id="imageModal"
-        class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-
-        <button id="closeModal"
-                class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition">
-            &times;
-        </button>
-
-        <img id="modalImage"
-            class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-2xl cursor-zoom-in transition duration-300">
+    <div id="imageModal" class="fixed inset-0 bg-slate-900/95 hidden items-center justify-center z-50 backdrop-blur-sm p-4">
+        <button id="closeModal" class="absolute top-6 right-6 text-white bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition text-2xl">&times;</button>
+        <img id="modalImage" class="max-h-full max-w-full rounded-2xl shadow-2xl transition-transform duration-300">
     </div>
 
-
-</div>
     <script src="/js/tags.js"></script>
 </div>
