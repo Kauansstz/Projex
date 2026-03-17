@@ -1,126 +1,84 @@
+<div class="min-h-screen bg-gray-50 flex w-full" th:fragment="editProject">
+    
+    <div class="hidden md:block md:w-72 shrink-0"></div>
 
-<div class="flex flex-column justify-center items-center m-auto" th:fragment="editProject">
-    <div class="w-[56rem] max-w-md p-8 bg-white rounded-2xl shadow-2xl ">
+    <div class="flex-grow flex flex-col items-center justify-start py-10 px-4 sm:px-10">
+        
+        <div class="w-full max-w-3xl bg-white rounded-[2.5rem] shadow-2xl shadow-purple-200/40 border border-gray-100 overflow-hidden">
             
-            <h2 class="text-3xl font-bold text-center text-gray-900 mb-6">Editar Projeto</h2>
-
-            <form th:action="@{/panelProjetos/{id}/editar(id=${projeto.id})}" th:object="${projeto}" method="post" class="space-y-5">
-
-                <input type="hidden" th:field="*{id}">
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Título:</label>
-                    <input type="text" th:field="*{titulo}" placeholder="Digite o título"
-                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                </div>
-
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Descrição:</label>
-                    <textarea th:field="*{descricao}" rows="4" placeholder="Descrição detalhada"
-                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"></textarea>
-                </div>
-
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Status:</label>
-                    <select th:field="*{status}"
-                            class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                        <option value="EM_ANDAMENTO">Em andamento</option>
-                        <option value="CONCLUIDO">Concluído</option>
-                        <option value="CANCELADO">Cancelado</option>
-                    </select>
-                </div>
-
-                <!-- Data de Conclusão -->
-                <div class="flex flex-col">
-                    <label class="mb-2 font-semibold text-gray-700">Data de Conclusão:</label>
-                    <input type="date" th:field="*{dataConclusao}" 
-                        class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"/>
-                </div>
-
-                <!-- Tecnologias -->
-                <div class="flex flex-col">
-                <label class="mb-2 font-semibold text-gray-700">Tecnologias:</label>
-
-                <!-- Container das TAGS + Input -->
-                <div id="tag-container"
-                     class="border border-gray-300 rounded-lg px-4 py-3 min-h-[48px] flex flex-wrap gap-2 cursor-text"
-                     onclick="document.getElementById('tag-input').focus()">
-
-                    <input id="tag-input" type="text"
-                           placeholder="Digite e coloque ; para criar tags"
-                           class="outline-none flex-grow min-w-[120px]"/>
-                </div>
-
-                <!-- Campo hidden enviado ao backend -->
-                <input type="hidden" th:field="*{tecnologiasText}" id="tecnologiasText">
-
+            <div class="bg-purple-600 p-10 text-center relative overflow-hidden">
+                <div class="absolute top-[-20px] right-[-20px] w-24 h-24 bg-white/10 rounded-full"></div>
+                <div class="absolute bottom-[-10px] left-[-10px] w-16 h-16 bg-white/5 rounded-full"></div>
+                
+                <h2 class="text-3xl font-black text-white relative z-10">Editar Projeto</h2>
+                <p class="text-purple-100 text-sm mt-2 opacity-90 relative z-10">Atualize as informações do seu projeto</p>
             </div>
+
+            <form th:action="@{/panelProjetos/{id}/editar(id=${projeto.id})}" th:object="${projeto}" method="post" class="p-8 md:p-12 space-y-8">
                 
-                
-                <div class="flex justify-center gap-20">
-                    <!-- Botão de voltar -->
-                    <a th:href="@{/panelProjetos}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                        <i class="bi bi-arrow-left-circle"></i> Cancelar
+                <input type="hidden" th:field="*{id}">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Título do Projeto</label>
+                        <input type="text" th:field="*{titulo}" placeholder="Ex: App de Gestão Financeira"
+                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-4 focus:bg-white focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition-all shadow-sm"/>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Status</label>
+                        <select th:field="*{status}" id="status"
+                                class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-4 focus:bg-white focus:border-purple-500 outline-none transition-all cursor-pointer text-gray-600 shadow-sm">
+                            <option value="SELECIONE_OPCAO">Selecione uma opção</option>
+                            <option value="EM_ANDAMENTO">Em andamento</option>
+                            <option value="CONCLUIDO">Concluído</option>
+                            <option value="CANCELADO">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Data de Conclusão</label>
+                        <input type="date" th:field="*{dataConclusao}"
+                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-4 focus:bg-white focus:border-purple-500 outline-none transition-all text-gray-600 shadow-sm"/>
+                    </div>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Descrição Detalhada</label>
+                    <textarea th:field="*{descricao}" rows="4" placeholder="Conte os detalhes do projeto..."
+                              class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-4 focus:bg-white focus:border-purple-500 outline-none transition-all resize-none shadow-sm"></textarea>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Tecnologias (Tags)</label>
+                    <div id="tag-container"
+                         class="border-2 border-dashed border-gray-200 rounded-2xl px-5 py-4 min-h-[70px] flex flex-wrap gap-2 cursor-text hover:border-purple-300 hover:bg-purple-50/30 transition-all shadow-inner"
+                         onclick="document.getElementById('tag-input').focus()">
+                        
+                        <input id="tag-input" type="text"
+                               placeholder="Digite e use ';'..."
+                               class="outline-none flex-grow min-w-[150px] bg-transparent text-sm"/>
+                    </div>
+                    <input type="hidden" th:field="*{tecnologiasText}" id="tecnologiasText">
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 pt-6">
+                    <a th:href="@{/panelProjetos}" 
+                       class="w-full sm:w-1/3 order-2 sm:order-1 py-4 px-6 rounded-2xl font-bold text-gray-400 hover:bg-gray-100 transition-all text-center">
+                        Cancelar
                     </a>
-                    <!-- Botão Salvar -->
-                    <button type="submit" 
-                            class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300 flex items-center gap-2">
-                        <i class="bi bi-floppy"></i>Salvar
+                    <button type="submit"
+                            class="w-full sm:w-2/3 order-1 sm:order-2 py-4 px-6 rounded-2xl font-bold text-white bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-200 active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <i class="bi bi-floppy"></i> Salvar Alterações
                     </button>
                 </div>
-
             </form>
         </div>
+    </div>
 </div>
-<script>
-    const container = document.getElementById("tag-container");
-    const input = document.getElementById("tag-input");
-    const hiddenInput = document.getElementById("tecnologiasText");
 
-    function createTag(text) {
-        const tag = document.createElement("span");
-        tag.className = "bg-purple-600 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2";
-        tag.textContent = text;
+</div>
+    <script src="/js/tags.js"></script>
+</div>
 
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "×";
-        removeBtn.className = "ml-2 font-bold";
-        removeBtn.onclick = () => {
-            tag.remove();
-            updateHiddenInput();
-        };
-
-        tag.appendChild(removeBtn);
-        container.insertBefore(tag, input);
-    }
-
-    function updateHiddenInput() {
-        const tags = Array.from(container.querySelectorAll("span"))
-            .map(tag => tag.firstChild.textContent.trim());
-
-        hiddenInput.value = tags.join(";");
-    }
-
-    // Criar tag ao digitar ;
-    input.addEventListener("keyup", (e) => {
-        if (e.key === ";") {
-            const value = input.value.replace(";", "").trim();
-            if (value) {
-                createTag(value);
-                updateHiddenInput();
-            }
-            input.value = "";
-        }
-    });
-
-    // 🔥 PRECARREGAR TAGS NO EDIT
-    document.addEventListener("DOMContentLoaded", () => {
-        if (hiddenInput.value) {
-            hiddenInput.value.split(";").forEach(t => {
-                if (t.trim()) {
-                    createTag(t.trim());
-                }
-            });
-        }
-    });
-</script>
-
+<script src="/js/notificacao.js"></script>
