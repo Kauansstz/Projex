@@ -1,81 +1,81 @@
-<div class="flex flex-col justify-center items-center m-auto 
-            ml-0 lg:ml-[15rem] 2xl:ml-[20rem] min-w-[300px]" th:fragment="aboutAccount">
-    <div class="w-full min-h-max max-w-[1440px] min-w-[300px]  xl:ml[5rem]
-                h-auto sm:h-[50rem] md:h-[55rem] p-8 
-                bg-white rounded-2xl shadow-2xl">
-                <!-- Título -->
-                 <div class="flex items-center justify-start gap-6">
-                    <!-- Botão de voltar -->
-                    <button onclick="history.back()" 
-                            class="text-black font-bold w-10 text-[32px] hover:bg-gray-200 hover:rounded-lg">
-                        <i class="bi bi-arrow-left"></i>
-                    </button>
+<div class="flex flex-col m-auto ml-0 lg:ml-[16rem] 2xl:ml-[20rem] p-4 lg:p-8 w-full max-w-[1200px]" th:fragment="aboutAccount">
+    
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+        
+        <div class="h-32 bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] relative">
+            <button onclick="history.back()" 
+                    class="absolute top-6 left-6 bg-white/20 hover:bg-white/40 text-white p-2 rounded-xl backdrop-blur-md transition-all">
+                <i class="bi bi-arrow-left text-xl"></i>
+            </button>
+        </div>
 
-                    <!-- Título -->
-                    <h2 class="text-3xl font-bold text-gray-900 m-auto">Perfil</h2>
+        <div class="px-8 pb-10">
+            <div class="relative flex flex-col md:flex-row md:items-end gap-6 -mt-12 mb-8">
+                <div class="w-32 h-32 bg-white rounded-[2.5rem] p-2 shadow-lg">
+                    <div class="w-full h-full bg-gray-100 rounded-[2rem] flex items-center justify-center text-[#6366F1]">
+                        <i class="bi bi-person-circle text-6xl"></i>
+                    </div>
                 </div>
-                    <!-- Título -->
-                <div class="flex flex-row gap-2 text-[30px] mt-[40px]">
-                    <i class="bi bi-person-circle"></i>
-                    <label class="mb-2 font-semibold text-gray-700">Kauan dos Santos de Souza</label>
+                <div class="flex-1 pb-2">
+                    <h2 class="text-3xl font-black text-gray-900 leading-tight">Kauan dos Santos de Souza</h2>
+                    <p class="text-[#6366F1] font-medium tracking-wide uppercase text-xs">Desenvolvedor Full Stack</p>
                 </div>
+                <div class="flex gap-3 pb-2">
+                    <a th:href="@{/dashboardEdit}" class="p-3 bg-gray-50 hover:bg-blue-50 text-gray-400 hover:text-blue-600 rounded-2xl transition-all border border-gray-100">
+                        <i class="bi bi-pencil-square text-xl"></i>
+                    </a>
+                </div>
+            </div>
 
-                <!-- Descrição -->
-                <div class="flex flex-col">
-                    <label  rows="4" class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </label>
-                </div>
-                <div class="flex flex-col mt-10">
-                    <label class="mb-2 font-semibold text-gray-700 text-[20px]">Sobre</label>
-                    <label  rows="4" class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </label>
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
-                    <!-- Tecnologias -->
-                    <div class="flex flex-col mt-10">
-                        <div class="flex items-center justify-between">
-                            <label class="mb-2 font-semibold text-gray-700 text-[20px]">Ultimos projetos</label>
-                            <a class="text-gray-700 cursor-pointer hover:text-blue-600" th:href="@{/dashboardEdit}">
-                                <i class="bi bi-pencil-square text-xl"></i>
+                <div class="lg:col-span-2 space-y-10">
+                    <section>
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="bi bi-chat-left-text text-[#6366F1]"></i> Sobre
+                        </h3>
+                        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-50 leading-relaxed text-gray-600">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                                <i class="bi bi-code-slash text-[#6366F1]"></i> Últimos Projetos
+                            </h3>
+                        </div>
+                        <div th:replace="~{fragments/cardsGrid :: cardsGrid(${ultimosProjetos}, 'grid-cols-1 md:grid-cols-2')}"></div>
+                    </section>
+                </div>
+
+                <div class="space-y-10">
+                    <section>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold text-gray-800">Experiência</h3>
+                            <a href="#" class="text-[#6366F1] hover:bg-indigo-50 p-2 rounded-lg transition-colors">
+                                <i class="bi bi-plus-lg"></i>
                             </a>
                         </div>
-                        <div th:replace="fragments/cardsGrid :: cardsGrid(${ultimosProjetos})"></div>
+                        <div class="space-y-4">
+                            <div th:replace="~{fragments/certificate :: certificados(${certificados}, '')}"></div>
+                        </div>
+                    </section>
 
-
-                    </div>
-
-                    <div class="flex flex-col mt-10">
-                        <div class="flex items-center justify-between text-[20px]">
-                            <label class="mb-2 font-semibold text-gray-700">Experiência</label>
-                            <a class="text-gray-700 cursor-pointer hover:text-blue-600">
-                                <i class="bi bi-pencil-square text-xl"></i>
+                    <section class="bg-[#F8FAFC] rounded-[2rem] p-6 border border-gray-100">
+                        <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-4">Relatórios</h3>
+                        <div class="grid grid-cols-1 gap-3">
+                            <a th:href="@{/historico}" class="flex items-center justify-center gap-2 bg-white hover:bg-orange-50 text-orange-600 border border-orange-100 font-bold py-3 rounded-2xl transition-all">
+                                <i class="bi bi-eye"></i> Visualizar Histórico
+                            </a>
+                            <a href="/historico/api/v1/exportCSV" class="flex items-center justify-center gap-2 bg-[#22C55E] hover:bg-green-600 text-white font-bold py-3 rounded-2xl shadow-lg shadow-green-100 transition-all">
+                                <i class="bi bi-file-earmark-spreadsheet"></i> Exportar CSV
                             </a>
                         </div>
-                        <div th:replace="fragments/certificate :: certificate" ></div>
-                    </div>
-                    <div class="flex flex-col mt-10">
-                        <div class="flex items-center justify-between text-[20px]">
-                            <label class="mb-2 font-semibold text-gray-700">Histórico</label>
-                        </div>
-                        <div class="flex flex-row gap-2">
-                            <div class="mb-10 flex justify-start">
-                                <a th:href="@{/historico}">
-                                    <button class=" bg-orange-500 text-white text-[20px] w-auto rounded-[5px] p-[8px] hover:bg-orange-600">
-                                        <span>Visualizar</span>
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="mb-10 flex justify-start">
-                                <a href="/historico/api/v1/exportCSV">
-                                    <button class=" bg-green-500 text-white text-[20px] w-auto rounded-[5px] p-[8px] hover:bg-green-600">
-                                        <span>Exportar CSV</span>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
+                </div>
 
             </div>
+        </div>
+    </div>
 </div>
