@@ -50,6 +50,9 @@ public class InfoUser {
     @Column(name="DESCRICAO", columnDefinition = "TEXT")
     private String descricao;
 
+    @Column(name="SOBRE", columnDefinition = "TEXT")
+    private String sobre;
+
     @Column(name="CRIADO_EM", nullable = false, updatable = false)
     private Timestamp criadoEm;
 
@@ -156,6 +159,9 @@ public class InfoUser {
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public String getSobre() { return sobre; }
+    public void setSobre(String sobre) { this.sobre = sobre; }
 
     public Timestamp getCriadoEm() { return criadoEm; }
     public void setCriadoEm(Timestamp criadoEm) { this.criadoEm = criadoEm; }

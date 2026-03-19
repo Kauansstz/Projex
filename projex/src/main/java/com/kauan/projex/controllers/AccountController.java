@@ -38,6 +38,7 @@ public class AccountController {
         List<InfoProject> ultimosProjetos = cardService.buscarUltimos3Projetos(usuario);
         List<Certificated> certificados = certficateRepository.findByDono(usuario);
 
+        model.addAttribute("usuario", usuario);
         model.addAttribute("certificados", certificados);
         model.addAttribute("ultimosProjetos", ultimosProjetos);
         model.addAttribute("pageTitle", "Perfil");
