@@ -12,7 +12,7 @@ import com.kauan.projex.model.InfoUser;
 public interface UsuarioRepository extends JpaRepository<InfoUser, Long> {
     Boolean existsByCpf(String cpf);
     Optional<InfoUser> findByCpf(String cpf);
-    List<InfoUser> findByTecnologiaId(Long id);
+    List<InfoUser> findByTecnologiasTextContaining(String tecnologia);
     Optional<InfoUser> findByEmail(String email);
     Optional<InfoUser> findByEmailAndPassword(String email, String password);
     Optional<InfoUser> findByToken(String token);

@@ -17,6 +17,8 @@ public class Tecnologia {
     @Column(name="NOME", length = 100, nullable = false)
     private String nome;
 
+    // @ManyToMany(mappedBy = "tecnologias")
+    // private List<InfoUser> usuarios;
 
     public String getNome(){
         return this.nome;

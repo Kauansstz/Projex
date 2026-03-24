@@ -74,10 +74,9 @@ public class InfoUser {
     @Column(name="TOKEN", nullable = false)
     private String token;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tecnologia_id")
-    private Tecnologia tecnologia;    
-    
+    @Column(name="tecnologias_text", columnDefinition = "TEXT")
+    private String tecnologiasText;  
+
     @Column(name="RESET_TOKEN_EXPIRACAO", nullable = false)
     private String resetTokenExpiracao;
     
@@ -224,8 +223,8 @@ public class InfoUser {
     public Boolean getAceitarTermos() { return aceitarTermos; }
     public void setAceitarTermos(Boolean aceitarTermos) { this.aceitarTermos = aceitarTermos; }
 
-    public Tecnologia getTecnologia(){return tecnologia;}
-    public void setTecnologia(Tecnologia tecnologia){this.tecnologia = tecnologia;}
+    public String getTecnologiasText(){return tecnologiasText;}
+    public void setTecnologiasText(String tecnologiasText){this.tecnologiasText = tecnologiasText;}
 
     @Override
     public String toString() {
@@ -237,7 +236,7 @@ public class InfoUser {
                 " | ROLE: '" + role + '\'' +
                 " | GENERO: " + genero +
                 " | CPF: '" + cpf + '\'' + "\n" +
-                " | TECNOLOGIA: '" + tecnologia + '\'' + "\n" +
+                " | TECNOLOGIA: '" + tecnologiasText + '\'' + "\n" +
                 '}';
     }
 }

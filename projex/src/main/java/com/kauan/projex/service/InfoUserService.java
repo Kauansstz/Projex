@@ -23,14 +23,16 @@ import jakarta.transaction.Transactional;
 public class InfoUserService {
 
     @Autowired
-    private UsuarioRepository userRepository; // Nome que você definiu no repositório
+    private UsuarioRepository userRepository; 
 
-    // Caminho onde as fotos serão salvas (fora do target para não sumirem no restart)
+    @Autowired
+    private UsuarioRepository repository;
+
     private final String uploadDir = "uploads/profiles/";
 
     @Transactional
     public void atualizarPerfil(InfoUser formUser, MultipartFile file) throws IOException {
-        // 1. Busca o usuário persistido para garantir consistência
+        
         InfoUser usuarioBanco = userRepository.findById(formUser.getId())
             .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
         usuarioBanco.setName(formUser.getName());
@@ -39,7 +41,7 @@ public class InfoUserService {
         usuarioBanco.setTelefone(formUser.getTelefone());
         usuarioBanco.setDescricao(formUser.getDescricao());
         usuarioBanco.setSobre(formUser.getSobre());
-        usuarioBanco.setTecnologia(formUser.getTecnologia());
+        usuarioBanco.setTecnologiasText(formUser.getTecnologiasText());
         usuarioBanco.setAtualizadoEm(LocalDateTime.now());
 
         if (file != null && !file.isEmpty()) {
@@ -53,6 +55,10 @@ public class InfoUserService {
         }
         userRepository.save(usuarioBanco);
     }
+    public InfoUser buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
+    }
 
     private String salvarArquivo(MultipartFile file) throws IOException {
         // Cria o diretório se não existir
@@ -60,6 +66,8 @@ public class InfoUserService {
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
+        
+        
 
         // Gera um nome único para evitar sobrescrever fotos com mesmo nome
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();

@@ -1,6 +1,6 @@
 <div class="flex flex-col m-auto ml-0 lg:ml-[16rem] 2xl:ml-[20rem] p-4 lg:p-8 w-full max-w-[1200px]" th:fragment="editAccount">
     
-    <form th:action="@{/panelEditAccount/atualizar}" th:object="${usuario}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/editAccount/{id}/atualizar(id=${usuario.id})}" th:object="${usuario}" method="POST" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
 
         <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden relative">
@@ -21,7 +21,7 @@
                     <div class="group relative w-32 h-32 bg-white rounded-[2.5rem] p-2 shadow-lg flex-shrink-0 mx-auto md:mx-0">
                         <div class="w-full h-full bg-gray-100 rounded-[2rem] flex items-center justify-center text-[#6366F1] overflow-hidden">
                             <i th:if="*{fotoPerfil == null or fotoPerfil.isEmpty()}" class="bi bi-person-circle text-6xl"></i>
-                            <img th:unless="*{fotoPerfil == null or fotoPerfil.isEmpty()}" th:src="*{fotoPerfil}" class="w-full h-full object-cover">
+                            <img th:unless="*{fotoPerfil == null or fotoPerfil.isEmpty()}" th:src="*{${usuario.fotoPerfil != null ? usuario.fotoPerfil : '/img/default-user.png'}}" class="w-full h-full object-cover">
                             
                             <label class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity rounded-[2.5rem]">
                                 <input type="file" name="fileFoto" class="hidden" accept="image/*">
@@ -88,16 +88,17 @@
                                       placeholder="Conte um pouco sobre sua trajetória..."></textarea>
                         </section>
 
-                        <section>
-                            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-3">
-                                <i class="bi bi-cpu text-[#6366F1] text-xl"></i> Tecnologia Principal
-                            </h3>
-                            <select th:field="*{tecnologia}" class="w-full md:w-1/2 bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 transition-all appearance-none cursor-pointer">
-                                <option th:each="tec : ${todasTecnologias}" 
-                                        th:value="${tec.id}" 
-                                        th:text="${tec.nome}">Java</option>
-                            </select>
-                        </section>
+                        <div class="flex flex-col">
+                            <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Tecnologias (Tags)</label>
+                            <div id="tag-container"
+                                class="border-2 border-dashed border-gray-200 rounded-2xl px-5 py-4 min-h-[70px] flex flex-wrap gap-2 cursor-text hover:border-purple-300 hover:bg-purple-50/30 transition-all shadow-inner"
+                                onclick="document.getElementById('tag-input').focus()">
+                                <input id="tag-input" type="text"
+                                    placeholder="Digite e use ';'..."
+                                    class="outline-none flex-grow min-w-[150px] bg-transparent text-sm"/>
+                            </div>
+                            <input type="hidden" th:field="*{tecnologiasText}" id="tecnologiasText">
+                        </div>
 
                     </div>
                 </div>
