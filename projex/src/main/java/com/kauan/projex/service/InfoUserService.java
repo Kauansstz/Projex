@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +17,6 @@ import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.UsuarioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 @Service
 public class InfoUserService {
@@ -41,9 +40,17 @@ public class InfoUserService {
         usuarioBanco.setTelefone(formUser.getTelefone());
         usuarioBanco.setDescricao(formUser.getDescricao());
         usuarioBanco.setSobre(formUser.getSobre());
+        usuarioBanco.setArea(formUser.getArea());
         usuarioBanco.setTecnologiasText(formUser.getTecnologiasText());
         usuarioBanco.setAtualizadoEm(LocalDateTime.now());
 
+        usuarioBanco.getLink().clear(); 
+    if (formUser.getLink() != null) {
+        for (var link : formUser.getLink()) {
+            link.setUsuario(usuarioBanco);
+            usuarioBanco.getLink().add(link);
+        }
+    }
         if (file != null && !file.isEmpty()) {
             if (usuarioBanco.getFotoPerfil() != null) {
                 Path fotoAntiga = Paths.get(usuarioBanco.getFotoPerfil().substring(1));
@@ -58,6 +65,26 @@ public class InfoUserService {
     public InfoUser buscarPorId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public InfoUser getUserForEditing(Long id) {
+        InfoUser user = userRepository.findById(id).orElseThrow();
+        user.getLink().size(); // Forces Hibernate to load the collection now
+        return user;
+    }
+
+    @Transactional(readOnly = true)
+    public InfoUser getUserWithLinks(Long id) {
+        InfoUser user = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        // Força a inicialização da coleção Lazy
+        if (user.getLink() != null) {
+            user.getLink().size(); 
+        }
+        
+        return user;
     }
 
     private String salvarArquivo(MultipartFile file) throws IOException {

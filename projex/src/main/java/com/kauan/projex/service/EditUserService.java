@@ -10,6 +10,8 @@ import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.model.LinkUsuario;
 import com.kauan.projex.repository.CenterUserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EditUserService {
 
@@ -18,11 +20,15 @@ public class EditUserService {
     public EditUserService(CenterUserRepository repository){
         this.repository = repository;
     }
-
+    @Transactional
     public void atualizarComDTO(Long id, EditUserDTO dto) {
 
         InfoUser user = repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new WorkFlowException("Usuário não encontrado"));
+
+        if (!user.getNameUser().equalsIgnoreCase(dto.getNameUser())) {
+            validarCamposDuplicadosNameUser(dto.getNameUser());
+        }
 
         user.setName(dto.getName());
         user.setNameUser(dto.getNameUser());
@@ -33,24 +39,20 @@ public class EditUserService {
         user.setDescricao(dto.getDescricao());
         user.setGenero(dto.getGenero());
         user.setDataNasc(dto.getDataNasc());
+        user.setArea(dto.getArea());
 
         user.getLink().clear();
-
-        for (LinkDTO linkDTO : dto.getLink()) {
-
-            if (linkDTO.getTipoLink() != null &&
-                linkDTO.getUrl() != null &&
-                !linkDTO.getUrl().isBlank()) {
-
-                LinkUsuario link = new LinkUsuario();
-                link.setTipoLink(linkDTO.getTipoLink());
-                link.setUrl(linkDTO.getUrl());
-                link.setUsuario(user);
-
-                user.getLink().add(link);
+        if (dto.getLink() != null) {
+            for (LinkDTO linkDTO : dto.getLink()) {
+                if (linkDTO.getUrl() != null && !linkDTO.getUrl().isBlank()) {
+                    LinkUsuario link = new LinkUsuario();
+                    link.setTipoLink(linkDTO.getTipoLink());
+                    link.setUrl(linkDTO.getUrl());
+                    link.setUsuario(user);
+                    user.getLink().add(link);
+                }
             }
         }
-
         repository.save(user);
     }
 

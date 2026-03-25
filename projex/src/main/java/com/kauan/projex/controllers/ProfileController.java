@@ -1,6 +1,7 @@
 package com.kauan.projex.controllers;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kauan.projex.model.InfoUser;
+import com.kauan.projex.model.LinkUsuario;
 import com.kauan.projex.repository.TecnologiaRepository;
 import com.kauan.projex.service.InfoUserService;
 
@@ -31,21 +33,24 @@ public class ProfileController {
     private InfoUserService service;
 
     @GetMapping("/{id}/editar")
-    public String editPage(Model model,  InfoUser usuario, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-       try{
-        InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-        if (usuarioLogado == null) {
-            return "redirect:/login"; 
-        }
-        model.addAttribute("usuario", usuarioLogado);
-        model.addAttribute("todasTecnologias", tecnologiaRepository.findAll());
-        
-        return "pages/panelEditAccount"; 
-    } catch(Exception e){
-        redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-        return "redirect:/panelAccount";
-    } 
-}
+    public String editPage(@PathVariable Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        try {
+            InfoUser usuarioParaEditar = service.getUserWithLinks(id);
+    
+            // Se ele não tiver links, adicionamos um vazio para o formulário aparecer
+            if (usuarioParaEditar.getLink() == null || usuarioParaEditar.getLink().isEmpty()) {
+                usuarioParaEditar.getLink().add(new LinkUsuario()); 
+            }         
+            model.addAttribute("usuario", usuarioParaEditar);
+            model.addAttribute("tipoLink", List.of("GITHUB", "LINKEDIN", "PORTFOLIO"));
+            model.addAttribute("todasTecnologias", tecnologiaRepository.findAll());          
+            return "pages/panelEditAccount"; 
+
+        } catch(Exception e) {
+            redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao carregar perfil: " + e.getMessage());
+            return "redirect:/panelAccount";
+        } 
+    }
 
     @PostMapping("/{id}/atualizar") 
     public String updateProfile(@PathVariable Long id,@ModelAttribute("usuario") InfoUser formUser,

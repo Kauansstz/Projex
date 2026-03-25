@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.kauan.projex.utils.Genero;
 
 @Entity
@@ -63,6 +65,7 @@ public class InfoUser {
     private LocalDateTime ultimoLogin;
 
     @Column(name="ATUALIZADO_EM", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime atualizadoEm;
 
     @Column(name="TENTATIVAS_LOGIN", nullable = false)
@@ -74,6 +77,9 @@ public class InfoUser {
     @Column(name="TOKEN", nullable = false)
     private String token;
 
+    @Column(name="AREA")
+    private String area;
+    
     @Column(name="tecnologias_text", columnDefinition = "TEXT")
     private String tecnologiasText;  
 
@@ -105,8 +111,10 @@ public class InfoUser {
 
     public Long inativadoPor;
 
+    @Column(name="CARGO")
     public String cargo;
 
+    @Column(name="EMPRESA")
     public String empresa;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -213,6 +221,9 @@ public class InfoUser {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getArea() { return area; } 
+    public void setArea(String area) { this.area = area; }
     
     public List<InfoProject> getProjetos() { return projetos; }
     public void setProjetos(List<InfoProject> projetos) { this.projetos = projetos; }

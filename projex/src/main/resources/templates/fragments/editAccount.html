@@ -1,6 +1,6 @@
 <div class="flex flex-col m-auto ml-0 lg:ml-[16rem] 2xl:ml-[20rem] p-4 lg:p-8 w-full max-w-[1200px]" th:fragment="editAccount">
     
-    <form th:action="@{/editAccount/{id}/atualizar(id=${usuario.id})}" th:object="${usuario}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{/editAccount/{id}/atualizar(id=${usuario.id})}" th:object="${usuario}" method="POST" enctype="multipart/form-data" id="formPerfil">
         <input type="hidden" th:field="*{id}">
 
         <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden relative">
@@ -19,25 +19,26 @@
                 
                 <div class="relative flex flex-col md:flex-row md:items-end gap-6 -mt-12 mb-10">
                     <div class="group relative w-32 h-32 bg-white rounded-[2.5rem] p-2 shadow-lg flex-shrink-0 mx-auto md:mx-0">
-                        <div class="w-full h-full bg-gray-100 rounded-[2rem] flex items-center justify-center text-[#6366F1] overflow-hidden">
-                            <i th:if="*{fotoPerfil == null or fotoPerfil.isEmpty()}" class="bi bi-person-circle text-6xl"></i>
-                            <img th:unless="*{fotoPerfil == null or fotoPerfil.isEmpty()}" th:src="*{${usuario.fotoPerfil != null ? usuario.fotoPerfil : '/img/default-user.png'}}" class="w-full h-full object-cover">
+                        <div class="w-full h-full bg-gray-100 rounded-[2rem] flex items-center justify-center text-[#6366F1] overflow-hidden relative">
+                            <img id="previewFoto" 
+                                 th:src="*{fotoPerfil != null && !fotoPerfil.empty ? fotoPerfil : '/img/default-user.png'}" 
+                                 class="w-full h-full object-cover">
                             
-                            <label class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity rounded-[2.5rem]">
-                                <input type="file" name="fileFoto" class="hidden" accept="image/*">
+                            <label class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity rounded-[2rem]">
+                                <input type="file" name="fileFoto" id="fileFoto" class="hidden" accept="image/*" onchange="previewImage(this)">
                                 <i class="bi bi-camera-fill text-white text-2xl"></i>
                             </label>
                         </div>
                     </div>
                     
                     <div class="flex-1 pb-2 text-center md:text-left">
-                        <label class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Título do Perfil</label>
-                        <input type="text" th:field="*{name}" placeholder="Seu nome completo"
+                        <label for="nameInput" class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Nome de Exibição</label>
+                        <input type="text" th:field="*{name}" id="nameInput" placeholder="Seu nome completo"
                                class="w-full text-2xl font-black text-gray-900 bg-transparent border-b-2 border-dashed border-gray-200 focus:border-[#6366F1] focus:outline-none transition-colors">
                     </div>
                     
                     <div class="flex gap-3 pb-2 justify-center md:justify-end">
-                        <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition-all">
+                        <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition-all active:scale-95">
                             <i class="bi bi-check-lg"></i> Salvar Alterações
                         </button>
                     </div>
@@ -48,23 +49,39 @@
                     <div class="lg:col-span-1 space-y-6">
                         <section class="bg-gray-50 rounded-3xl p-6 border border-gray-100 space-y-4">
                             <h3 class="font-bold text-gray-800 flex items-center gap-2 mb-2">
+                                <i class="bi bi-person-badge text-[#6366F1]"></i> Identidade
+                            </h3>
+                            <div>
+                                <label for="nameUserInput" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Username</label>
+                                <input type="text" th:field="*{nameUser}" id="nameUserInput" placeholder="ex: joao.dev"
+                                    class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">CPF (Não editável)</label>
+                                <input type="text" th:value="*{cpf}" disabled
+                                    class="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-500 cursor-not-allowed">
+                            </div>
+                        </section>
+
+                        <section class="bg-gray-50 rounded-3xl p-6 border border-gray-100 space-y-4">
+                            <h3 class="font-bold text-gray-800 flex items-center gap-2 mb-2">
                                 <i class="bi bi-briefcase text-[#6366F1]"></i> Profissional
                             </h3>
-                            
                             <div>
-                                <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Cargo Atual</label>
-                                <input type="text" th:field="*{cargo}" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 focus:outline-none">
+                                <label for="area" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Área Atual</label>
+                                <input type="text" th:field="*{area}" id="area" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
                             </div>
-
                             <div>
-                                <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Empresa</label>
-                                <input type="text" th:field="*{empresa}" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 focus:outline-none">
+                                <label for="cargo" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Cargo</label>
+                                <input type="text" th:field="*{cargo}" id="cargo" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
                             </div>
-
                             <div>
-                                <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Bio Curta (Descrição)</label>
-                                <input type="text" th:field="*{descricao}" placeholder="Ex: Desenvolvedor Fullstack"
-                                       class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 focus:outline-none">
+                                <label for="empresa" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Empresa atual</label>
+                                <input type="text" th:field="*{empresa}" id="empresa" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
+                            </div>
+                            <div>
+                                <label for="descricao" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Descrição do perfil</label>
+                                <input type="text" th:field="*{descricao}" id="descricao" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
                             </div>
                         </section>
 
@@ -72,40 +89,70 @@
                             <h3 class="font-bold text-gray-800 flex items-center gap-2 mb-2">
                                 <i class="bi bi-telephone text-[#6366F1]"></i> Contato
                             </h3>
-                            <input type="text" th:field="*{telefone}" placeholder="(00) 00000-0000"
-                                   class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm">
+                            <div>
+                                <label for="telefone" class="text-[10px] font-bold text-gray-500 uppercase ml-1">Telefone</label>
+                                <input type="text" th:field="*{telefone}" id="telefone" placeholder="(00) 00000-0000"
+                                    class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
+                            </div>
+                            <div>
+                                <label for="email" class="text-[10px] font-bold text-gray-500 uppercase ml-1">E-mail Corporativo</label>
+                                <input type="email" th:field="*{email}" id="email"
+                                    class="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none">
+                            </div>
                         </section>
                     </div>
 
                     <div class="lg:col-span-2 space-y-8">
-                        
                         <section>
                             <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-3">
                                 <i class="bi bi-chat-left-text text-[#6366F1] text-xl"></i> Sobre Mim
                             </h3>
-                            <textarea th:field="*{sobre}" rows="8" 
+                            <textarea th:field="*{sobre}" rows="6" 
                                       class="w-full bg-gray-50 rounded-2xl p-6 border border-gray-100 text-gray-600 text-sm focus:ring-2 focus:ring-indigo-100 focus:outline-none shadow-inner"
-                                      placeholder="Conte um pouco sobre sua trajetória..."></textarea>
+                                      placeholder="Conte um pouco sobre sua trajetória profissional e conquistas..."></textarea>
                         </section>
 
-                        <div class="flex flex-col">
-                            <label class="text-xs uppercase tracking-widest font-bold text-gray-400 mb-2 ml-1">Tecnologias (Tags)</label>
+                        <div>
+                            <label class="text-xs uppercase tracking-widest font-bold text-gray-500 mb-2 ml-1">Tecnologias & Skills</label>
                             <div id="tag-container"
-                                class="border-2 border-dashed border-gray-200 rounded-2xl px-5 py-4 min-h-[70px] flex flex-wrap gap-2 cursor-text hover:border-purple-300 hover:bg-purple-50/30 transition-all shadow-inner"
-                                onclick="document.getElementById('tag-input').focus()">
-                                <input id="tag-input" type="text"
-                                    placeholder="Digite e use ';'..."
-                                    class="outline-none flex-grow min-w-[150px] bg-transparent text-sm"/>
+                                class="border-2 border-dashed border-gray-200 rounded-2xl px-5 py-4 min-h-[70px] flex flex-wrap gap-2 cursor-text hover:border-indigo-300 hover:bg-indigo-50/30 transition-all shadow-inner bg-white">
+                                <input id="tag-input" type="text" placeholder="Digite uma skill e aperte Enter ou ';'"
+                                    class="outline-none flex-grow min-w-[200px] bg-transparent text-sm py-1"/>
                             </div>
                             <input type="hidden" th:field="*{tecnologiasText}" id="tecnologiasText">
                         </div>
 
+                        <section class="bg-gray-50 rounded-3xl p-6 border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-3">
+                                <i class="bi bi-globe2 text-[#6366F1] text-xl"></i> Presença Digital
+                            </h3>
+
+                            <div class="space-y-3">
+                                <div th:each="link, stat : ${usuario.link}" class="flex flex-col md:flex-row gap-2 group">
+                                    <input type="hidden" th:field="*{link[__${stat.index}__].id}" />
+                                    
+                                    <select th:field="*{link[__${stat.index}__].tipoLink}"
+                                            class="rounded-xl px-3 py-2.5 border border-gray-200 focus:ring-2 focus:ring-indigo-100 outline-none bg-white text-sm font-medium">
+                                        <option th:value="${null}">Rede Social</option>
+                                        <option th:each="tipo : ${tipoLink}" th:value="${tipo}" th:text="${tipo}"></option>
+                                    </select>
+
+                                    <div class="relative flex-grow">
+                                        <i class="bi bi-link-45deg absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                                        <input type="text" th:field="*{link[__${stat.index}__].url}"
+                                               placeholder="URL do perfil (Linkedin, Github...)"
+                                               class="pl-9 w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-100 outline-none bg-white"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-     <div th:if="${mensagemErro}" 
+    
+    <div th:if="${mensagemErro}" 
         role="alert" 
         id="alert"
         >
@@ -119,3 +166,15 @@
         
     </div>
 </div>
+
+<script>
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewFoto').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>

@@ -18,6 +18,7 @@ public class EditUserDTO {
     private String cargo;
     private String empresa;
     private String descricao;
+    private String area;
     private Genero genero;
     private LocalDate dataNasc;
     private List<LinkDTO> link = new ArrayList<>();
@@ -46,6 +47,13 @@ public void setNameUser(String nameUser) {
     this.nameUser = nameUser;
 }
 
+public String getArea() {
+    return area;
+}
+
+public void setArea(String area) {
+    this.area = area;
+}
 public String getEmail() {
     return email;
 }

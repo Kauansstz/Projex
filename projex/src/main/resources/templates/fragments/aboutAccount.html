@@ -26,11 +26,21 @@
                 </div>
             </div>
                 
-                <div class="flex-1 pb-2 text-center md:text-left">
-                    <h2 class="text-3xl font-black text-gray-900 leading-tight" th:utext="${usuario.name}">Nome do usuário</h2>
+                <div class="flex-1 pb-2 pt-8 text-center md:text-left">
+                    <h2 class="text-3xl font-black text-gray-900 mt-[16px]  leading-tight" th:utext="${usuario.name}">Nome do usuário</h2>
                     <p class="text-[#6366F1] font-medium tracking-wide uppercase text-xs mt-1" th:utext="${usuario.descricao}">Descrição do usuário</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-3 text-gray-500 text-sm">
+                            <span th:if="${usuario.empresa != null}" class="flex items-center gap-1">
+                                <i class="bi bi-building text-gray-400"></i> [[${usuario.empresa}]]
+                            </span>
+                            <span th:if="${usuario.email != null}" class="flex items-center gap-1">
+                                <i class="bi bi-envelope text-gray-400"></i> [[${usuario.email}]]
+                            </span>
+                            <span th:if="${usuario.telefone != null}" class="flex items-center gap-1">
+                                <i class="bi bi-telephone text-gray-400"></i> [[${usuario.telefone}]]
+                            </span>
+                        </div>
                 </div>
-                
                 <div class="flex gap-3 pb-2 justify-center md:justify-end">
                     <a th:href="@{/editAccount/{id}/editar(id = ${usuario.id})}" title="Editar Perfil"
                        class="p-3 bg-gray-50 hover:bg-blue-50 text-gray-400 hover:text-blue-600 rounded-2xl transition-all border border-gray-100">
@@ -58,57 +68,77 @@
                 </div>
             </div>
 
-            <div class="space-y-12 max-w-full">
-                
-                <section class="max-w-3xl">
-                    <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-3">
-                        <i class="bi bi-chat-left-text text-[#6366F1] text-xl"></i> Sobre
-                    </h3>
-                    <div class="bg-gray-50 rounded-2xl p-7 border border-gray-100 leading-relaxed text-gray-600 text-sm shadow-inner shadow-gray-100/50" th:utext="${usuario.sobre}">
-                        Sobre
-                    </div>
-                </section>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2 space-y-12">
+                    <section>
+                            <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-3">
+                                <i class="bi bi-chat-left-text text-[#6366F1] text-xl"></i> Sobre
+                            </h3>
+                            <div class="bg-gray-50/50 rounded-3xl p-7 border border-gray-100 leading-relaxed text-gray-700 text-sm shadow-inner" 
+                                th:utext="${#strings.replace(usuario.sobre, '\n', '<br/>')}">
+                                Biografia do usuário...
+                            </div>
+                        </section>
+                        <section class="w-full">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-3">
+                                <i class="bi bi-code-slash text-[#6366F1] text-xl"></i> Últimos Projetos
+                            </h3>
+                        </div>
 
-                <section class="w-full">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-3">
-                            <i class="bi bi-code-slash text-[#6366F1] text-xl"></i> Últimos Projetos
-                        </h3>
-                    </div>
+                        <div class="bg-gray-100 border border-gray-100 rounded-3xl p-8 shadow-sm w-full h-auto overflow-hidden">
+                            <div th:replace="~{fragments/cardsGrid :: cardsGrid(${ultimosProjetos}, 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3')}"></div>
+                        </div>
+                    </section>
+                    
+                    
+                </div>
+                <div class="lg:col-span-1  space-y-10">
+                    <section>
+                            <h3 class="text-gray-800 font-bold flex items-center gap-3 mb-5">
+                                <i class="bi bi-cpu text-[#6366F1] text-xl"></i>
+                                <span th:text="${usuario.area == 'TI' ? 'Hard Skills' : 'Sistemas'}">Skills</span>
+                            </h3>
+                        
+                            <div class="flex flex-wrap gap-2">
+                                <th:block th:if="${usuario.tecnologiasText != null}">
+                                    <th:block th:with="techs=${#strings.arraySplit(usuario.tecnologiasText, ';')}">
+                                        <span th:each="tech : ${techs}" 
+                                            th:text="${tech.trim()}"
+                                            class="px-3 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-bold rounded-xl shadow-sm hover:border-indigo-200 transition-colors">
+                                        </span>
+                                    </th:block>
+                                </th:block>
+                                <p th:if="${usuario.tecnologiasText == null or usuario.tecnologiasText.empty}" class="text-gray-400 text-xs italic">Nenhuma tecnologia listada.</p>
+                            </div>
+                        </section>
 
-                    <div class="bg-gray-100 border border-gray-100 rounded-3xl p-8 shadow-sm w-full h-auto overflow-hidden">
-                        <div th:replace="~{fragments/cardsGrid :: cardsGrid(${ultimosProjetos}, 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3')}"></div>
+                        <section class="w-full gap-3 pt-11">
+                        
+                            <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-3"></h3>
+                                <i class="bi bi-award text-[#6366F1] text-xl"></i> Experiência & Certificados
+                            </h3>
+                            
+                            <div th:replace="~{fragments/certificateGrid :: certificadosGrid(${certificados}, 'grid-cols-1')}"></div>
+                            
+                        </section>
                     </div>
-                </section>
-                
-                <section class="w-full">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-3">
-                            <i class="bi bi-award text-[#6366F1] text-xl"></i> Experiência & Certificados
-                        </h3>
-                        <a href="#" class="p-2 bg-indigo-50 text-[#6366F1] rounded-lg hover:bg-[#6366F1] hover:text-white transition-all">
-                            <i class="bi bi-plus-lg"></i>
-                        </a>
-                    </div>
-                    <div class="bg-gray-100 border border-gray-100 rounded-3xl p-8 shadow-sm w-full h-auto overflow-hidden">
-                        <div th:replace="~{fragments/certificateGrid :: certificadosGrid(${certificados}, '')}"></div>
-                    </div>
-                </section>
-                
+                    
+                </div>
             </div>
              <div th:if="${mensagemErro}" 
-        role="alert" 
-        id="alert"
-        >
-        <p th:text="${mensagemErro}" class="font-medium"></p>
-    </div>
-    
-        <div th:if="${mensagemSucesso}" 
-        role="alert" 
-        id="alert-sucesso"
-        th:text="${mensagemSucesso}">
-        
-    </div>
+                role="alert" 
+                id="alert"
+                >
+                <p th:text="${mensagemErro}" class="font-medium"></p>
+            </div>
+            
+                <div th:if="${mensagemSucesso}" 
+                role="alert" 
+                id="alert-sucesso"
+                th:text="${mensagemSucesso}">
+                
+            </div>
          </div>
     </div>
 </div>

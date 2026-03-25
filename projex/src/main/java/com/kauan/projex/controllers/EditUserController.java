@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.kauan.projex.dto.EditUserDTO;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.EditUserService;
 
@@ -25,41 +27,12 @@ public class EditUserController {
     
     @PostMapping("/editar/{id}")
     public String editUser(@PathVariable Long id,
-                        @ModelAttribute("user") InfoUser formUser,
+                        @ModelAttribute("user") EditUserDTO formUser,
                         HttpServletRequest request,
                         RedirectAttributes redirectAttributes) {
 
         try {
-
-            InfoUser usuarioBanco = service.buscarPorId(id);
-
-            // Atualiza apenas os campos editáveis
-            usuarioBanco.setName(formUser.getName());
-            usuarioBanco.setNameUser(formUser.getNameUser());
-            usuarioBanco.setEmail(formUser.getEmail());
-            usuarioBanco.setTelefone(formUser.getTelefone());
-            usuarioBanco.setCargo(formUser.getCargo());
-            usuarioBanco.setEmpresa(formUser.getEmpresa());
-            usuarioBanco.setDescricao(formUser.getDescricao());
-            usuarioBanco.setGenero(formUser.getGenero());
-            usuarioBanco.setDataNasc(formUser.getDataNasc());
-
-            // Atualiza links
-            usuarioBanco.getLink().clear();
-
-            if (formUser.getLink() != null) {
-                formUser.getLink().forEach(link -> {
-                    if (link.getTipoLink() != null &&
-                        link.getUrl() != null &&
-                        !link.getUrl().isBlank()) {
-
-                        link.setUsuario(usuarioBanco);
-                        usuarioBanco.getLink().add(link);
-                    }
-                });
-            }
-
-            service.salvar(usuarioBanco);
+            service.atualizarComDTO(id, formUser);
 
             redirectAttributes.addFlashAttribute("mensagemSucesso",
                     "Usuário alterado com sucesso!");
