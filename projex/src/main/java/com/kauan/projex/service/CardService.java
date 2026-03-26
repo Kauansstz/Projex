@@ -24,8 +24,8 @@ public class CardService {
         return cardRepository.findByTituloContainingIgnoreCase(titulo);
     }
 
-    public List<InfoProject> buscarUltimos3Projetos(InfoUser usuario) {
-        return cardRepository.findTop3ByDonoOrderByCriadoEmDesc(usuario);
+    public List<InfoProject> buscarUltimos2Projetos(InfoUser usuario) {
+        return cardRepository.findTop2ByDonoOrderByCriadoEmDesc(usuario);
     }
 
     public List<InfoProject> buscarPorPublicado(Boolean isPublish){

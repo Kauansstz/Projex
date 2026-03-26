@@ -29,7 +29,7 @@ public interface CardCertificateRepository extends JpaRepository<Certificated, L
 
     List<Certificated> findByCategory(Category categoria);
 
-    List<Certificated> findByDono(InfoUser dono);
+    List<Certificated> findTop2ByDonoOrderByIdDesc(InfoUser dono);
 
     List<Certificated> findTop3ByDonoOrderByCriadoEmDesc(InfoUser dono);
 

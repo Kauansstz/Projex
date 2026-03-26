@@ -35,8 +35,8 @@ public class AccountController {
             return "redirect:/login";
         }
 
-        List<InfoProject> ultimosProjetos = cardService.buscarUltimos3Projetos(usuario);
-        List<Certificated> certificados = certficateRepository.findByDono(usuario);
+        List<InfoProject> ultimosProjetos = cardService.buscarUltimos2Projetos(usuario);
+        List<Certificated> certificados = certficateRepository.findTop2ByDonoOrderByIdDesc(usuario);
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("certificados", certificados);

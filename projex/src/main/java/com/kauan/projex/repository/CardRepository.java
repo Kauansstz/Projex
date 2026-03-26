@@ -10,6 +10,6 @@ import com.kauan.projex.model.InfoUser;
 @Repository
 public interface CardRepository extends JpaRepository<InfoProject, Long> {
     List<InfoProject> findByTituloContainingIgnoreCase(String titulo);
-    List<InfoProject> findTop3ByDonoOrderByCriadoEmDesc(InfoUser dono);
+    List<InfoProject> findTop2ByDonoOrderByCriadoEmDesc(InfoUser dono);
     List<InfoProject> findByIsPublish(Boolean publish);
 }
