@@ -1,51 +1,117 @@
 <main th:fragment="user(explore, extraClass)" class="w-full" th:classappend="${extraClass}">
     
-    <div class="mb-8">
-        <h1 class="text-2xl font-black text-gray-800 tracking-tight">Explorar Talentos</h1>
-        <p class="text-sm text-gray-500">Conecte-se com outros desenvolvedores da plataforma.</p>
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-black text-gray-800 tracking-tight">Explorar Talentos</h1>
+            <p class="text-sm text-gray-500">Conecte-se com as produções da plataforma.</p>
+        </div>
+
+        <div class="flex bg-gray-100 p-1 rounded-xl w-fit border border-gray-200">
+            <button onclick="switchTab('projetos')" id="btn-projetos" 
+                class="tab-btn px-4 py-2 text-sm font-bold rounded-lg transition-all bg-white text-[#6366F1] shadow-sm">
+                Projetos
+            </button>
+            <button onclick="switchTab('certificados')" id="btn-certificados" 
+                class="tab-btn px-4 py-2 text-sm font-bold rounded-lg transition-all text-gray-500 hover:text-gray-700">
+                Certificados
+            </button>
+        </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <div th:each="explore : ${explorer}" 
+    <div id="content-projetos" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="projeto : ${projetos}" 
              class="relative bg-white rounded-3xl p-5 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer">
-             <span class="absolute top-5 right-5 text-green-500 text-[8px] animate-pulse">
-                <i th:class="${explore.ativo} ? 'bi bi-circle-fill text-[8px] text-green-500 animate-pulse' : 'bi bi-circle-fill text-[8px] text-gray-300'"></i>
-            </span>
-                
+            
             <div class="flex flex-col gap-4">
-                
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 bg-[#6366F1]/10 text-[#6366F1] rounded-2xl flex items-center justify-center group-hover:bg-[#6366F1] group-hover:text-white transition-colors">
-                        <i class="bi bi-person-circle text-2xl"></i>
+                        <i class="bi bi-rocket-takeoff text-2xl"></i>
                     </div>
                     <div class="flex flex-col">
                         <span class="font-bold text-gray-800 text-lg group-hover:text-[#6366F1] transition-colors leading-tight" 
-                        th:text="${explore.name}">Nome do Usuário</span>
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Membro Projex</span>
+                              th:text="${projeto.titulo}">Nome do Projeto</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Projeto em Destaque</span>
                     </div>
                 </div>
-
-                <div class="flex flex-wrap gap-2">
-                    <span class="inline-flex items-center px-3 py-1 rounded-lg bg-gray-100 text-gray-600 text-xs font-bold border border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-100 transition-all"
-                          th:text="${explore.tecnologia.nome}">
-                        Tecnologia
-                    </span>
-                    
-                </div>
-
+                <p class="text-xs text-gray-600 line-clamp-2" >
+                   Criado em: <span th:text="${#temporals.format(projeto.criadoEm, 'dd/MM/yyyy')}"></span>
+                </p>
+                <div  class="flex items-center gap-1 text-gray-500 text-sm">
+                        <a th:href="@{/explore(search=${search}, dono=${projeto.dono.name})}" class="flex flex-row gap-1 text-sm cursor-pointer w-[15rem] font-medium text-[#0D6EFD] hover:text-[black] duration-300 transform transition-transform ">
+                            <i class="bi bi-person-circle "></i>
+                            <span th:text="${projeto.dono != null ? projeto.dono.name : 'Sem dono'}"></span>
+                        </a>
+                    </div>
+                   
+   
+                
                 <div class="pt-4 mt-2 border-t border-gray-50 flex justify-between items-center">
-                    <span class="text-[10px] text-gray-300 font-medium italic">Ver perfil completo</span>
+                    <span class="text-[10px] text-gray-300 font-medium italic">Ver detalhes técnicos</span>
                     <i class="bi bi-arrow-right text-gray-300 group-hover:text-[#6366F1] group-hover:translate-x-1 transition-all"></i>
                 </div>
+            </div>
+        </div>
+        
+        <div th:if="${#lists.isEmpty(projetos)}" class="col-span-full text-center py-10">
+            <p class="text-gray-400 text-sm">Nenhum projeto publicado no momento.</p>
+        </div>
+    </div>
 
+    <div id="content-certificados" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="cert : ${certificados}" 
+             class="relative bg-white rounded-3xl p-5 shadow-sm border border-gray-100 hover:border-amber-200 hover:shadow-md transition-all duration-300 group">
+            
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center">
+                        <i class="bi bi-patch-check-fill text-2xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-gray-800 text-lg" th:text="${cert.titulo}">Nome do Certificado</span>
+                        <span class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Certificação Verificada</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <div class="">
+                        <i class="bi bi-building"></i>
+                        <span th:text="${cert.instituicao}">Instituição</span>
+                    </div>
+                    <div class="">
+                        <i class="bi bi-calendar-week"></i>
+                        <span th:text="${#temporals.format(cert.dataConclusao, 'dd/MM/yyyy')}">Conclusão</span>
+                    </div>
+                    <div class="">
+                        <a th:href="@{/explore(search=${searc}, category=${cert.category})}" 
+                        class="flex flex-row gap-1 cursor-pointer  text-[#0D6EFD] text-xs  hover:text-[black] duration-300 transform transition-transform ">
+                            <i class="bi bi-layers-fill"></i>
+                            <span th:text="${cert.category.label}">Conclusão</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div th:if="${#lists.isEmpty(certificados)}" class="col-span-full text-center py-10">
+            <p class="text-gray-400 text-sm">Nenhuma certificação encontrada.</p>
+        </div>
     </div>
 
-    <div th:if="${#lists.isEmpty(explorer)}" class="text-center py-20">
-        <i class="bi bi-search text-5xl text-gray-200"></i>
-        <p class="mt-4 text-gray-400 font-medium">Nenhum desenvolvedor encontrado no momento.</p>
-    </div>
+    <script>
+        function switchTab(tab) {
+            // 1. Esconder todos os conteúdos
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // 2. Resetar estilos de todos os botões
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-[#6366F1]', 'shadow-sm');
+                btn.classList.add('text-gray-500');
+            });
+
+            // 3. Mostrar a aba clicada e estilizar o botão
+            document.getElementById('content-' + tab).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tab);
+            activeBtn.classList.add('bg-white', 'text-[#6366F1]', 'shadow-sm');
+            activeBtn.classList.remove('text-gray-500');
+        }
+    </script>
 </main>
