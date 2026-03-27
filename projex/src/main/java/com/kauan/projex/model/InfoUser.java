@@ -117,7 +117,7 @@ public class InfoUser {
     @Column(name="EMPRESA")
     public String empresa;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     public List<LinkUsuario> link = new ArrayList<>();
 
     public LocalDateTime dataInativacao;
