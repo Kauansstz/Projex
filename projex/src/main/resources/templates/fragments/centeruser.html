@@ -33,7 +33,7 @@
                         <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
                             <i class="bi bi-person text-xl"></i>
                         </div>
-                        <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
+                        <a th:href="@{/editUser/viewer/{id}(id=${user.id})}" 
                            class="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors leading-tight"
                            th:text="${user.name}">
                         </a>

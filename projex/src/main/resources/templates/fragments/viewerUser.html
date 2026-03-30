@@ -1,0 +1,158 @@
+<div class="flex min-h-screen bg-slate-50 py-12 pl-0 md:pl-64 justify-center items-start font-sans" th:fragment="viewerUser">
+
+    <div class="w-full max-w-5xl bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mx-6">
+        
+        <div class="bg-gradient-to-r from-purple-700 to-indigo-600 px-8 py-10 text-white">
+            <h2 class="text-3xl font-extrabold tracking-tight">
+                Central do Usuário
+            </h2>
+            <p class="text-purple-100 mt-2">Mantenha seu perfil atualizado para a comunidade.</p>
+        </div>
+
+        <form method="post"
+              th:action="@{/panelUser/viewer/{id}(id=${user.id})}"
+              th:object="${user}" 
+              class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-12"> 
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="md:col-span-7 space-y-8">
+                
+                <div class="border-b border-slate-100 pb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="bi bi-person-circle text-purple-600"></i> Dados Pessoais
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <div class="flex flex-col md:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 border-dashed">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Foto de perfil</label>
+                        <img th:unless="${user.fotoPerfil == null or user.fotoPerfil.isEmpty()}" 
+                             th:src="${user.fotoPerfil}" 
+                             alt="Foto de Perfil"
+                             class="w-full h-full object-cover rounded-[2rem]">
+                             
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Nome completo</label>
+                        <div th:text="${user.name ?: 'Nome não informado'}" 
+                             th:classappend="${user.name == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Username</label>
+                        <div th:text="${user.nameUser != null && !user.nameUser.isEmpty() ? '@' + user.nameUser : 'Sem usuário definido'}" 
+                             th:classappend="${user.nameUser == null ? 'text-slate-400 italic' : 'text-slate-700 font-medium'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center text-purple-700"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Nascimento</label>
+                        <div th:text="${user.dataNasc ?: 'Data não informada'}" 
+                             th:classappend="${user.dataNasc == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Gênero</label>
+                        <div th:text="${user.genero ?: 'Não especificado'}" 
+                             th:classappend="${user.genero == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Cargo</label>
+                        <div th:text="${user.cargo ?: 'Não definido'}" 
+                             th:classappend="${user.cargo == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Empresa</label>
+                        <div th:text="${user.empresa ?: 'Autônomo / Sem empresa'}" 
+                             th:classappend="${user.empresa == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[48px] flex items-center"></div>
+                    </div>
+
+                    <div class="flex flex-col md:col-span-2">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Sobre você</label>
+                        <div th:text="${user.descricao ?: 'O usuário ainda não escreveu uma biografia.'}" 
+                             th:classappend="${user.descricao == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 min-h-[100px] transition-all"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-5 space-y-8">
+                
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-3">
+                        <i class="bi bi-telephone text-purple-600"></i> Contato
+                    </h3>
+                    
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-xs font-bold text-slate-500 uppercase">E-mail</label>
+                        <div th:text="${user.email ?: 'E-mail não cadastrado'}" 
+                             th:classappend="${user.email == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="bg-white border border-slate-200 rounded-xl px-4 py-2.5"></div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-xs font-bold text-slate-500 uppercase">Telefone</label>
+                        <div th:text="${user.telefone ?: '(00) 00000-0000'}" 
+                             th:classappend="${user.telefone == null ? 'text-slate-400 italic' : 'text-slate-700'}"
+                             class="bg-white border border-slate-200 rounded-xl px-4 py-2.5"></div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-900 p-6 rounded-3xl shadow-lg shadow-indigo-100 text-white space-y-6">
+                    <h3 class="text-lg font-bold flex items-center gap-2 border-b border-indigo-800 pb-3">
+                        <i class="bi bi-globe"></i> Redes Sociais
+                    </h3>
+                    
+                    <div th:if="${user.link == null || user.link.isEmpty()}" class="text-indigo-300 italic text-sm p-4 text-center border border-indigo-700 border-dashed rounded-2xl">
+                        Nenhuma rede social conectada.
+                    </div>
+
+                    <div th:each="link, stat : ${user.link}" class="space-y-3 p-3 bg-indigo-800/40 rounded-2xl border border-indigo-700">
+                        <input type="hidden" th:field="*{link[__${stat.index}__].id}" />
+                        
+                        <div th:text="${link.tipoLink ?: 'Link'}"
+                             class="w-full bg-indigo-900/50 border border-indigo-600 rounded-lg px-2 py-2 text-sm font-bold text-purple-300">
+                        </div>
+
+                        <div th:text="${link.url ?: 'URL não informada'}" 
+                             class="w-full bg-indigo-900/50 border border-indigo-600 rounded-lg px-3 py-2 text-sm truncate text-indigo-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-12 flex flex-col-reverse md:flex-row justify-end gap-4 border-t border-slate-100 pt-10 mt-6">
+                <a th:href="@{/panelUser}" 
+                   class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-10 py-4 rounded-2xl transition text-center active:scale-95">
+                    Voltar
+                </a> 
+                <button type="submit" 
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-14 py-4 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="bi bi-pencil-square"></i> Editar Perfil
+                </button>
+            </div>
+
+        </form>
+
+        <div class="px-8 pb-8">
+            <div th:if="${mensagemErro}" role="alert" class="p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3">
+                <i class="bi bi-exclamation-octagon-fill"></i>
+                <p th:utext="${mensagemErro}" class="font-semibold text-sm"></p>
+            </div>
+            <div th:if="${mensagemSucesso}" role="alert" class="p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl flex items-center gap-3">
+                <i class="bi bi-check-all text-xl"></i>
+                <p th:text="${mensagemSucesso}" class="font-semibold text-sm"></p>
+            </div>
+        </div>
+    </div>
+</div>

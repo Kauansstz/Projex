@@ -55,5 +55,12 @@ public class EditUserController {
         model.addAttribute("pageTitle", "Edição do usuário");
         return "pages/panelEditUser";
     }
+    @GetMapping("/viewer/{id}")
+    public String viewerUser(@PathVariable Long id, Model model){
+        InfoUser user= service.buscarPorId(id);
+        model.addAttribute("user",user);
+        model.addAttribute("pageTitle", "Edição do usuário");
+        return "pages/panelViewerUser";
+    }
 
 }
