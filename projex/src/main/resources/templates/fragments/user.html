@@ -73,15 +73,18 @@
                 </div>
                 <div class="flex items-center gap-2 text-xs text-gray-500">
                     <div class="">
-                        <i class="bi bi-building"></i>
-                        <span th:text="${cert.instituicao}">Instituição</span>
-                    </div>
-                    <div class="">
                         <i class="bi bi-calendar-week"></i>
                         <span th:text="${#temporals.format(cert.dataConclusao, 'dd/MM/yyyy')}">Conclusão</span>
                     </div>
+                    <div class="bg-gray-100 rounded-xl py-1 px-2">
+                        <a th:href="@{/explore(search=${search}, dono=${cert.dono.name})}" 
+                        class="flex flex-row gap-1 cursor-pointer  text-[#0D6EFD] text-xs  hover:text-[black] duration-300 transform transition-transform ">
+                            <i class="bi bi-person"></i>
+                            <span th:text="${cert.dono.name}">Dono</span>
+                        </a>
+                    </div>
                     <div class="">
-                        <a th:href="@{/explore(search=${searc}, category=${cert.category})}" 
+                        <a th:href="@{/explore(search=${search}, category=${cert.category})}" 
                         class="flex flex-row gap-1 cursor-pointer  text-[#0D6EFD] text-xs  hover:text-[black] duration-300 transform transition-transform ">
                             <i class="bi bi-layers-fill"></i>
                             <span th:text="${cert.category.label}">Conclusão</span>
