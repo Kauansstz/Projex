@@ -1,212 +1,148 @@
-<div class="flex flex-col justify-center items-center m-auto" th:fragment="editUser">
+<div class="flex min-h-screen bg-slate-50 py-12 pl-0 md:pl-64 justify-center items-start font-sans" th:fragment="editUser">
 
-    <div class="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-2xl">
-
-        <!-- Título -->
-        <h1 class="text-3xl font-bold border-b pb-3 text-center text-gray-900 mb-10">
-            Central do Usuário
-        </h1>
+    <div class="w-full max-w-5xl bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mx-6">
+        
+        <div class="bg-gradient-to-r from-purple-700 to-indigo-600 px-8 py-10 text-white">
+            <h2 class="text-3xl font-extrabold tracking-tight">
+                Central do Usuário
+            </h2>
+            <p class="text-purple-100 mt-2">Mantenha seu perfil atualizado para a comunidade.</p>
+        </div>
 
         <form method="post"
-            th:action="@{/panelUser/editar/{id}(id=${user.id})}"
-             th:object="${user}" 
-             class="space-y-14"> 
+              th:action="@{/panelUser/editar/{id}(id=${user.id})}"
+              th:object="${user}" 
+              class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-12"> 
 
             <input type="hidden" th:field="*{id}">
 
-            <div>
-
-                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
-                    👤 Dados Pessoais
-                </h3>
+            <div class="md:col-span-7 space-y-8">
+                
+                <div class="border-b border-slate-100 pb-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="bi bi-person-circle text-purple-600"></i> Dados Pessoais
+                    </h3>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <!-- Foto -->
-                    <div class="flex flex-col md:col-span-2">
-                        <label class="mb-2 font-semibold text-gray-700">Foto de perfil</label>
+                    
+                    <div class="flex flex-col md:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 border-dashed">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Foto de perfil</label>
                         <input type="file" th:field="*{fotoPerfil}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                               class="text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 cursor-pointer"/>
                     </div>
 
-                    <!-- Nome -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Nome completo</label>
-                        <input type="text" placeholder="Digite seu nome completo"
-                        th:field ="*{name}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Nome completo</label>
+                        <input type="text" th:field="*{name}" placeholder="Digite seu nome"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
                     </div>
 
-                    <!-- Username -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Nome de usuário</label>
-                        <input type="text" placeholder="ex: joao.dev"
-                                th:field="*{nameUser}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Username</label>
+                        <input type="text" th:field="*{nameUser}" placeholder="@usuario"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
                     </div>
 
-                    <!-- Data -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Data de nascimento</label>
-                        <input type="date"
-                        th:field="*{dataNasc}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Nascimento</label>
+                        <input type="date" th:field="*{dataNasc}"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 cursor-pointer"/>
                     </div>
 
-                    <!-- Gênero -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Gênero</label>
-                        <select class="border border-gray-300 rounded-lg px-4 py-3
-                        focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        th:field="*{genero}">
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Gênero</label>
+                        <select th:field="*{genero}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500 appearance-none cursor-pointer">
                             <option value="">Selecione</option>
                             <option value="MASCULINO">Masculino</option>
                             <option value="FEMININO">Feminino</option>
                             <option value="OUTRO">Outro</option>
                         </select>
-
                     </div>
 
-                    <!-- Cargo -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Cargo / Profissão</label>
-                        <input type="text" placeholder="Ex: Desenvolvedor Backend"
-                        th:field="*{cargo}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Cargo</label>
+                        <input type="text" th:field="*{cargo}" placeholder="Ex: Desenvolvedor"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500"/>
                     </div>
 
-                    <!-- Empresa -->
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Empresa</label>
-                        <input type="text" placeholder="Onde você trabalha?"
-                            th:field="*{empresa}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Empresa</label>
+                        <input type="text" th:field="*{empresa}" placeholder="Onde trabalha?"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:border-purple-500"/>
                     </div>
 
-                    <!-- Bio -->
                     <div class="flex flex-col md:col-span-2">
-                        <label class="mb-2 font-semibold text-gray-700">Sobre</label>
-                        <textarea rows="4" placeholder="Fale um pouco sobre você"
-                        th:field="*{descricao}"
-                                  class="border border-gray-300 rounded-lg px-4 py-3
-                                  focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                        <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Sobre você</label>
+                        <textarea th:field="*{descricao}" rows="4" placeholder="Conte sua trajetória..."
+                                  class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all resize-none"></textarea>
                     </div>
-
                 </div>
-
             </div>
 
-            <div>
-
-                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
-                    📞 Contato
-                </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
+            <div class="md:col-span-5 space-y-8">
+                
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-3">
+                        <i class="bi bi-telephone text-purple-600"></i> Contato
+                    </h3>
+                    
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">E-mail</label>
-                        <input type="email"
-                        th:field="*{email}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-xs font-bold text-slate-500 uppercase">E-mail</label>
+                        <input type="email" th:field="*{email}"
+                               class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500"/>
                     </div>
 
                     <div class="flex flex-col">
-                        <label class="mb-2 font-semibold text-gray-700">Telefone</label>
-                        <input type="tel"
-                        th:field="*{telefone}"
-                               class="border border-gray-300 rounded-lg px-4 py-3
-                               focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        <label class="mb-2 text-xs font-bold text-slate-500 uppercase">Telefone</label>
+                        <input type="tel" th:field="*{telefone}"
+                               class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:border-purple-500"/>
                     </div>
-
                 </div>
 
-            </div>
+                <div class="bg-indigo-900 p-6 rounded-3xl shadow-lg shadow-indigo-100 text-white space-y-6">
+                    <h3 class="text-lg font-bold flex items-center gap-2 border-b border-indigo-800 pb-3">
+                        <i class="bi bi-globe"></i> Redes Sociais
+                    </h3>
+                    
+                    <div th:each="link, stat : ${user.link}" class="space-y-3 p-3 bg-indigo-800/40 rounded-2xl border border-indigo-700">
+                        <input type="hidden" th:field="*{link[__${stat.index}__].id}" />
+                        
+                        <select th:field="*{link[__${stat.index}__].tipoLink}"
+                                class="w-full bg-indigo-900/50 border border-indigo-600 rounded-lg px-2 py-2 text-sm outline-none focus:border-purple-400">
+                            <option th:value="${null}">Selecione o tipo</option>
+                            <option th:each="tipo : ${tipoLink}" th:value="${tipo}" th:text="${tipo}"></option>
+                        </select>
 
-
-            <!-- ================= LINKS ================= -->
-            <div>
-
-                <h3 class="text-xl font-bold text-gray-600 mb-6 flex items-center gap-2">
-                    🌐 Links
-                </h3>
-
-                <div th:each="link, stat : ${user.link}" 
-                    class="mb-2 font-semibold text-gray-700">
-
-                    <!-- ID do LinkUsuario -->
-                    <input type="hidden"
-                        th:field="*{link[__${stat.index}__].id}" />
-
-                    <!-- Select do ENUM -->
-                    <select th:field="*{link[__${stat.index}__].tipoLink}"
-                            class=" rounded-lg px-2 py-3
-                                focus:outline-none focus:ring-2 focus:ring-purple-500 ">
-
-                        <option th:value="${null}">Selecione</option>
-
-                        <option th:each="tipo : ${tipoLink}"
-                                th:value="${tipo}"
-                                th:text="${tipo}">
-                        </option>
-                    </select>
-
-                    <!-- URL -->
-                    <input type="text"
-                        th:field="*{link[__${stat.index}__].url}"
-                        placeholder="Digite a URL"
-                        class="border border-gray-300 rounded-lg px-4 py-3
-                                focus:outline-none focus:ring-2 focus:ring-purple-500 w-full"/>
-
+                        <input type="text" th:field="*{link[__${stat.index}__].url}" placeholder="URL do perfil"
+                               class="w-full bg-indigo-900/50 border border-indigo-600 rounded-lg px-3 py-2 text-sm outline-none focus:border-purple-400 placeholder:text-indigo-400"/>
+                    </div>
                 </div>
-
             </div>
 
-
-
-
-            <!-- ================= BOTÕES ================= -->
-            <div class="flex justify-center gap-10 pt-4"> 
-                <!-- Cancelar --> 
+            <div class="md:col-span-12 flex flex-col-reverse md:flex-row justify-end gap-4 border-t border-slate-100 pt-10 mt-6">
                 <a th:href="@{/panelUser}" 
-                class="bg-gray-200 hover:bg-gray-300 
-                text-gray-800 font-bold px-8 py-3 rounded-xl 
-                shadow-md hover:shadow-lg transition duration-300 
-                flex items-center gap-2"> 
-                    <i class="bi bi-arrow-left-circle"></i> 
-                    Cancelar 
+                   class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-10 py-4 rounded-2xl transition text-center active:scale-95">
+                    Cancelar
                 </a> 
-                <!-- Salvar -->
-                 <button type="submit" 
-                 class="bg-purple-600 hover:bg-purple-700 text-white 
-                 font-bold px-10 py-3 rounded-xl shadow-lg hover:shadow-xl 
-                 transition duration-300 flex items-center gap-2"> 
-                 <i class="bi bi-floppy"></i> 
-                 Salvar alterações 
+                <button type="submit" 
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-14 py-4 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="bi bi-floppy-fill"></i> Salvar Alterações
                 </button>
-             </div>
+            </div>
 
         </form>
 
-        
-    </div>
-    <div th:if="${mensagemErro}" 
-    role="alert" 
-    id="alert" 
-    th:utext="${mensagemErro}" 
-    class="font-medium"></div>
+        <div class="px-8 pb-8">
+            <div th:if="${mensagemErro}" role="alert" class="p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3">
+                <i class="bi bi-exclamation-octagon-fill"></i>
+                <p th:utext="${mensagemErro}" class="font-semibold text-sm"></p>
+            </div>
 
-    <div th:if="${mensagemSucesso}" 
-        role="alert" 
-        id="alert"
-        th:text="${mensagemSucesso}">
+            <div th:if="${mensagemSucesso}" role="alert" class="p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl flex items-center gap-3">
+                <i class="bi bi-check-all text-xl"></i>
+                <p th:text="${mensagemSucesso}" class="font-semibold text-sm"></p>
+            </div>
+        </div>
     </div>
-
 </div>
