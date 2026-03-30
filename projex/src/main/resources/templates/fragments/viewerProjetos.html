@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-slate-50 flex w-full font-sans" th:fragment="viewerProject">
+    
+    <div class="hidden md:block md:w-72 shrink-0"></div>
+
+    <div class="flex-grow flex flex-col items-center justify-start py-12 px-4 sm:px-10">
+        
+        <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
+            
+            <div class="bg-slate-900 p-8 md:p-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-indigo-400 text-xs font-bold uppercase tracking-[0.2em] mb-2 block">Detalhes do Registro</span>
+                        <h2 class="text-3xl font-bold text-white tracking-tight">Visualização do Projeto</h2>
+                    </div>
+                </div>
+            </div>
+
+            <form th:action="@{/panelProjetos/{id}/viewer(id=${projeto.id})}" th:object="${projeto}" method="post" class="p-8 md:p-12">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="space-y-10">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                                <span class="w-4 h-[1px] bg-slate-300"></span> Título do Projeto
+                            </label>
+                            <div th:text="*{titulo}" 
+                                class="text-xl font-semibold text-slate-800 bg-slate-50/50 border-b-2 border-slate-100 py-2">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                                <span class="w-4 h-[1px] bg-slate-300"></span> Conclusão
+                            </label>
+                            <div th:text="${#temporals.format(projeto.dataConclusao, 'dd/MM/yyyy')}"
+                                class="text-lg font-medium text-indigo-600 bg-indigo-50/50 rounded-xl px-4 py-2 border border-indigo-100">
+                            </div>
+                        </div>
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                                <span class="w-4 h-[1px] bg-slate-300"></span> Status
+                            </label>
+                            <div th:text="*{status.label}" 
+                                class="text-xl font-semibold text-slate-800 bg-slate-50/50 border-b-2 border-slate-100 py-2">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                                <span class="w-4 h-[1px] bg-slate-300"></span> Dono
+                            </label>
+                            <div th:text="*{dono.name}"
+                                class="text-xl font-semibold text-slate-800 bg-slate-50/50 border-b-2 border-slate-100 py-2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                            <span class="w-4 h-[1px] bg-slate-300"></span> Sobre o Projeto
+                        </label>
+                        <div th:text="*{descricao}" 
+                            class="w-full text-slate-600 leading-relaxed bg-slate-50/30 rounded-2xl p-6 border border-slate-100 min-h-[120px] shadow-sm italic">
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <label class="text-[11px] uppercase tracking-wider font-semibold text-slate-500 flex items-center gap-2">
+                            <span class="w-4 h-[1px] bg-slate-300"></span> Stack Tecnológica
+                        </label>
+                        <div class="flex flex-wrap gap-2 p-1" th:if="${projeto.tecnologiasText != null}">
+                            <span th:each="tech : ${#strings.arraySplit(projeto.tecnologiasText, ';')}"
+                                  th:text="${tech.trim()}"
+                                  class="inline-flex items-center px-3 py-1.5 rounded-lg bg-white border border-slate-200 shadow-sm text-xs font-bold text-slate-700 hover:border-indigo-300 transition-colors">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

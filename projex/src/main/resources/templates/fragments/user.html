@@ -28,8 +28,10 @@
                         <i class="bi bi-rocket-takeoff text-2xl"></i>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-bold text-gray-800 text-lg group-hover:text-[#6366F1] transition-colors leading-tight" 
-                              th:text="${projeto.titulo}">Nome do Projeto</span>
+                        <a th:href="@{/panelProjetos/{id}/viewer(id=${projeto.id})}">
+                            <span class="font-bold text-gray-800 text-lg group-hover:text-[#6366F1] transition-colors leading-tight" 
+                                th:text="${projeto.titulo}">Nome do Projeto</span>
+                        </a>
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Projeto em Destaque</span>
                     </div>
                 </div>

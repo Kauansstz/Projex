@@ -74,4 +74,15 @@ public class EditProjectController {
 
         return "pages/panelEditProject";
     }
+    @GetMapping("/{id}/viewer")
+    public String editarViewer(@PathVariable Long id, Model model) {
+
+        InfoProject projeto = cardService.buscarPorId(id);
+
+        model.addAttribute("projeto", projeto);
+        model.addAttribute("tecnologias", tecnologiaRepository.findAll());
+        model.addAttribute("pageTitle", "Visualizar Projeto");
+
+        return "pages/panelViewerProject";
+    }
 }
