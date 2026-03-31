@@ -26,12 +26,12 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
-                    <div class="flex flex-col md:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 border-dashed">
+                    <div class="flex flex-col md:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 w-[15rem] border-dashed">
                         <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Foto de perfil</label>
                         <img th:unless="${user.fotoPerfil == null or user.fotoPerfil.isEmpty()}" 
                              th:src="${user.fotoPerfil}" 
                              alt="Foto de Perfil"
-                             class="w-full h-full object-cover rounded-[2rem]">
+                             class="w-[15rem] h-[15rem] object-cover rounded-[2rem]">
                              
                     </div>
 
