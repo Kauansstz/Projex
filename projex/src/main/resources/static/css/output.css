@@ -1426,6 +1426,22 @@ video {
   width: 100vw;
 }
 
+.w-\[2rem\] {
+  width: 2rem;
+}
+
+.w-\[13rem\] {
+  width: 13rem;
+}
+
+.w-\[12\.5rem\] {
+  width: 12.5rem;
+}
+
+.w-\[12\.8rem\] {
+  width: 12.8rem;
+}
+
 .min-w-\[120px\] {
   min-width: 120px;
 }
@@ -3823,6 +3839,14 @@ video {
 .after\:content-\[\'\'\]::after {
   --tw-content: '';
   content: var(--tw-content);
+}
+
+.hover\:w-\[5rem\]:hover {
+  width: 5rem;
+}
+
+.hover\:w-\[1rem\]:hover {
+  width: 1rem;
 }
 
 .hover\:-translate-x-1:hover {
