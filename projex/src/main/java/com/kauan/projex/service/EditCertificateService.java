@@ -39,10 +39,8 @@ public class EditCertificateService {
         entidade.setIsPublish(request.getIsPublish());
         entidade.setDono(request.getDono());
 
-        // 🔥 Tratamento do anexo
         if (request.getAnexo() != null && !request.getAnexo().isEmpty()) {
 
-            // Remove arquivo antigo se existir
             if (entidade.getAnexo() != null) {
                 deletarArquivo(entidade.getAnexo());
             }
@@ -51,7 +49,7 @@ public class EditCertificateService {
             entidade.setAnexo(nomeArquivo);
 
         } else {
-            // mantém arquivo antigo
+
             entidade.setAnexo(request.getAnexoNome());
         }
 
