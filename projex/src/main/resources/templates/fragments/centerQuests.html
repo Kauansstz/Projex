@@ -1,4 +1,4 @@
-<main th:fragment="quests" class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA]">
+<main th:fragment="quests" class="flex-1 h-screen overflow-auto ml-64 rounded-lg p-6 bg-[#F4F6FA] scroll-smooth">
 
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-[#1F2937]">Central de Desafios</h1>
@@ -32,7 +32,7 @@
     <div th:if="${categoriaSelecionada != null}" id="secaoPerguntas">
         
         <a th:href="${nivelSelecionado == null ? '/perguntas' : '/perguntas(categoria=' + categoriaSelecionada + ')'}"
-        onclick="window.history.back(); return false;" 
+           onclick="window.history.back(); return false;" 
            class="mb-6 inline-flex items-center gap-2 text-purple-600 font-semibold hover:underline">
             <i class="bi bi-arrow-left"></i> <span th:text="${nivelSelecionado == null ? 'Voltar para o Hall' : 'Trocar Dificuldade'}"></span>
         </a>
@@ -43,7 +43,6 @@
         </div>
 
         <div th:if="${perguntas == null}" id="niveisContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            
             <a th:href="@{/perguntas(categoria=${categoriaSelecionada}, nivel='INICIANTE')}" class="bg-white p-8 rounded-2xl border-2 border-transparent hover:border-green-500 shadow-sm hover:shadow-lg transition-all group text-center block">
                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
                     <span class="font-bold text-xl">1</span>
@@ -70,35 +69,55 @@
         </div>
 
         <div th:if="${perguntas != null}" id="desafioAtivo" class="pb-20">
-            <div class="flex justify-between items-center mb-10 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                <div>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-purple-100 text-purple-700" th:text="${nivelSelecionado}">NÍVEL</span>
-                    <h3 class="text-xl font-bold text-gray-800 mt-1">Questões Disponíveis</h3>
+            
+            <div class="sticky top-0 z-20 bg-white/90 backdrop-blur-md p-4 mb-10 rounded-xl shadow-md border border-purple-100">
+                <div class="flex justify-between items-center mb-3">
+                    <div>
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-purple-100 text-purple-700" th:text="${nivelSelecionado}">NÍVEL</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">Seu Progresso</h3>
+                    </div>
+                    <span id="progressoTexto" class="text-sm font-bold text-green-600 bg-green-50 px-3 py-1 rounded-lg border border-green-100">0 / 10 Respondidas</span>
+                </div>
+                
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                    <div id="barraProgresso" class="bg-green-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 justify-center border-t pt-3">
+                    <a th:each="pergunta, stat : ${perguntas}" 
+                       th:href="'#p' + ${pergunta.id}"
+                       th:id="'indicador-p' + ${pergunta.id}"
+                       class="w-8 h-8 rounded-lg border-2 border-gray-200 flex items-center justify-center text-xs font-bold text-gray-400 transition-all hover:border-purple-400 hover:text-purple-600 cursor-pointer no-underline"
+                       th:text="${stat.count}">
+                    </a>
                 </div>
             </div>
 
             <form id="formRespostas" class="space-y-8 max-w-4xl mx-auto">
-                <div th:each="pergunta, stat : ${perguntas}" class="p-6 bg-white rounded-xl shadow-md border border-gray-200">
+                <div th:each="pergunta, stat : ${perguntas}" 
+                     th:id="'p' + ${pergunta.id}" 
+                     class="p-6 bg-white rounded-xl shadow-md border border-gray-200 transition-all scroll-mt-40">
+                    
                     <div class="mb-4">
                         <span class="text-sm font-bold text-blue-600 uppercase" th:text="${pergunta.categoria}">Categoria</span>
                         <h3 class="text-lg font-semibold text-gray-800" th:text="${stat.count + '. ' + pergunta.enunciado}"></h3>
                     </div>
                     
                     <div class="space-y-3">
-                        <label th:if="${pergunta.respostas[0]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[0].id}" class="h-4 w-4 text-blue-600">
+                        <label th:if="${pergunta.respostas.size() > 0}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[0].id}" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
                             <span class="ml-3 text-gray-700"><strong>A)</strong> <span th:text="${pergunta.respostas[0].descricao}"></span></span>
                         </label>
-                        <label th:if="${pergunta.respostas[1]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                            <input type="radio" th:name="'p' + ${pergunta.id}" value="B" class="h-4 w-4 text-blue-600">
+                        <label th:if="${pergunta.respostas.size() > 1}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[1].id}" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
                             <span class="ml-3 text-gray-700"><strong>B)</strong> <span th:text="${pergunta.respostas[1].descricao}"></span></span>
                         </label>
-                        <label th:if="${pergunta.respostas[2]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                            <input type="radio" th:name="'p' + ${pergunta.id}" value="C" class="h-4 w-4 text-blue-600">
+                        <label th:if="${pergunta.respostas.size() > 2}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[2].id}" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
                             <span class="ml-3 text-gray-700"><strong>C)</strong> <span th:text="${pergunta.respostas[2].descricao}"></span></span>
                         </label>
-                        <label th:if="${pergunta.respostas[3]}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                            <input type="radio" th:name="'p' + ${pergunta.id}" value="D" class="h-4 w-4 text-blue-600">
+                        <label th:if="${pergunta.respostas.size() > 3}" class="flex items-center p-3 rounded-lg border border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                            <input type="radio" th:name="'p' + ${pergunta.id}" th:value="${pergunta.respostas[3].id}" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
                             <span class="ml-3 text-gray-700"><strong>D)</strong> <span th:text="${pergunta.respostas[3].descricao}"></span></span>
                         </label>
                     </div>
@@ -112,4 +131,37 @@
             </form>
         </div>
     </div>
+
+    <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('formRespostas');
+        if (!form) return;
+
+        const totalPerguntas = document.querySelectorAll('#formRespostas > div[id^="p"]').length;
+        const barra = document.getElementById('barraProgresso');
+        const texto = document.getElementById('progressoTexto');
+
+        form.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                const perguntaId = e.target.name; 
+                
+                // 1. Destacar o indicador numérico
+                const indicador = document.getElementById('indicador-' + perguntaId);
+                if (indicador) {
+                    indicador.classList.remove('border-gray-200', 'text-gray-400');
+                    indicador.classList.add('border-green-500', 'bg-green-50', 'text-green-600');
+                }
+
+                // 2. Calcular progresso (FORMA CORRIGIDA)
+                // Seleciona todos os rádios que estão marcados dentro do formulário
+                const respondidas = form.querySelectorAll('input[type="radio"]:checked').length;
+                const percent = (respondidas / totalPerguntas) * 100;
+
+                // 3. Atualizar Visual
+                barra.style.width = percent + '%';
+                texto.innerText = `${respondidas} / ${totalPerguntas} Respondidas`;
+            }
+        });
+    });
+    </script>
 </main>
