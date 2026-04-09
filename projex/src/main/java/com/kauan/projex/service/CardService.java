@@ -12,7 +12,7 @@ import com.kauan.projex.repository.CardRepository;
 public class CardService {
 
     private final CardRepository cardRepository;
-    public CardService(CardRepository cardRepository) {
+    public CardService(CardRepository cardRepository ) {
         this.cardRepository = cardRepository;
     }
 

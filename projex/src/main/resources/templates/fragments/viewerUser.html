@@ -138,6 +138,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="flex flex-col">
+                        <label class="mb-2 text-xs font-bold text-slate-500 uppercase">Últimos Projetos</label>
+                        <div class="bg-gray-100 border border-gray-100 rounded-3xl p-8">
+                            <div th:replace="~{fragments/cardsGrid :: cardsGrid(${ultimosProjetos}, 'grid-cols-1 md:grid-rows ')}"></div>
+                        </div>
+                    </div>
             </div>
 
             
