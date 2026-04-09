@@ -1,135 +1,119 @@
-<div class="max-w-5xl mx-auto p-8" th:fragment="config">
-  <h1 class="text-3xl font-bold mb-6">Configurações do Sistema</h1>
+<div class="flex flex-col m-auto ml-0 lg:ml-[16rem] 2xl:ml-[20rem] p-4 lg:p-8 w-full max-w-[1200px]" th:fragment="config">
+    
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden relative">
+        
+        <div class="h-32 bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] relative">
+            <div class="absolute -bottom-6 left-10">
+                <div class="bg-white p-3 rounded-2xl shadow-lg">
+                    <i class="bi bi-gear-fill text-3xl text-[#6366F1]"></i>
+                </div>
+            </div>
+        </div>
 
-  <!-- Menu de Abas -->
-  <div class="border-b border-gray-300 mb-6 flex space-x-6 text-gray-600">
-    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="geral">Geral</button>
-    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="notificacoes">Notificações</button>
-    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="integracoes">Integrações</button>
-    <button class="tab-link font-semibold border-b-2 border-transparent py-2 hover:border-gray-400" data-tab="seguranca">Segurança</button>
-  </div>
+        <div class="px-6 md:px-10 pb-12 pt-10">
+            <h1 class="text-3xl font-black text-gray-900 leading-tight mb-2">Configurações do Sistema</h1>
+            <p class="text-gray-500 text-sm mb-8">Gerencie suas preferências de conta e segurança</p>
 
-  <!-- Aba: Geral -->
-  <div id="geral" class="tab-content">
-    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Preferências Gerais</h2>
+            <div class="flex flex-wrap gap-2 mb-10 p-1 bg-gray-50 rounded-2xl w-fit">
+                <button class="tab-link flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 active-tab" data-tab="geral">
+                    <i class="bi bi-sliders"></i> Geral
+                </button>      
+            </div>
 
-      <div class="flex justify-between items-center">
-        <span>Modo Escuro</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" id="modoEscuro" class="sr-only peer">
-          <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:h-5 after:w-5 after:rounded-full after:transition-all peer-checked:after:translate-x-full"></div>
-        </label>
-      </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2">
+                    
+                    <div id="geral" class="tab-content animate-fade-in">
+                        <section class="space-y-8">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800 mb-5 flex items-center gap-3">
+                                    <i class="bi bi-person-gear text-[#6366F1] text-xl"></i> Preferências de Interface
+                                </h3>
+                                <div class="bg-gray-50/50 rounded-3xl p-7 border border-gray-100 space-y-6 shadow-inner">
+                                    <div class="flex justify-between items-center group">
+                                        <div>
+                                            <p class="font-bold text-gray-700">Modo Escuro</p>
+                                            <p class="text-xs text-gray-400">Altera o visual para cores mais escuras</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="modoEscuro" class="sr-only peer">
+                                            <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-lg after:h-4 after:w-4 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-[#6366F1] peer-checked:to-[#8B5CF6]"></div>
+                                        </label>
+                                    </div>
 
-      <div>
-        <label class="text-sm font-medium">Idioma</label>
-        <select id="idioma" class="w-full border rounded-lg p-2 mt-1">
-          <option>Português (Brasil)</option>
-          <option>Inglês (EUA)</option>
-          <option>Espanhol</option>
-        </select>
-      </div>
+                                    <hr class="border-gray-200/50">
 
-      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Salvar Alterações</button>
+                                    <div>
+                                        <label class="text-sm font-bold text-gray-700 block mb-2">Idioma do Sistema</label>
+                                        <select id="idioma" class="w-full bg-white border border-gray-200 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-200 outline-none transition-all">
+                                            <option>Português (Brasil)</option>
+                                            <option>Inglês (EUA)</option>
+                                            <option>Espanhol</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="salvarConfiguracoes()" class="flex items-center gap-2 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold py-3 px-8 rounded-2xl shadow-lg shadow-indigo-100 transition-all active:scale-95">
+                                <i class="bi bi-check2-circle"></i> Salvar Alterações
+                            </button>
+                        </section>
+                    </div>
+
+                    </div>
+
+                <div class="lg:col-span-1 space-y-8">
+                    <section>
+                        <h3 class="text-gray-800 font-bold flex items-center gap-3 mb-5">
+                            <i class="bi bi-info-circle text-[#6366F1] text-xl"></i> Precisando de ajuda?
+                        </h3>
+                        <div class="bg-indigo-50 rounded-[2rem] p-6 border border-indigo-100">
+                            <p class="text-sm text-indigo-900 leading-relaxed mb-4">
+                                Caso tenha dúvidas sobre as permissões ou integração com o <strong>Projex</strong>, entre em contato com o suporte interno.
+                            </p>
+                            <a href="#" class="text-[#6366F1] text-xs font-black uppercase tracking-widest hover:underline">Documentação →</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <!-- Aba: Notificações -->
-  <div id="notificacoes" class="tab-content hidden">
-    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Notificações</h2>
-      <div class="flex justify-between items-center">
-        <span>Notificações por E-mail</span>
-        <input type="checkbox" id="notifEmail" class="h-5 w-5">
-      </div>
-      <div class="flex justify-between items-center">
-        <span>Notificações por WhatsApp</span>
-        <input type="checkbox" id="notifWhatsapp" class="h-5 w-5">
-      </div>
-      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Salvar Preferências</button>
-    </div>
-  </div>
-
-  <!-- Aba: Integrações -->
-  <div id="integracoes" class="tab-content hidden">
-    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Integrações</h2>
-      <div>
-        <label class="text-sm font-medium">E-mail principal</label>
-        <input type="email" id="email" class="w-full border rounded-lg p-2 mt-1" placeholder="exemplo@empresa.com">
-      </div>
-      <div>
-        <label class="text-sm font-medium">WhatsApp</label>
-        <input type="text" id="whatsapp" class="w-full border rounded-lg p-2 mt-1" placeholder="+55 (48) 99999-9999">
-      </div>
-      <button onclick="salvarConfiguracoes()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">Atualizar Integrações</button>
-    </div>
-  </div>
-
-  <!-- Aba: Segurança -->
-  <div id="seguranca" class="tab-content hidden">
-    <div class="bg-white shadow rounded-2xl p-6 space-y-6">
-      <h2 class="text-xl font-semibold">Segurança</h2>
-      <div>
-        <label class="text-sm font-medium">Nova Senha</label>
-        <input type="password" id="senha" class="w-full border rounded-lg p-2 mt-1">
-      </div>
-      <div>
-        <label class="text-sm font-medium">Confirmar Senha</label>
-        <input type="password" id="confirmarSenha" class="w-full border rounded-lg p-2 mt-1">
-      </div>
-      <button onclick="atualizarSenha()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg">Atualizar Senha</button>
-    </div>
-  </div>
 </div>
 
-<!-- Scripts -->
+<style>
+    .active-tab {
+        background-color: white !important;
+        color: #6366F1 !important;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
 <script th:inline="javascript">
-  document.addEventListener("DOMContentLoaded", function () {
-    const tabs = document.querySelectorAll(".tab-link");
-    const contents = document.querySelectorAll(".tab-content");
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".tab-link");
+        const contents = document.querySelectorAll(".tab-content");
 
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("border-blue-600", "text-blue-600"));
-        tab.classList.add("border-blue-600", "text-blue-600");
-        contents.forEach(c => c.classList.add("hidden"));
-        document.getElementById(tab.dataset.tab).classList.remove("hidden");
-      });
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                // Estilização das abas
+                tabs.forEach(t => {
+                    t.classList.remove("active-tab");
+                    t.classList.add("text-gray-500");
+                });
+                tab.classList.add("active-tab");
+                tab.classList.remove("text-gray-500");
+
+                // Troca de conteúdo
+                contents.forEach(c => c.classList.add("hidden"));
+                const target = document.getElementById(tab.dataset.tab);
+                if(target) target.classList.remove("hidden");
+            });
+        });
     });
-  });
-
-  function salvarConfiguracoes() {
-    const data = {
-      modoEscuro: document.getElementById("modoEscuro").checked,
-      idioma: document.getElementById("idioma").value,
-      notifEmail: document.getElementById("notifEmail")?.checked,
-      notifWhatsapp: document.getElementById("notifWhatsapp")?.checked,
-      email: document.getElementById("email")?.value,
-      whatsapp: document.getElementById("whatsapp")?.value
-    };
-
-    fetch("/api/configuracoes", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.ok ? alert("Configurações salvas com sucesso!") : alert("Erro ao salvar."))
-    .catch(() => alert("Erro ao salvar configurações."));
-  }
-
-  function atualizarSenha() {
-    const senha = document.getElementById("senha").value;
-    const confirmar = document.getElementById("confirmarSenha").value;
-    if (senha !== confirmar) return alert("As senhas não coincidem!");
-
-    fetch("/api/configuracoes/senha", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ senha })
-    })
-    .then(res => res.ok ? alert("Senha atualizada com sucesso!") : alert("Erro ao atualizar senha."))
-    .catch(() => alert("Erro ao atualizar senha."));
-  }
 </script>
