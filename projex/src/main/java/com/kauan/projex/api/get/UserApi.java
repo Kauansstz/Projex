@@ -1,4 +1,4 @@
-package com.kauan.projex.api;
+package com.kauan.projex.api.get;
 
 import java.util.List;
 
