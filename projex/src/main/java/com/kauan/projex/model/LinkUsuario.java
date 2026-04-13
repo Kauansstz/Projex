@@ -1,5 +1,6 @@
 package com.kauan.projex.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.utils.TipoLink;
 import jakarta.persistence.*;
 
@@ -17,11 +18,9 @@ public class LinkUsuario {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private InfoUser usuario;
 
-    // ========================
-    // GETTERS AND SETTERS
-    // ========================
 
     public Long getId() {
         return id;

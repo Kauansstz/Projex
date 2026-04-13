@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kauan.projex.utils.Genero;
 
 @Entity
@@ -118,6 +119,7 @@ public class InfoUser {
     public String empresa;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
     public List<LinkUsuario> link = new ArrayList<>();
 
     public LocalDateTime dataInativacao;
