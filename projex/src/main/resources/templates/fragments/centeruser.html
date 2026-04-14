@@ -11,86 +11,11 @@
         </a>
     </div>
 
-    <div th:if="${mensagemErro}" id="alert" role="alert" 
-         class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-r-xl shadow-sm">
-        <p th:utext="${mensagemErro}" class="font-medium text-sm"></p>
-    </div>
+    <div id="container-usuarios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[2rem]"></div>
+
     
-    <div th:if="${mensagemSucesso}" id="alert-sucesso" role="alert" 
-         class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-r-xl shadow-sm">
-        <p th:text="${mensagemSucesso}" class="font-medium text-sm"></p>
-    </div>
-
-    <div th:if="${not #lists.isEmpty(usuario)}" 
-         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-[2rem]">
-
-        <div th:each="user : ${usuario}"
-             class="group bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between border-b-4 hover:border-b-purple-400">
-            
-            <div>
-                <div class="flex items-start justify-between mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
-                            <i class="bi bi-person text-xl" th:hidden="${user.fotoPerfil != null or !#strings.isEmpty(user.fotoPerfil)}"></i>
-                            <img th:src="${user.fotoPerfil}" 
-                            th:if="${user.fotoPerfil != null or !#strings.isEmpty(user.fotoPerfil)}" 
-                            class="rounded-lg"
-                            alt="Foto de Perfil">
-                        </div>
-                        <a th:href="@{/editUser/viewer/{id}(id=${user.id})}" 
-                           class="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors leading-tight"
-                           th:text="${user.name}">
-                        </a>
-                    </div>
-
-                    <details class="relative" onclick="event.stopPropagation();">
-                        <summary class="list-none cursor-pointer p-1.5 rounded-lg hover:bg-gray-100 text-gray-400">
-                            <i class="bi bi-three-dots-vertical text-lg"></i>
-                        </summary>
-
-                        <div class="absolute right-0 mt-2 w-44 rounded-xl bg-white shadow-2xl border border-gray-100 z-50 overflow-hidden">
-                            <ul class="py-1 text-sm text-gray-600">
-                                <li>
-                                    <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
-                                       class="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 transition-colors">
-                                        <i class="bi bi-pencil"></i> Editar Perfil
-                                    </a>
-                                </li>
-                                <li class="border-t border-gray-50">
-                                    <button type="button"
-                                            th:attr="onclick=|openDeleteModal('/panelProjetos/${user.id}/deletar')|"
-                                            class="flex items-center gap-2 w-full text-left px-4 py-2.5 text-red-500 hover:bg-red-50 transition-colors">
-                                        <i class="bi bi-trash"></i> Excluir
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-
-                <div class="mt-2">
-                    <label class="text-[10px] uppercase tracking-widest font-bold text-gray-400 block mb-1">Descrição</label>
-                    <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
-                        <p class="text-sm text-gray-600 line-clamp-2" th:text="${user.descricao != null ? user.descricao : 'Sem descrição cadastrada.'}">
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
-                 <span class="text-[10px] font-bold text-gray-300 uppercase tracking-tighter">ID: [[${user.id}]]</span>
-                 <a th:href="@{/panelUser/editar/{id}(id=${user.id})}" 
-                    class="text-xs font-bold text-purple-500 hover:text-blue-700 transition-colors uppercase">
-                    Configurações →
-                 </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SEM RESULTADOS -->
-    <div th:if="${#lists.isEmpty(usuario)}"
-         class="mt-6 text-center text-gray-500">
-        Nenhum projeto encontrado.
+    <div id="sem-resultados" class="mt-6 text-center text-gray-500 hidden">
+        Nenhum usuário encontrado.
     </div>
 
     <div th:if="${mensagemErro}" 
