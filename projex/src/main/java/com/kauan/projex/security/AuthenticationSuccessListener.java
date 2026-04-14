@@ -28,6 +28,8 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 
         InfoUser usuario = usuarioRepository
         .findByEmail(username)
+        .stream()
+        .findFirst()
         .orElseThrow(() -> new UsernameNotFoundException("E-mail não encontrado: " + username));
 
 
