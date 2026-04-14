@@ -16,7 +16,7 @@ public interface UsuarioRepository extends JpaRepository<InfoUser, Long> {
     List<InfoUser> findByCpf(String cpf);
     List<InfoUser> findByTecnologiasTextContaining(String tecnologia);
     List<InfoUser> findByEmail(String email);
-    Optional<InfoUser> findByEmailAndPassword(String email, String password);
+    List<InfoUser> findByEmailAndPassword(String email, String password);
     Optional<InfoUser> findByToken(String token);
     @Query("SELECT u FROM InfoUser u LEFT JOIN FETCH u.link WHERE u.id = :id")
     Optional<InfoUser> findByIdWithLinks(@Param("id") Long id);
