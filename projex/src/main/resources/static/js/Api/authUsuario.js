@@ -26,29 +26,6 @@ function renderizarTelaLogin() {
 async function authUsuario() {
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
-    const container = document.getElementById("container-login");
-
-    container.innerHTML = `<div class="flex flex-col justify-center space-y-4  w-[20px]" >
-                <div class="flex flex-col">
-                    <label class="font-sans text-[21px] w-[5rem]">E-mail</label>
-                    <input 
-                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
-                    type="email" 
-                    id="email" required />
-                </div>
-                <div class="flex flex-col">
-                    <label class="font-sans text-[21px]">Senha</label>
-                    <input 
-                    class="w-[22.5rem] p-[15px] rounded-[4px] border border-black outline-none focus:ring-1 focus:ring-black" 
-                    type="password" id="senha" 
-                    required />
-                </div>
-                <div class="w-12">
-                    <button type="button" class="w-[5rem] bg-blue-500 p-[8px] text-white rounded-[5px]"
-                    onclick="authUsuario()">Entrar</button>
-                </div>
-            </div>`;
-
 
     try {
         const response = await fetch("/api/v1/email/login", {
