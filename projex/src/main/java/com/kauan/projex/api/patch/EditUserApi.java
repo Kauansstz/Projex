@@ -1,4 +1,4 @@
-package com.kauan.projex.api.put;
+package com.kauan.projex.api.patch;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class EditUserApi {
         this.repository = repository;
     }
 
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<?> editUsuario(@RequestParam(required = false) String cpf, @RequestBody java.util.Map<String, Object>  novosDados){
         List<InfoUser> buscar = repository.findByCpf(cpf);
         if (buscar == null || buscar.isEmpty()) {

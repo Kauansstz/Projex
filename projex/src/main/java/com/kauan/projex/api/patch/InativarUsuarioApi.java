@@ -1,4 +1,4 @@
-package com.kauan.projex.api.put;
+package com.kauan.projex.api.patch;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ public class InativarUsuarioApi {
         this.repository = repository;
     }
 
-    @PutMapping("/{id}/desabilitar")
+    @PatchMapping("/{id}/desabilitar")
     public ResponseEntity<?> inativarUsuario(@PathVariable Long id){
         return repository.findById(id).map(
             usuario -> {usuario.setAtivo(false);
