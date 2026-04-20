@@ -13,8 +13,9 @@ public class InitData {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+        .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**", "/uploads/**").permitAll()
+                .requestMatchers("/h2-console/**", "/uploads/**", "/api/v1/create/**").permitAll()
                 .anyRequest().permitAll()
             )
 

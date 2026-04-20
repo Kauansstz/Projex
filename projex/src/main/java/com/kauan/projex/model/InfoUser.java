@@ -62,10 +62,10 @@ public class InfoUser {
     @Column(name="ATIVO", nullable = false)
     private Boolean ativo;
 
-    @Column(name="ULTIMO_LOGIN", nullable = false)
+    @Column(name="ULTIMO_LOGIN")
     private LocalDateTime ultimoLogin;
 
-    @Column(name="ATUALIZADO_EM", nullable = false)
+    @Column(name="ATUALIZADO_EM")
     @UpdateTimestamp
     private LocalDateTime atualizadoEm;
 
@@ -96,7 +96,7 @@ public class InfoUser {
     @Column(name="IP_ULTIMO_LOGIN", nullable = false)
     private String ipUltimoLogin;
     
-    @Column(name="FORCAR_TROCA_SENHA", nullable = false)
+    @Column(name="FORCAR_TROCA_SENHA")
     private Boolean forcarTrocaSenha;
     
     @Column(name="EMAIL", nullable = false)
