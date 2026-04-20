@@ -126,7 +126,7 @@ async function cadastrarUser(){
         };
 
     try{
-    const response = await fetch('/api/v1/create/create', {
+    const response = await fetch('/api/v1/create/usuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body:JSON.stringify(userData)

@@ -25,7 +25,7 @@ public class CreateUsuario {
         this.repository = repository;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/usuario")
     public ResponseEntity<?> criarUsuario(@RequestBody Map<String, Object> dados, HttpServletRequest request){
         if (!dados.containsKey("email") || dados.get("email").toString().isEmpty()) {
             return ResponseEntity.badRequest().body("Email obrigatório para o cadastro");
