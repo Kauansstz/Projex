@@ -1,56 +1,62 @@
 package com.kauan.projex.api.post;
 
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.Map;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.model.InfoUser;
-import com.kauan.projex.repository.CardRepository;
-import com.kauan.projex.repository.UsuarioRepository;
 import com.kauan.projex.service.CreatedCardService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("api/v1/create")
 public class CreateProjeto {
-    private final UsuarioRepository repositoryUsuario;
-    private final CardRepository repositoryCard;
     private final CreatedCardService service;
-    public CreateProjeto(UsuarioRepository repositoryUsuario, CreatedCardService service, CardRepository repositoryCard){
-        this.repositoryUsuario = repositoryUsuario;
-        this.repositoryCard = repositoryCard;
+    public CreateProjeto(CreatedCardService service ){
         this.service = service;
     }
     @PostMapping("/projeto")
-    public ResponseEntity<?> criarProjeto(Model model, @RequestBody Map<String, String> dados){
+    public ResponseEntity<?> criarProjeto(Model model, @RequestBody Map<String, Object> dados, HttpServletRequest request, RedirectAttributes redirectAttributes){
+
+        InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+        if (dono == null) {
+            throw new WorkFlowException("Usuário não autenticado.");
+        }
+        System.out.println("ID do Dono: " + (dono != null ? dono.getId() : "NULO"));
         try{    
             InfoProject card = new InfoProject();
-            String status = dados.getOrDefault("status", "").toString();
-            Long id = Long.parseLong(dados.getOrDefault("dono", "").toString());
-            InfoUser usuario = repositoryUsuario.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
+            String statusStr = String.valueOf(dados.getOrDefault("status", "ANDAMANTO"));
+            Object isPublishObj = dados.get("isPublish");
+            boolean isPublish = isPublishObj instanceof Boolean ? (Boolean) isPublishObj : false;
+            if (dados.get("dataConclusao") != null && !dados.get("dataConclusao").toString().isEmpty()) {
+                LocalDate data = LocalDate.parse(dados.get("dataConclusao").toString());
+                card.setDataConclusao(data);
+            }
             card.setTitulo(dados.getOrDefault("titulo", "").toString());
             card.setDescricao(dados.getOrDefault("descricao", "").toString());
-            card.setStatus(InfoProject.Status.valueOf(status.toUpperCase()));
             card.setTecnologiasText(dados.getOrDefault("tecnologiasText", "").toString());
-            card.setDono(usuario);
-
-            if (dados.containsKey("dataConclusao")) {
-                String dataConclusao = dados.getOrDefault("dataConclusao", "2026-01-01").toString();
-                LocalDate dataConclusaoFormat = LocalDate.parse(dataConclusao);
-                card.setDataConclusao(dataConclusaoFormat);
+            card.setIsPublish(isPublish);
+            card.setDono(dono);
+            try {
+            card.setStatus(InfoProject.Status.valueOf(statusStr.toUpperCase()));
+            } catch (Exception e) {
+                card.setStatus(InfoProject.Status.EM_ANDAMENTO);
             }
-
-            service.infoCard(card);
-            InfoProject salvar = repositoryCard.save(card);
+            System.err.println("Teste 1");
+            InfoProject salvar = service.infoCard(card);
+            System.err.println("Teste 2");
             return ResponseEntity.ok(salvar);
-        }catch(WorkFlowException e){
-            return ResponseEntity.internalServerError().body("Erro ao criar o projeto: " + e.getMessage());
-        }
+        } catch (Exception e) {
+            System.err.println("Teste 3");
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage()); 
+        } 
         
     }
 }
