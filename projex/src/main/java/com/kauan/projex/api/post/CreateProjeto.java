@@ -47,12 +47,9 @@ public class CreateProjeto {
             } catch (Exception e) {
                 card.setStatus(InfoProject.Status.EM_ANDAMENTO);
             }
-            System.err.println("Teste 1");
             InfoProject salvar = service.infoCard(card);
-            System.err.println("Teste 2");
             return ResponseEntity.ok(salvar);
         } catch (Exception e) {
-            System.err.println("Teste 3");
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage()); 
