@@ -1418,6 +1418,14 @@ video {
   width: 100vw;
 }
 
+.w-\[22\.5rem\] {
+  width: 22.5rem;
+}
+
+.w-\[5rem\] {
+  width: 5rem;
+}
+
 .min-w-\[150px\] {
   min-width: 150px;
 }
@@ -1915,6 +1923,10 @@ video {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-\[4px\] {
+  border-radius: 4px;
 }
 
 .rounded-l-2xl {
@@ -2597,6 +2609,10 @@ video {
   padding: 20px;
 }
 
+.p-\[8px\] {
+  padding: 8px;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -2982,6 +2998,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[21px\] {
+  font-size: 21px;
 }
 
 .font-black {
