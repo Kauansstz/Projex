@@ -20,25 +20,12 @@ async function criarProjeto() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
         }).then(async response => {
-    const msg = await response.text(); // Pega "O título é obrigatório"
+    const msg = await response.text();
 
     if (!response.ok) {
-        // MOSTRAR ERRO NO TOPO
-        const container = document.getElementById('container-notificacao');
-        const alertaErro = document.getElementById('alerta-erro');
-        const textoErro = document.getElementById('texto-erro');
-
-        textoErro.innerText = msg;
-        container.classList.remove('hidden');
-        alertaErro.classList.remove('hidden');
-
-        // Esconder após 5 segundos
-        setTimeout(() => {
-            container.classList.add('hidden');
-        }, 5000);
-
+        window.__showToast(msg, "error");
     } else {
-        // Lógica de sucesso (ex: redirecionar ou mostrar alerta verde)
+        window.__showToast("Projeto criado com sucesso!", "success");
         window.location.href = "/dashboard"; 
     }
 });

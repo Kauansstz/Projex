@@ -1,0 +1,15 @@
+<div id="container-notificacao" class="fixed top-5 right-5 z-[9999] w-80 space-y-4 hidden" th:fragment="notificacao">
+    
+    <div role="alert" id="alerta-erro" class="hidden p-4 bg-red-100 border border-red-300 text-red-700 rounded-2xl flex items-center gap-3 shadow-lg animate-pulse">
+        <i class="bi bi-exclamation-octagon-fill text-lg"></i>
+        <p id="texto-erro" class="font-semibold text-sm"></p>
+    </div>
+
+    <div role="alert" id="alerta-sucesso" class="hidden p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl flex items-center gap-3 shadow-lg">
+        <i class="bi bi-check-all text-2xl"></i>
+        <p id="texto-sucesso" class="font-semibold text-sm"></p>
+    </div>
+
+    <span id="alert" th:text="${mensagemErro}" class="hidden"></span>
+    <span id="alert-sucesso" th:text="${mensagemSucesso}" class="hidden"></span>
+</div>

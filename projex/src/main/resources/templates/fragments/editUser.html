@@ -132,17 +132,5 @@
             </div>
 
         </form>
-
-        <div class="px-8 pb-8">
-            <div th:if="${mensagemErro}" role="alert" class="p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3">
-                <i class="bi bi-exclamation-octagon-fill"></i>
-                <p th:utext="${mensagemErro}" class="font-semibold text-sm"></p>
-            </div>
-
-            <div th:if="${mensagemSucesso}" role="alert" class="p-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl flex items-center gap-3">
-                <i class="bi bi-check-all text-xl"></i>
-                <p th:text="${mensagemSucesso}" class="font-semibold text-sm"></p>
-            </div>
-        </div>
     </div>
 </div>
