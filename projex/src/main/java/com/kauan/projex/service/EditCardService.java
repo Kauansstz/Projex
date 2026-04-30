@@ -1,12 +1,13 @@
 package com.kauan.projex.service;
 
+import com.kauan.projex.dto.EditProjetoDto;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.InfoProject;
+import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CardRepository;
 import com.kauan.projex.repository.CreatedCardRepository;
-
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+
 
 @Service
 public class EditCardService {
@@ -17,24 +18,41 @@ public class EditCardService {
         this.cardRepository = cardRepository;
     }
 
-    public InfoProject infoCardEdit(InfoProject project){
-        validarCampos(project);
+    public InfoProject infoCardEdit(Long id,EditProjetoDto dto, InfoUser dono){
+        InfoProject project = cardEdit.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
+        validarCampos(id, dto, dono, project);
         return salvar(project);
     }
-    private void validarCampos(InfoProject project){
-        if (!StringUtils.hasText(project.getTitulo())) {
-            throw new WorkFlowException( "O campo 'Titulo' deve ser preenchido");
+    private void validarCampos(Long id, EditProjetoDto dto, InfoUser dono, InfoProject project){
+        try{
+            if (dto.getTitulo() != null) {
+                if (dto.getTitulo().isBlank()) {
+                    throw new WorkFlowException( "O campo 'Titulo' deve ser preenchido");
+                }
+                project.setTitulo(dto.getTitulo());
+            }
+            if (dto.getDescricao() != null) {
+                if (dto.getDescricao().isBlank()) {
+                    throw new WorkFlowException( "O campo 'Descrição' deve ser preenchido");
+                }
+                project.setDescricao(dto.getDescricao());
+            }
+            if (dto.getDataConclusao() != null) {
+                project.setDataConclusao(dto.getDataConclusao());
+            }
+            if (dto.getTecnologiasText() != null) {
+                project.setTecnologiasText(dto.getTecnologiasText());
+            }
+            
+            if (dto.getStatus() != null) {
+                String statusStr = dto.getStatus().toString();
+                project.setStatus(InfoProject.Status.valueOf(statusStr));
+            }
+            project.setDono(dono);
+        } catch(Exception e){
+            throw new WorkFlowException("Houve um erro inexperado. " + e);
         }
-        if (!StringUtils.hasText(project.getDescricao())) {
-            throw new WorkFlowException( "O campo 'Descrição' deve ser preenchido");
-        }
-        if (project.getDataConclusao() == null) {
-            throw new WorkFlowException( "O campo 'Data de Conclusão' deve ser preenchido");
-        }
-        if (!StringUtils.hasText(project.getTecnologiasText())) {
-            throw new WorkFlowException( "O campo 'Tecnologias' deve ser preenchido");
-        }
-        
+
     }
     public InfoProject buscarPorId(Long id) {
         return cardRepository.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
