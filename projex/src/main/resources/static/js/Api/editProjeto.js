@@ -9,10 +9,19 @@ async function editProjeto() {
         tecnologiasText: document.getElementById("tag-input").value,
         isPublish: document.getElementById("isPublish").checked
     };
-
+    
+    const inputId = document.querySelector('input[id="id"]') || document.querySelector('input[name="id"]');
+    const projetoId = inputId ? inputId.value : null;
+    if (!projetoId) {
+        console.log("ID encontrado: " + projetoId);
+        console.error("ID do projeto não encontrado no HTML. Verifique se o <input type='hidden' id='id'> tem valor.");
+        return;
+    }
+    console.log("Teste")
     try {
-        const response = await fetch('/api/v1/projeto/editProjeto', {
-            method: 'POST',
+        console.log("Teste 2")
+        const response = await fetch(`/api/v1/projeto/editProjeto?id=${projetoId}`, {
+            method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         });
