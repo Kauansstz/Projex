@@ -11,7 +11,7 @@
 
         <div class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-12">
 
-            <input type="hidden" th:field="*{id}">
+            <input type="hidden" id="id" th:value="${projeto.id}">
 
             <div class="md:col-span-7 space-y-6">
                 
@@ -80,7 +80,7 @@
                             <p class="text-xs text-indigo-200">Exibir este certificado no seu perfil público.</p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" th:field="*{isPublish}" class="sr-only peer">
+                            <input type="checkbox" id="isPublish" class="sr-only peer">
                             <div class="w-14 h-7 bg-indigo-700/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                         </label>
                     </div>
@@ -103,7 +103,8 @@
                    class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-10 py-4 rounded-2xl transition active:scale-95 text-center">
                     Cancelar
                 </a>
-                <button type="submit"
+                <button type="button" 
+                        onclick="editProjeto()"
                         class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-14 py-4 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
                     <i class="bi bi-floppy"></i> Salvar Alterações
                 </button>

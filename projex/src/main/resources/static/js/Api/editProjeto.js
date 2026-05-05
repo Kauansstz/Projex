@@ -1,34 +1,29 @@
 async function editProjeto() {
-    const titulo = document.getElementById("titulo").value;
-    const descricao = document.getElementById("descricao").value;
-    const dataConclusao = document.getElementById("dataConclusao").value;
-    const status = document.getElementById("status").value;
-    const tecnologiasText = document.getElementById("tag-input").value;
-    const isPublish = document.getElementById("isPublish").value;
+    console.log("Iniciando salvamento...");
 
     const data = {
-        titulo: titulo,
-        descricao: descricao,
-        dataConclusao: dataConclusao,
-        status: status,
-        tecnologiasText: tecnologiasText,
-        isPublish: isPublish,
+        titulo: document.getElementById("titulo").value,
+        descricao: document.getElementById("descricao").value,
+        dataConclusao: document.getElementById("dataConclusao").value,
+        status: document.getElementById("status").value,
+        tecnologiasText: document.getElementById("tag-input").value,
+        isPublish: document.getElementById("isPublish").checked
     };
-    try{
 
-        const response = await fetch('api/v1/projeto/editProjeto', {
+    try {
+        const response = await fetch('/api/v1/projeto/editProjeto', {
             method: 'POST',
-            heards: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         });
 
-        if(!response.ok){
-            console.log("Houve algum erro no processo de salvamento")
-        } 
-        window.location.href= '/panelProjetos';
-        
-    }catch(erro){
-        console.log("Erro na conexão: ", error);
+        if (response.ok) {
+            console.log("Projeto salvo!");
+            window.location.href = '/panelProjetos';
+        } else {
+            console.error("Erro no servidor ao salvar.");
+        }
+    } catch (error) {
+        console.error("Erro na conexão: ", error);
     }
-    
 }

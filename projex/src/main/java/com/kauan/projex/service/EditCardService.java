@@ -19,7 +19,7 @@ public class EditCardService {
     }
 
     public InfoProject infoCardEdit(Long id,EditProjetoDto dto, InfoUser dono){
-        InfoProject project = cardEdit.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
+        InfoProject project = buscarPorId(id);
         validarCampos(id, dto, dono, project);
         return salvar(project);
     }

@@ -18,10 +18,15 @@ public class EditProjeto {
         this.service = service;
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<InfoProject> buscarProjeto(@RequestParam Long id) {
+        InfoProject projeto = service.buscarPorId(id);
+        return ResponseEntity.ok(projeto);
+    }
+
     @PatchMapping("/editProjeto")
     public ResponseEntity<?> editarProjeto(@RequestParam(required = false) Long id, @RequestBody EditProjetoDto dto,HttpServletRequest request){
-       InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-
+        InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
         InfoProject salvo = service.infoCardEdit(id, dto, dono);
 
         return ResponseEntity.ok(salvo);
