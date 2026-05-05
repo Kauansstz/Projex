@@ -33,7 +33,6 @@ public class EmailApi {
     public ResponseEntity<?> autenticar(@RequestBody Map<String, String> dados, HttpServletRequest request){
         String email = dados.get("email");
         String password = dados.get("password");
-        System.out.println("Login recebido: " + email);
         List<InfoUser> user = repository.findByEmailAndPassword(email, password);
         if (user == null || user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas.");

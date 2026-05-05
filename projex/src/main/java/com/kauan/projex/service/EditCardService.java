@@ -7,7 +7,7 @@ import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CardRepository;
 import com.kauan.projex.repository.CreatedCardRepository;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.StringUtils;
 
 @Service
 public class EditCardService {
@@ -24,31 +24,35 @@ public class EditCardService {
         return salvar(project);
     }
     private void validarCampos(Long id, EditProjetoDto dto, InfoUser dono, InfoProject project){
+        System.out.println(dto + " E o projeto: " + project);
         try{
-            if (dto.getTitulo() != null) {
-                if (dto.getTitulo().isBlank()) {
-                    throw new WorkFlowException( "O campo 'Titulo' deve ser preenchido");
-                }
-                project.setTitulo(dto.getTitulo());
+            if (dto.getTitulo() != null || dto.getTitulo().isBlank()) {
+                throw new WorkFlowException( "O campo 'Titulo' deve ser preenchido");
             }
-            if (dto.getDescricao() != null) {
-                if (dto.getDescricao().isBlank()) {
-                    throw new WorkFlowException( "O campo 'Descrição' deve ser preenchido");
-                }
-                project.setDescricao(dto.getDescricao());
+            if (dto.getDescricao() == null || dto.getDescricao().isBlank()) {
+                throw new WorkFlowException( "O campo 'Descrição' deve ser preenchido");
             }
-            if (dto.getDataConclusao() != null) {
-                project.setDataConclusao(dto.getDataConclusao());
+            if (dto.getDataConclusao() == null) {
+                throw new WorkFlowException("A data de conclusão é obrigatória.");
+
             }
-            if (dto.getTecnologiasText() != null) {
-                project.setTecnologiasText(dto.getTecnologiasText());
+            if (!StringUtils.hasText(dto.getTecnologiasText())) {
+                throw new WorkFlowException("Pelo menos uma tecnologia é obrigatória.");
+
             }
             
             if (dto.getStatus() != null) {
                 String statusStr = dto.getStatus().toString();
                 project.setStatus(InfoProject.Status.valueOf(statusStr));
             }
+            if (project.getDono() == null) {
+                throw new WorkFlowException("O nome do responsável é obrigatório.");
+            }
+            project.setTitulo(dto.getTitulo());
+            project.setDescricao(dto.getDescricao());
+            project.setDataConclusao(dto.getDataConclusao());
             project.setDono(dono);
+            project.setTecnologiasText(dto.getTecnologiasText());
         } catch(Exception e){
             throw new WorkFlowException("Houve um erro inexperado. " + e);
         }

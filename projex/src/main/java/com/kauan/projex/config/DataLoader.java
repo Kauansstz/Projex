@@ -30,7 +30,6 @@ public class DataLoader implements CommandLineRunner {
         // 2. Tenta ler o ficheiro JSON da pasta resources/data/
         try (InputStream inputStream = getClass().getResourceAsStream("/json/quests.json")) {
             if (inputStream == null) {
-                System.out.println(">>> ERRO: Ficheiro perguntas.json não encontrado!");
                 return;
             }
 
@@ -46,9 +45,7 @@ public class DataLoader implements CommandLineRunner {
             }
             repository.saveAll(perguntas);
 
-            System.out.println(">>> SUCESSO: " + perguntas.size() + " perguntas carregadas do JSON!");
         } catch (Exception e) {
-            System.out.println(">>> ERRO ao carregar JSON: " + e.getMessage());
             e.printStackTrace();
         }
     }

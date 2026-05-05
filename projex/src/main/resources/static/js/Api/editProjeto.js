@@ -6,7 +6,7 @@ async function editProjeto() {
         descricao: document.getElementById("descricao").value,
         dataConclusao: document.getElementById("dataConclusao").value,
         status: document.getElementById("status").value,
-        tecnologiasText: document.getElementById("tag-input").value,
+        tecnologiasText: document.getElementById("tecnologiasText").value,
         isPublish: document.getElementById("isPublish").checked
     };
     
@@ -17,9 +17,8 @@ async function editProjeto() {
         console.error("ID do projeto não encontrado no HTML. Verifique se o <input type='hidden' id='id'> tem valor.");
         return;
     }
-    console.log("Teste")
+  
     try {
-        console.log("Teste 2")
         const response = await fetch(`/api/v1/projeto/editProjeto?id=${projetoId}`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},

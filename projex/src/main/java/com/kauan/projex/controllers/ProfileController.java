@@ -73,7 +73,6 @@ public class ProfileController {
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Perfil atualizado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace(); 
-            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("mensagemErro", "Erro ao atualizar: " + e.getMessage());
         }
         return "redirect:/panelAccount";

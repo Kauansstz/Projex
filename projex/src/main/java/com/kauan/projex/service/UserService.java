@@ -24,14 +24,10 @@ public class UserService {
             .stream()
             .findFirst() 
             .orElseThrow(() -> new WorkFlowException("Usuário ou senha incorretos."));
-        System.out.println("Resultado da busca no banco: " + foundUser);
         
         String token = UUID.randomUUID().toString();
         foundUser.setToken(token);
         usuarioRepository.save(foundUser);
-
-        System.out.println("Usuário autenticado: " + foundUser.getName() + " | " + foundUser.getEmail());
-        System.out.println("Token gerado: " + token);
 
         return foundUser;
     }

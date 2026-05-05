@@ -123,7 +123,6 @@ public class HistoricoController {
         Historico historicoAcao =
                 (Historico) request.getSession().getAttribute("history");
 
-        System.out.println(">>>> HISTORY NA SESSÃO: " + historicoAcao);
 
         model.addAttribute("acaoHistory",
                 historicoAcao != null ? historicoAcao.getAcao() : "");

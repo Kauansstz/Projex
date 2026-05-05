@@ -45,11 +45,6 @@ public class PerguntaController {
                 }
                 model.addAttribute("perguntas", perguntas);
                 model.addAttribute("nivelSelecionado", nivel);
-
-                System.out.println("Categoria selecionada: " + categoriaEnum);
-                System.out.println("Categoria selecionado: " + categoria);
-                System.out.println("Nivel selecionado: " + nivel);
-                System.out.println("Pergunta e respostas carregadas com sucesso");
             }
         } catch (IllegalArgumentException e) {
             return "redirect:/perguntas"; 

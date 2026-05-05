@@ -23,7 +23,6 @@ public class DataInitializer implements CommandLineRunner {
     public DataInitializer(PerguntaService perguntaService,
                         PerguntaRepository perguntaRepository,
                         ObjectMapper objectMapper) {
-                            System.out.println(">>>>>>>>DEBUG");
         this.perguntaService = perguntaService;
         this.perguntaRepository = perguntaRepository;
         this.objectMapper = objectMapper;
@@ -48,6 +47,5 @@ public void run(String... args) throws Exception {
         perguntaService.criarPergunta(dto);
     }
 
-    System.out.println("Perguntas carregadas via JSON!");
 }
 }

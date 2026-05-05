@@ -27,7 +27,6 @@ public class CreateProjeto {
         if (dono == null) {
             throw new WorkFlowException("Usuário não autenticado.");
         }
-        System.out.println("ID do Dono: " + (dono != null ? dono.getId() : "NULO"));
         try{    
             InfoProject card = new InfoProject();
             String statusStr = String.valueOf(dados.getOrDefault("status", "ANDAMANTO"));

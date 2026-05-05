@@ -46,8 +46,6 @@ public class CreatedCardService {
         }
 
         if (!StringUtils.hasText(project.getTecnologiasText())) {
-            System.out.println("Debug TecnologiaText: " + project.getTecnologiasText());
-            System.out.println("Debug Tecnologia: " + project.getTecnologias());
             throw new WorkFlowException("Pelo menos uma tecnologia é obrigatória.");
         }
 
