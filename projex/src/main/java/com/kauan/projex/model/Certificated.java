@@ -3,18 +3,10 @@ package com.kauan.projex.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
@@ -23,40 +15,19 @@ import lombok.Data;
 @Data
 @Entity
 public class Certificated {
-@Id  
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 private Long id;
-
-@Column(nullable = false, length = 100)
 private String titulo;
-
-@Column(nullable = false)
 private String instituicao;
-
-@Column(nullable = false)
 private String descricao;
-
 private String  anexo;
-
 private Boolean isPublish;
-
-@Enumerated(EnumType.STRING)
 private Status status;
-
-@Column(nullable = false)
 private String typeCertificate;
-
-@Enumerated(EnumType.STRING)
-@Column(nullable = false)
 private Category category;
-
-@Column(nullable = false)
 private LocalDate dataConclusao;
-
 private LocalDateTime update = LocalDateTime.now();
-
 private LocalDateTime criadoEm;
-
 
 @ManyToOne
 @JoinColumn(name = "dono_id")

@@ -1,74 +1,49 @@
 package com.kauan.projex.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
+import com.kauan.projex.Mapper.CertificatedMapper;
+import com.kauan.projex.dto.CertificatedRequest;
 import com.kauan.projex.exceptions.DuplicateException;
 import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
+import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CreatedCertificateRepository;
+import com.kauan.projex.repository.UsuarioRepository;
+
 
 @Service
 public class CreatedCertificateService {
 
     private final CreatedCertificateRepository repository;
+    private final CertificatedMapper mapper;
+    private final UsuarioRepository usuarioRepository;
 
-    public CreatedCertificateService(CreatedCertificateRepository repository) {
+    public CreatedCertificateService(CreatedCertificateRepository repository, CertificatedMapper mapper, UsuarioRepository usuarioRepository) {
         this.repository = repository;
+        this.mapper = mapper;
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    public Certificated infoCertificate(Long id, CertificatedRequest dto) {
+        Certificated certificado = buscarPorId(id);
+        InfoUser dono = usuarioRepository.findById(dto.getDonoId()).orElseThrow(() ->  new WorkFlowException("Usuário não encontrado"));
+
+        validarDuplicidade(dto.getTitulo());
+        certificado.setDono(dono);
+        mapper.updateEntityFromDto(dto, certificado);
+        return  repository.save(certificado);
+
     }
 
 
-    public Certificated infoCertificate(Certificated certificado) {
-
-        validarCamposObrigatoriosFormCertificate(certificado);
-        validarDuplicidade(certificado.getTitulo());
-
-        return salvar(certificado);
+    public Certificated buscarPorId(Long id){
+        return repository.findById(id).orElseThrow(() -> new WorkFlowException("Certificado não encontrado"));
     }
-
-
-    private void validarCamposObrigatoriosFormCertificate(Certificated certificado) {
-
-        if (!StringUtils.hasText(certificado.getTitulo())) {
-            throw new WorkFlowException("O título é obrigatório.");
-        }
-
-        if (!StringUtils.hasText(certificado.getDescricao())) {
-            throw new WorkFlowException("A descrição é obrigatória.");
-        }
-        if (!StringUtils.hasText(certificado.getInstituicao())) {
-            throw new WorkFlowException("A Instituição é obrigatória.");
-        }
-        if (!StringUtils.hasText(certificado.getTypeCertificate())) {
-            throw new WorkFlowException("O tipo de certificado é obrigatória.");
-        }
-
-        if (certificado.getStatus() == null) {
-            throw new WorkFlowException("O status é obrigatório.");
-        }
-
-        if (certificado.getDataConclusao() == null) {
-            throw new WorkFlowException("A data de conclusão é obrigatória.");
-        }
-
-        if (certificado.getCategory() == null) {
-            throw new WorkFlowException("O campo 'Categoria' deve ser preenchido");
-        }
-
-        if (certificado.getDono() == null) {
-            throw new WorkFlowException("O nome do responsável é obrigatório.");
-        }
-    }
-
 
     private void validarDuplicidade(String titulo) {
         if (repository.existsByTitulo(titulo)) {
             throw new DuplicateException("Já existe um projeto com este título: ", titulo);
         }
-    }
-
-    public Certificated salvar(Certificated certificado) {
-        return repository.save(certificado);
     }
 
 }

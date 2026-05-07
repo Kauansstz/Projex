@@ -2,63 +2,59 @@ package com.kauan.projex.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 public class CertificatedRequest {
-
     @Id  
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 100)
+    @NotBlank(message = "O título é obrigatório.")    
     private String titulo;
 
+    @Column(nullable = false)
+    @NotBlank(message = "A Instituição é obrigatória.")
     private String instituicao;
 
+    @Column(nullable = false)
+    @NotBlank(message = "O tipo de certificado é obrigatório.")
     private String typeCertificate;
 
+    @Column(nullable = false)
+    @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "O status é obrigatório.")
     private Status status;
 
     private Boolean isPublish;
 
+    @NotNull(message = "O arquivo de anexo é obrigatório.")
     private MultipartFile anexo;
 
     private String anexoNome;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "A categoria é obrigatória.")
     private Category category;
 
+    @NotNull(message = "O ID do dono é obrigatório")
+    private Long donoId; 
+
+    @Column(nullable = false)
+    @NotNull(message = "A data de conclusão é obrigatória.")
     private LocalDate dataConclusao;
-
     private LocalDateTime update = LocalDateTime.now();
-
     private LocalDateTime criadoEm;
 
-    @ManyToOne
-    @JoinColumn(name = "dono_id")
-    @JsonIgnore
-    private InfoUser dono;
-
-    // GETTERS E SETTERS
-
-    @PrePersist
     protected void onCreate() {
         this.criadoEm = LocalDateTime.now();
     }
@@ -69,6 +65,13 @@ public class CertificatedRequest {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public Long getDonoId() {
+        return donoId;
+    }
+
+    public void setDonoId(Long donoId) {
+        this.donoId = donoId;
     }
 
     public String getTitulo() {
@@ -148,13 +151,6 @@ public class CertificatedRequest {
         this.update = update;
     }
 
-    public InfoUser getDono() {
-        return dono;
-    }
-
-    public void setDono(InfoUser dono) {
-        this.dono = dono;
-    }
     public Status getStatus() {
         return status;
     }
