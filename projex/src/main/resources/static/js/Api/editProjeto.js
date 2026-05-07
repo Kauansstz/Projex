@@ -31,7 +31,7 @@ async function editProjeto() {
                 window.__showToast(msg, "error");
             } else {
                 window.__showToast("Projeto criado com sucesso!", "success");
-                setTimeout(() => window.location.reload(), 1000);
+                setTimeout(() => window.location.href= "/panelProjetos", 3000);
             }
         });
 
