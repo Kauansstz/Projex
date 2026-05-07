@@ -2,18 +2,18 @@ package com.kauan.projex.exceptions;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
     
     @ExceptionHandler(DuplicateException.class)
-    public ResponseEntity<Map<String, Object>> handlerDuplicate(DuplicateException ex){
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> handlerDuplicate( DuplicateException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
             "status",409,
             "error", "Conflito de dados",
@@ -22,13 +22,8 @@ public class GlobalExceptionHandler {
         ));
     }
     @ExceptionHandler(WorkFlowException.class)
-    public String handleWorkflow(
-            WorkFlowException ex,
-            RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute(
-            "mensagemErro",
-            ex.getMessage()
-        );
-        return "redirect:/login";
-    }
+    @ResponseBody
+    public ResponseEntity<String> handleWorkflow(WorkFlowException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());    
+        }
 }

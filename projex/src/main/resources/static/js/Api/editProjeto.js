@@ -21,13 +21,27 @@ async function editProjeto() {
     try {
         const response = await fetch(`/api/v1/projeto/editProjeto?id=${projetoId}`, {
             method: 'PATCH',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
+        }).then(async response => {
+            const msg = await response.text();
+
+            if (!response.ok) {
+                window.__showToast(msg, "error");
+            } else {
+                window.__showToast("Projeto criado com sucesso!", "success");
+                setTimeout(() => window.location.reload(), 1000);
+            }
         });
 
         if (response.ok) {
-            console.log("Projeto salvo!");
-            window.location.href = '/panelProjetos';
+            try{
+                console.log("Projeto salvo!");
+                window.location.href = '/panelProjetos';
+            }catch(error){
+                console.error("Erro de salvar os dados", e);
+            }
         } else {
             console.error("Erro no servidor ao salvar.");
         }

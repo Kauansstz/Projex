@@ -8,20 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const alertaSucesso = document.getElementById('alerta-sucesso');
     const textoSucesso = document.getElementById('texto-sucesso');
 
-    /**
-     * @param {string} message
-     * @param {string} type
-     */
     function showNotification(message, type = "success") {
         if (!message || !container) return;
 
         if (debug) console.log(`[Notificação] exibindo ${type}: ${message}`);
-
         container.classList.remove('hidden');
         alertaErro.classList.add('hidden');
         alertaSucesso.classList.add('hidden');
 
-        if (type === "error") {
+        if (type === "error" || type === "danger") {
             textoErro.innerText = message;
             alertaErro.classList.remove('hidden');
         } else {

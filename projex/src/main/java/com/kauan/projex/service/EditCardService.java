@@ -6,6 +6,12 @@ import com.kauan.projex.model.InfoProject;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CardRepository;
 import com.kauan.projex.repository.CreatedCardRepository;
+
+import jakarta.transaction.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,10 +29,15 @@ public class EditCardService {
         validarCampos(id, dto, dono, project);
         return salvar(project);
     }
+    @Transactional
     private void validarCampos(Long id, EditProjetoDto dto, InfoUser dono, InfoProject project){
-        System.out.println(dto + " E o projeto: " + project);
+        
+        if (dono == null || dono.getId() == null) {
+            throw new WorkFlowException("Usuário logado não encontrado na sessão.");
+        }
+
         try{
-            if (dto.getTitulo() != null || dto.getTitulo().isBlank()) {
+            if (dto.getTitulo() == null || dto.getTitulo().isBlank()) {
                 throw new WorkFlowException( "O campo 'Titulo' deve ser preenchido");
             }
             if (dto.getDescricao() == null || dto.getDescricao().isBlank()) {
@@ -45,18 +56,28 @@ public class EditCardService {
                 String statusStr = dto.getStatus().toString();
                 project.setStatus(InfoProject.Status.valueOf(statusStr));
             }
-            if (project.getDono() == null) {
-                throw new WorkFlowException("O nome do responsável é obrigatório.");
-            }
+           
             project.setTitulo(dto.getTitulo());
             project.setDescricao(dto.getDescricao());
             project.setDataConclusao(dto.getDataConclusao());
             project.setDono(dono);
-            project.setTecnologiasText(dto.getTecnologiasText());
-        } catch(Exception e){
+            project.setIsPublish(dto.getIsPublish());
+            project.setTecnologiasText((limparTecnologias(dto.getTecnologiasText())));
+        } catch(WorkFlowException e){
+            throw  e;
+        }catch(Exception e){
             throw new WorkFlowException("Houve um erro inexperado. " + e);
         }
 
+    }
+    private String limparTecnologias(String texto) {
+        if (texto == null) return "";
+        List<String> lista = Arrays.stream(texto.split(";"))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .toList();
+        return String.join(";", lista);
     }
     public InfoProject buscarPorId(Long id) {
         return cardRepository.findById(id).orElseThrow(() -> new WorkFlowException("Projeto não encontrado"));
