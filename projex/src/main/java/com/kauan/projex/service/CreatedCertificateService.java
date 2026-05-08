@@ -8,7 +8,6 @@ import com.kauan.projex.exceptions.WorkFlowException;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.repository.CreatedCertificateRepository;
-import com.kauan.projex.repository.UsuarioRepository;
 
 
 @Service
@@ -16,12 +15,10 @@ public class CreatedCertificateService {
 
     private final CreatedCertificateRepository repository;
     private final CertificatedMapper mapper;
-    private final UsuarioRepository usuarioRepository;
 
-    public CreatedCertificateService(CreatedCertificateRepository repository, CertificatedMapper mapper, UsuarioRepository usuarioRepository) {
+    public CreatedCertificateService(CreatedCertificateRepository repository, CertificatedMapper mapper ) {
         this.repository = repository;
         this.mapper = mapper;
-        this.usuarioRepository = usuarioRepository;
     }
 
     public Certificated infoCertificate(CertificatedRequest dto, InfoUser dono) {
@@ -33,6 +30,7 @@ public class CreatedCertificateService {
             String nomeDoArquivo = dto.getAnexo().getOriginalFilename();
             certificado.setAnexo(nomeDoArquivo);
         }
+        certificado.setDono(dono);
         return  repository.save(certificado);
 
     }
