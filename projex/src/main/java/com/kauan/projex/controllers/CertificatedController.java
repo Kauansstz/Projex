@@ -76,8 +76,6 @@ public class CertificatedController {
                 throw new WorkFlowException("Usuário não autenticado.");
             }
 
-            certificado.setDono(dono);
-
             editCardService.infoCertificateEdit(certificado);
 
             redirectAttributes.addFlashAttribute("mensagemSucesso", 

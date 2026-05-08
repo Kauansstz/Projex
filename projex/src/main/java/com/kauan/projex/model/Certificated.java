@@ -6,25 +6,30 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 public class Certificated {
-
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
+
 private String titulo;
 private String instituicao;
 private String descricao;
 private String  anexo;
 private Boolean isPublish;
+
+@Enumerated(EnumType.STRING)
 private Status status;
+
 private String typeCertificate;
+
+@Enumerated(EnumType.STRING)
 private Category category;
+
 private LocalDate dataConclusao;
 private LocalDateTime update = LocalDateTime.now();
 private LocalDateTime criadoEm;

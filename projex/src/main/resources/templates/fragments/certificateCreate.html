@@ -25,21 +25,21 @@
 
                 <div class="flex flex-col">
                     <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Título da Conquista</label>
-                    <input type="text" th:field="*{titulo}" placeholder="Ex: Especialista em Spring Boot"
+                    <input type="text" id="titulo" placeholder="Ex: Especialista em Spring Boot"
                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all placeholder:text-slate-400"/>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="flex flex-col autocomplete-container relative">
                         <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Instituição Emissora</label>
-                        <input type="text" th:field="*{Instituicao}" placeholder="Nome da escola/empresa" id="instituicaoInput" autocomplete="off"
+                        <input type="text"  placeholder="Nome da escola/empresa" id="instituicaoInput" autocomplete="off"
                                class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
                         <ul id="instituicaoList" class="absolute z-20 w-full bg-slate-900 border border-slate-700 rounded-xl mt-20 hidden max-h-48 overflow-y-auto text-white shadow-xl"></ul>
                     </div>
 
                     <div class="flex flex-col autocomplete-container relative">
                         <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Tipo de Formação</label>
-                        <input type="text" th:field="*{typeCertificate}" placeholder="Ex: Bacharelado, Workshop" id="TypeInput" autocomplete="off"
+                        <input type="text" placeholder="Ex: Bacharelado, Workshop" id="TypeInput" autocomplete="off"
                                class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all"/>
                         <ul id="TypeList" class="absolute z-20 w-full bg-slate-900 border border-slate-700 rounded-xl mt-20 hidden max-h-48 overflow-y-auto text-white shadow-xl"></ul>
                     </div>
@@ -47,14 +47,14 @@
 
                 <div class="flex flex-col">
                     <label class="mb-2 text-sm font-bold text-slate-700 uppercase tracking-wider">Resumo ou Descrição</label>
-                    <textarea th:field="*{descricao}" rows="4" placeholder="O que você aprendeu neste curso?"
+                    <textarea id="descricao" rows="4" placeholder="O que você aprendeu neste curso?"
                               class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all resize-none"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="flex flex-col">
                         <label class="mb-2 text-sm font-bold text-slate-700">Status</label>
-                        <select th:field="*{status}" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 appearance-none cursor-pointer">
+                        <select id="status" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 appearance-none cursor-pointer">
                             <option value="EM_ANDAMENTO">Em andamento</option>
                             <option value="CONCLUIDO">Concluído</option>
                             <option value="CANCELADO">Cancelado</option>
@@ -63,12 +63,12 @@
 
                     <div class="flex flex-col">
                         <label class="mb-2 text-sm font-bold text-slate-700">Data de Conclusão</label>
-                        <input type="date" th:field="*{dataConclusao}" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer"/>
+                        <input type="date" id="dataConclusao" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer"/>
                     </div>
 
                     <div class="flex flex-col">
                         <label class="mb-2 text-sm font-bold text-slate-700">Categoria</label>
-                        <select id="categoria" th:field="*{category}" required class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer">
+                        <select id="categoria" required class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 cursor-pointer">
                             <option value="">Selecione...</option>
                             <option th:each="cat : ${categorias}" th:value="${cat.name()}" th:text="${cat.label}"></option>
                         </select>
@@ -108,7 +108,7 @@
                     </button>
                 </label>
                 
-                <input type="file" id="fileInput" class="hidden" th:field="*{anexo}">
+                <input type="file" id="fileInput" class="hidden">
 
                 <div class="bg-indigo-900 p-6 rounded-3xl shadow-lg shadow-indigo-200 text-white space-y-4">
                     <div class="flex justify-between items-center">
@@ -117,7 +117,7 @@
                             <p class="text-xs text-indigo-200">Exibir este certificado no seu perfil público.</p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" th:field="*{isPublish}" class="sr-only peer">
+                            <input type="checkbox" id="isPublish" class="sr-only peer">
                             <div class="w-14 h-7 bg-indigo-700/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-400"></div>
                         </label>
                     </div>
@@ -129,7 +129,8 @@
                    class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold px-10 py-4 rounded-2xl transition active:scale-95">
                     Cancelar
                 </button>
-                <button type="submit"
+                <button type="button"
+                        onclick="criarProjeto()"
                         class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-14 py-4 rounded-2xl shadow-xl shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
                     <i class="bi bi-check-circle-fill"></i> Finalizar Cadastro
                 </button>

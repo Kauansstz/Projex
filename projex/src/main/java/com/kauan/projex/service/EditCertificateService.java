@@ -37,8 +37,6 @@ public class EditCertificateService {
         entidade.setDataConclusao(request.getDataConclusao());
         entidade.setCategory(request.getCategory());
         entidade.setIsPublish(request.getIsPublish());
-        entidade.setDono(request.getDono());
-
         if (request.getAnexo() != null && !request.getAnexo().isEmpty()) {
 
             if (entidade.getAnexo() != null) {
@@ -109,9 +107,6 @@ public class EditCertificateService {
             throw new WorkFlowException("O campo 'Tipo de Certificado' deve ser preenchido");
         }
 
-        if (certificado.getDono() == null) {
-            throw new WorkFlowException("Erro ao encontrar o dono");
-        }
 
         if (certificado.getStatus() == null) {
             throw new WorkFlowException("O campo 'Status' deve ser preenchido");
@@ -134,7 +129,6 @@ public class EditCertificateService {
         dto.setStatus(entidade.getStatus());
         dto.setCategory(entidade.getCategory());
         dto.setIsPublish(entidade.getIsPublish());
-        dto.setDono(entidade.getDono());
         dto.setAnexoNome(entidade.getAnexo());
 
         return dto;

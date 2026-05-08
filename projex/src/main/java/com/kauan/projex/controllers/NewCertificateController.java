@@ -96,20 +96,6 @@ public String salvarCertificado(
                     throw new WorkFlowException("Nenhum arquivo foi enviado.");
                 }
 
-                Certificated certificado = new Certificated();
-                certificado.setTitulo(dto.getTitulo());
-                certificado.setDescricao(dto.getDescricao());
-                certificado.setCategory(dto.getCategory());
-                certificado.setTypeCertificate(dto.getTypeCertificate());
-                certificado.setInstituicao(dto.getInstituicao());
-                certificado.setStatus(dto.getStatus());
-                certificado.setDataConclusao(dto.getDataConclusao());
-                certificado.setDono(dono);
-
-                // salva apenas o nome (ou caminho)
-                certificado.setAnexo(arquivo.getOriginalFilename());
-
-                repositoryService.infoCertificate(certificado);
 
                 redirectAttributes.addFlashAttribute(
                         "mensagemSucesso", "Certificado cadastrado com sucesso!");

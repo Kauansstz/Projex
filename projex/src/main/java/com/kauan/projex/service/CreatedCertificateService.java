@@ -24,13 +24,15 @@ public class CreatedCertificateService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Certificated infoCertificate(Long id, CertificatedRequest dto) {
-        Certificated certificado = buscarPorId(id);
-        InfoUser dono = usuarioRepository.findById(dto.getDonoId()).orElseThrow(() ->  new WorkFlowException("Usuário não encontrado"));
-
+    public Certificated infoCertificate(CertificatedRequest dto, InfoUser dono) {
+        Certificated certificado = new Certificated();
         validarDuplicidade(dto.getTitulo());
-        certificado.setDono(dono);
         mapper.updateEntityFromDto(dto, certificado);
+
+        if (dto.getAnexo() != null || !dto.getAnexo().isEmpty()) {
+            String nomeDoArquivo = dto.getAnexo().getOriginalFilename();
+            certificado.setAnexo(nomeDoArquivo);
+        }
         return  repository.save(certificado);
 
     }

@@ -50,7 +50,6 @@ public class CardCertificateService {
         dto.setStatus(entidade.getStatus());
         dto.setCategory(entidade.getCategory());
         dto.setIsPublish(entidade.getIsPublish());
-        dto.setDono(entidade.getDono());
 
         return dto;
     }
