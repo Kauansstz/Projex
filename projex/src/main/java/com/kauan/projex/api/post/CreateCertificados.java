@@ -7,8 +7,8 @@ import com.kauan.projex.dto.CertificatedRequest;
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.service.CreatedCertificateService;
-
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1")
@@ -20,10 +20,9 @@ public class CreateCertificados {
     }
 
     @PostMapping(value = "/criarProjeto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> criarProjeto( @ModelAttribute CertificatedRequest dto, HttpServletRequest request){
+    public ResponseEntity<Object> criarProjeto(@ModelAttribute @Valid CertificatedRequest dto, HttpServletRequest request){
         InfoUser dono = (InfoUser) request.getSession().getAttribute("usuarioLogado");
-        Certificated salvo =  service.infoCertificate( dto, dono);
-        System.out.println("Arquivo recebido: " + dto.getAnexo().getOriginalFilename());
+        Certificated salvo =  service.infoCertificate(dto, dono);
         return ResponseEntity.ok(salvo);
     }
 }
