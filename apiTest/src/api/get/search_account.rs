@@ -1,6 +1,6 @@
 use serde_json::json;
 use dotenvy::dotenv;
-use std::env;
+use std::{env, thread, time::Duration};
 
 use crate::models::{info_user::InfoUser, login_response::{LoginResponse}};
 
@@ -55,6 +55,7 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
     match serde_json::from_str::<Vec<InfoUser>>(&raw_json) {
         Ok(users) => {
             println!("✅ Usuários encontrados com sucesso: ");
+            thread::sleep(Duration::from_millis(3000));
             for user in &users{
                 match serde_json::to_string_pretty(user) {
                     Ok(vertical) =>{
