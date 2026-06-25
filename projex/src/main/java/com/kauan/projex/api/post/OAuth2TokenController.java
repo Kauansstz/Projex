@@ -18,18 +18,24 @@ public class OAuth2TokenController {
     @Autowired
     private TokenService tokenService;
 
-    private final String CLIENT_ID_VALIDO = "projex";
-    private final String CLIENT_SECRET_VALIDO = "projext-secret-123";
+    @Value("${api.security.token.client_id_valido}")
+    private  String client_id_valido;
 
-    @PostMapping("projex-service-realm")
+    @Value("${api.security.token.client_secret_valido}")
+    private  String client_secret_valido ;
+
+    @PostMapping("/projex-service-realm")
     public ResponseEntity<?> gerarTokenOAuth2(
         @RequestParam("grant_type") String grantType,
         @RequestParam("client_id") String clientId,
         @RequestParam(value = "client_secret", required = false) String clientSecret
     ){
-        if (!CLIENT_ID_VALIDO.equals(clientId)) {
+        if (!client_id_valido.equals(clientId) || !client_secret_valido.equals(clientSecret)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("error", "invalid_client", "error_description", "Client ID inválido."));
+                    .body(Map.of(
+                        "error", "invalid_client", 
+                        "error_description", "Client ID ou Client Secret inválidos."
+                    ));
         }
 
         String token = tokenService.gerarToken(clientId);
