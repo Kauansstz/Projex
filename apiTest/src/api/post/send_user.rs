@@ -125,7 +125,7 @@ pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::
         println!("Status do Java: {}", status_delete);
         println!("");
     } else {
-        eprintln!("❌ Falha ao limpar o banco. Resposta do servidor: {}", reqtest_delete);
+        eprintln!("❌ Falha ao limpar o banco. Resposta do servidor: {}", status_delete);
         return Err(format!("Erro no DELETE: {}", status_delete).into());
     }
 
