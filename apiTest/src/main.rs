@@ -19,5 +19,10 @@ async fn main(){
     } else {
         println!("✅ Teste 'test_post_users_should_return_success' passou!");
     }
+    if let Err(e) = api::post::token::test_post_token_should_return_success().await {
+        eprintln!("❌ Teste 'test_post_token_should_return_success' falhou: {}", e);
+    } else {
+        println!("✅ Teste 'test_post_token_should_return_success' passou!");
+    }
 
 }
