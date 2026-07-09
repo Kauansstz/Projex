@@ -12,6 +12,10 @@ use crate::models::{info_user::{self, InfoUser}, login_response::LoginResponse};
 pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
+    println!("{:-<60}", "");
+    println!("|           INICIANDO O TESTE DE CRIACAO DE USUARIO        |");
+    println!("{:-<60}", "");
+
     let API = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
 

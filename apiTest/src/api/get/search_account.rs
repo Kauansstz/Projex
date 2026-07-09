@@ -2,11 +2,15 @@ use serde_json::json;
 use dotenvy::dotenv;
 use std::{env, thread, time::Duration};
 
-use crate::models::{info_user::InfoUser, login_response::{LoginResponse}};
+use crate::models::{info_user::{self, InfoUser}, login_response::LoginResponse};
 
 
 pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
+
+    println!("{:-<60}", "");
+    println!("|           INICIANDO O TESTE DE PESQUISA DE USUARIO       |");
+    println!("{:-<60}", "");
 
     let api = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
@@ -30,7 +34,7 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
         return Err(format!("Falha no login: {}", err_text).into());
     }
 
-    let login_data: LoginResponse = login_response.json().await?;
+    let login_data: InfoUser = login_response.json().await?;
     let token = login_data.token;
 
     println!("🚀 Buscando usuários com o token de autorização...");

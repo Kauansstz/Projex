@@ -21,7 +21,7 @@ public class EmailApi {
     }
 
     @GetMapping
-    private ResponseEntity<List<InfoUser>> listarEmailUser(@RequestParam(required = false) String email){
+    public ResponseEntity<List<InfoUser>> listarEmailUser(@RequestParam(name = "email",required = false) String email){
         List<InfoUser> lista = repository.findByEmail(email);
         if (email == null || email.isEmpty() ) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
