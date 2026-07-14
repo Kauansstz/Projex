@@ -4,6 +4,6 @@ use serde::{Deserialize, Serialize};
 pub struct LinkUsuario {
     pub id: Option<i64>,
     pub url: String,
-    pub tipo_link: TipoLink,
+    pub tipoLink: Option<TipoLink>,
     pub usuario: info_user::InfoUser,
 } 

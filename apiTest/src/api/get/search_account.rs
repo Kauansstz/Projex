@@ -37,22 +37,13 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
     }
 
     let raw_json = response.text().await?;
-    
+
     match serde_json::from_str::<Vec<InfoUser>>(&raw_json) {
         Ok(users) => {
-            println!("✅ Usuários encontrados com sucesso: ");
+            println!("Status: {}", status);
             thread::sleep(Duration::from_millis(3000));
-            for user in &users{
-                match serde_json::to_string_pretty(user) {
-                    Ok(vertical) =>{
-                        print!("{}\n", vertical);
-                        print!("--------------------------------------------------------------------------------------------------------------------\n")
-                    }
-                    Err(e) => {
-                        eprintln!("❌ Erro ao formatar usuário para JSON: {}", e);
-                    }
-                }
-            }
+            println!("Quantidade de usuário cadastrados: {}", users.len());
+            println!("{:-<60}", "");
         },
         Err(e) => {
             eprintln!("\n❌ Erro de Desserialização no Rust: {}", e);

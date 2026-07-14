@@ -15,14 +15,22 @@ async fn main(){
     }
 
     if let Err(e) = api::post::send_user::test_post_users_and_delete_should_return_success().await {
+        println!("");
         eprintln!("❌ Teste 'test_post_users_and_delete_should_return_success' falhou: {}", e);
+        println!("");
     } else {
+        println!("");
         println!("✅ Teste 'test_post_users_and_delete_should_return_success' passou!");
+        println!("");
     }
     if let Err(e) = api::post::token::test_post_token_should_return_success().await {
+        println!("");
         eprintln!("❌ Teste 'test_post_token_should_return_success' falhou: {}", e);
+        println!("");
     } else {
+        println!("");
         println!("✅ Teste 'test_post_token_should_return_success' passou!");
+        println!("");
     }
 
 }
