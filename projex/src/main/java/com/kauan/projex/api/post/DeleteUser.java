@@ -17,7 +17,7 @@ public class DeleteUser {
     private UsuarioRepository repository;
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deletarUsuario(@PathVariable @NonNull Long id){
+    public ResponseEntity<?> deletarUsuario(@PathVariable("id") @NonNull Long id){
         if(!repository.existsById(id)){
             return ResponseEntity.status(404).body("Usuário não encontrado com o ID: " + id);
         }

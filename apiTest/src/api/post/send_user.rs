@@ -113,7 +113,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
 
     println!("Usuário que está sendo deletado pelo ID: {:?}", usuario_id);
     let response_delete = client
-    .delete(format!("{}/delete/user/{}", api, &usuario_id))
+    .delete(format!("{}/delete/user/{:?}", api, usuario_id))
     .bearer_auth(&token)
     .send()
     .await?;
@@ -123,6 +123,9 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     println!("");
     println!("Token do delete: {}", token);
 
+    let req = response_delete.text().await?;
+
+    println!("Body: {}", req);
     if status_delete.is_success() {
         println!("✅ Limpeza do banco de dados realizada com sucesso!");
         println!("Status do Java: {}", status_delete);
