@@ -13,7 +13,6 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
     println!("|           INICIANDO O TESTE DE CRIACAO DE TOKEN          |");
     println!("{:-<60}", "");
 
-    let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client_id =  env::var("CLIENT_ID").expect("CLIENT_ID não foi encontrado");
     let client_secret = env::var("CLIENT_SECRET").expect("CLIENT_SECRET não foi encontrado");
     let token_url = env::var("TOKEN_URL").expect("TOKEN_URL não foi encontrado");
