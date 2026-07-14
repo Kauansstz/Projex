@@ -89,7 +89,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     let usuario_id = &usuario_criado.id.expect("O Java deveria ter retornado o ID do usuário.");
 
     println!("{:-<60}", "");
-    println!("|        🧹 Limpando o banco de dados...        |");
+    println!("|              🧹 Limpando o banco de dados...              |");
     println!("{:-<60}", "");
     thread::sleep(Duration::from_millis(3000));
 
