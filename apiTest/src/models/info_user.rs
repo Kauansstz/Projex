@@ -4,7 +4,7 @@ use crate::models::info_project::InfoProject;
 use serde::{Deserialize, Serialize};
 use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
 
-
+#[allow(non_snake_case)]
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InfoUser {

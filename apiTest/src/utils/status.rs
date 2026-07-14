@@ -1,8 +1,14 @@
 use serde::{Deserialize, Serialize};
 
+
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Status {
-    EM_ANDAMENTO,
-    CONCLUIDO,
-    CANCELADO,
+    #[serde(rename = "EM_ANDAMENTO")]
+    EmAndamento,
+
+    #[serde(rename = "CONCLUIDO")]
+    Concluido,
+
+    #[serde(rename = "CANCELADO")]
+    Cancelado,
 }
