@@ -1,22 +1,21 @@
-use chrono::format::Numeric::Timestamp;
 use serde_json::json;
 use dotenvy::dotenv;
 use std::thread;
 use std::time::Duration;
 use std::time::{SystemTime, UNIX_EPOCH};
-use std::{collections::HashMap, env};
+use std::env;
 
-use crate::models::{info_user::{self, InfoUser}, login_response::LoginResponse};
+use crate::models::{info_user::{InfoUser}, login_response::LoginResponse};
 
 
-pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
     println!("{:-<60}", "");
     println!("|           INICIANDO O TESTE DE CRIACAO DE USUARIO        |");
     println!("{:-<60}", "");
 
-    let API = env::var("API_URL").expect("API_URL não encontrada");
+    let api = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
 
     println!("🔑 Autenticando na API Java...");
@@ -26,7 +25,7 @@ pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::
     let password = env::var("PASSWORD").expect("PASSWORD não encontrado");
 
     let login_response = client
-        .post(format!("{}/email/login", API))
+        .post(format!("{}/email/login", api))
         .json(&json!({
             "email": email,
             "password": password
@@ -68,8 +67,8 @@ pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::
     });
 
     let response = client
-        .post(format!("{}/create/usuario", API))
-        .header("Authorization", format!("Bearer {}", token))
+        .post(format!("{}/create/usuario", api))
+        .bearer_auth(&token)
         .json(&dados)
         .send()
         .await?;
@@ -105,20 +104,24 @@ pub async fn test_post_users_should_return_success() -> Result<(), Box<dyn std::
     thread::sleep(Duration::from_millis(3000));
     
     assert!(status.is_success(), "A API Java não retornou um status de sucesso!");
-    let usuario_id = usuario_criado.id.expect("O Java deveria ter retornado o ID do usuário.");
+    let usuario_id = &usuario_criado.id.expect("O Java deveria ter retornado o ID do usuário.");
 
-    println!("🧹 Limpando o banco de dados...");
-    println!("");
+    println!("{:-<60}", "");
+    println!("|        🧹 Limpando o banco de dados...        |");
+    println!("{:-<60}", "");
     thread::sleep(Duration::from_millis(3000));
 
+    println!("Usuário que está sendo deletado pelo ID: {:?}", usuario_id);
     let response_delete = client
-    .delete(format!("{}/delete/user/{}", API, usuario_id))
-    .header("Authorization", format!("Bearer {}", token))
+    .delete(format!("{}/delete/user/{}", api, &usuario_id))
+    .bearer_auth(&token)
     .send()
     .await?;
     
     let status_delete = response_delete.status();
-    let reqtest_delete = response_delete.text().await?;
+    println!("Status do delete: {}", status_delete);
+    println!("");
+    println!("Token do delete: {}", token);
 
     if status_delete.is_success() {
         println!("✅ Limpeza do banco de dados realizada com sucesso!");

@@ -9,6 +9,10 @@ static TOKEN: OnceLock<String> = OnceLock::new();
 pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
     
+    println!("{:-<60}", "");
+    println!("|           INICIANDO O TESTE DE CRIACAO DE TOKEN          |");
+    println!("{:-<60}", "");
+
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client_id =  env::var("CLIENT_ID").expect("CLIENT_ID não foi encontrado");
     let client_secret = env::var("CLIENT_SECRET").expect("CLIENT_SECRET não foi encontrado");
@@ -39,24 +43,7 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
     let token_data: TokenResponse = token_response.json().await?;
     println!("Toke obtido com sucesso! Tipo: {}", token_data.token_type);
     println!("----------------------------------------------------------");
-    println!("Chamando a API principal: {}...", api);
 
-    let api_response = client
-        .get(&api)
-        .header("Authorization", format!("Bearer {}", token_data.access_token))
-        .header("Content-Type", "application/json")
-        .send()
-        .await?;
-
-    let status = api_response.status();
-
-
-    if status == 404 {
-        let erro_body: serde_json::Value = api_response.json().await?;
-        println!("Error: {:?}", erro_body);
-    }
-
-    println!("Status da Resposta: {}", &status);
     
 
     Ok(())

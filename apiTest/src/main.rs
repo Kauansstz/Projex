@@ -14,10 +14,10 @@ async fn main(){
         println!("Teste 'test_get_users_should_return_success' passou! ");
     }
 
-    if let Err(e) = api::post::send_user::test_post_users_should_return_success().await {
-        eprintln!("❌ Teste 'test_post_users_should_return_success' falhou: {}", e);
+    if let Err(e) = api::post::send_user::test_post_users_and_delete_should_return_success().await {
+        eprintln!("❌ Teste 'test_post_users_and_delete_should_return_success' falhou: {}", e);
     } else {
-        println!("✅ Teste 'test_post_users_should_return_success' passou!");
+        println!("✅ Teste 'test_post_users_and_delete_should_return_success' passou!");
     }
     if let Err(e) = api::post::token::test_post_token_should_return_success().await {
         eprintln!("❌ Teste 'test_post_token_should_return_success' falhou: {}", e);
