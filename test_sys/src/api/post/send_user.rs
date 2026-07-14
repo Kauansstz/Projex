@@ -1,11 +1,11 @@
-use serde_json::json;
 use dotenvy::dotenv;
 use std::thread;
 use std::time::Duration;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::env;
 
-use crate::models::{info_user::{InfoUser}, login_response::LoginResponse};
+use crate::models::info_user::InfoUser;
+use crate::utils::token::token;
 
 
 pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
@@ -21,25 +21,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     println!("🔑 Autenticando na API Java...");
     thread::sleep(Duration::from_millis(3000));
 
-    let email = env::var("USER_AUTH").expect("USER_AUTH não encontrado");
-    let password = env::var("PASSWORD").expect("PASSWORD não encontrado");
-
-    let login_response = client
-        .post(format!("{}/email/login", api))
-        .json(&json!({
-            "email": email,
-            "password": password
-        }))
-        .send()
-        .await?;
-
-    if login_response.status() != reqwest::StatusCode::OK {
-        let err_text = login_response.text().await?;
-        return Err(format!("Falha no login: {}", err_text).into());
-    }
-
-    let login_data: LoginResponse = login_response.json().await?;
-    let token = login_data.token;
+    let token = token().await.unwrap();
     let timestemp = SystemTime::now()
     .duration_since(UNIX_EPOCH)
     .unwrap()
@@ -68,7 +50,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
 
     let response = client
         .post(format!("{}/create/usuario", api))
-        .bearer_auth(&token)
+        .bearer_auth(token.clone())
         .json(&dados)
         .send()
         .await?;
@@ -113,15 +95,14 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
 
     println!("Usuário que está sendo deletado pelo ID: {:?}", usuario_id);
     let response_delete = client
-    .delete(format!("{}/delete/user/{:?}", api, usuario_id))
-    .bearer_auth(&token)
+    .delete(format!("{}/delete/user/{}", api, usuario_id))
+    .bearer_auth(token)
     .send()
     .await?;
     
     let status_delete = response_delete.status();
     println!("Status do delete: {}", status_delete);
     println!("");
-    println!("Token do delete: {}", token);
 
     let req = response_delete.text().await?;
 
