@@ -1,7 +1,7 @@
 use dotenvy::dotenv;
 use std::{env, thread, time::Duration};
 use crate::models::info_user::InfoUser;
-use crate::utils::token::token;
+use crate::utils::{token::token, loading::loading};
 
 
 pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
@@ -10,14 +10,14 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
     println!("{:-<60}", "");
     println!("|           INICIANDO O TESTE DE PESQUISA DE USUARIO       |");
     println!("{:-<60}", "");
-
+    loading();
     let api = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
 
     println!("🔑 Autenticando na API Java...");
 
     let token = token().await.unwrap();
-
+    thread::sleep(Duration::from_secs(2));
     println!("🚀 Buscando usuários com o token de autorização...");
 
     let response = client
@@ -35,13 +35,13 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
         
         return Err(format!("Server returned status {}", status).into());
     }
-
+    thread::sleep(Duration::from_secs(1));
     let raw_json = response.text().await?;
 
     match serde_json::from_str::<Vec<InfoUser>>(&raw_json) {
         Ok(users) => {
             println!("Status: {}", status);
-            thread::sleep(Duration::from_millis(3000));
+            thread::sleep(Duration::from_secs(2));
             println!("Quantidade de usuário cadastrados: {}", users.len());
             println!("{:-<60}", "");
         },
