@@ -2,7 +2,7 @@ use std::{env, thread, time::Duration};
 use dotenvy::dotenv;
 use reqwest::StatusCode;
 
-use crate::{models::info_project::InfoProject, utils::{loading::loading, token::token}};
+use crate::{models::info_project::InfoProject, utils::{loading::loading, login::login, token::token}};
 
 pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
@@ -12,19 +12,21 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     loading();
 
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
-    let client = reqwest::Client::new();
+    let client = login().await?;
 
     println!("⚙ Verificando os valores");
     thread::sleep(Duration::from_secs(2));
-
     let dados = serde_json::json!({
         "titulo": "Teste de criação",
         "descricao": "Teste de descriação",
         "isPublish": true,
         "tecnologiasText": vec!["Python;Java;"],
+        "tecnologias": vec!["Python;Java;"],
         "dataConclusao": "2026-07-14",
         "status": "CONCLUIDO",
-        "criado_em": "2026-07-14"
+        "criado_em": "2026-07-14",
+        "atualizadoEm": "2026-07-14",
+        "dono": 2
     });
 
 
@@ -34,7 +36,7 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     let token = token().await.unwrap();
     let response = client
     .post(format!("{}/create/projeto", api))
-    .bearer_auth(token)
+    .bearer_auth(token.clone())
     .json(&dados)
     .send()
     .await?;
@@ -70,6 +72,25 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     println!("{:-<60}", "");
     thread::sleep(Duration::from_secs(2));
     
+
+    eprintln!("Projeto que está sendo deletado pelo ID: {:?}", projeto_id);
+
+    let responde_delete = client
+    .delete(format!("{}/delete/projeto/{}", api, projeto_id))
+    .bearer_auth(token)
+    .send()
+    .await?;
+
+    let status_delete = responde_delete.status();
+    let raw_json = responde_delete.text().await?;
+    if !status_delete.is_success(){
+        println!("❌ O Java retornou Status {}!", status_delete);
+        println!("Mensagem do erro do servidor: {}", raw_json);
+        return  Err(format!("Server returned status {}", status_delete ).into());
+    }
+
+    eprintln!("✅ Limpeza do banco de dados realizada com sucesso!");
+    eprintln!("Status do Java: {}", status_delete);
 
     Ok(())
 }

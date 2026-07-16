@@ -32,5 +32,14 @@ async fn main(){
         println!("✅ Teste 'test_post_token_should_return_success' passou!");
         println!("");
     }
+    if let Err(e) = api::post::send_project::test_post_project_should_return_success().await {
+        println!("");
+        eprintln!("❌ Teste 'test_post_project_should_return_success' falhou: {}", e);
+        println!("");
+    } else {
+        println!("");
+        println!("✅ Teste 'test_post_project_should_return_success' passou!");
+        println!("");
+    }
 
 }
