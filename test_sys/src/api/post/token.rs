@@ -16,7 +16,6 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
     println!("|           INICIANDO O TESTE DE CRIACAO DE TOKEN          |");
     println!("{:-<60}", "");
 
-    loading();
     let client_id =  env::var("CLIENT_ID").expect("CLIENT_ID não foi encontrado");
     let client_secret = env::var("CLIENT_SECRET").expect("CLIENT_SECRET não foi encontrado");
     let token_url = env::var("TOKEN_URL").expect("TOKEN_URL não foi encontrado");
@@ -24,7 +23,7 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
     let client = reqwest::Client::new();
 
     println!("🔑 Autenicando na API do Java");
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     let mut params = HashMap::new();
     params.insert("grant_type", "client_credentials");
     params.insert("client_id", &client_id );
@@ -35,6 +34,8 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
         .form(&params)
         .send()
         .await?;
+    
+    loading();
 
     if !token_response.status().is_success(){
         eprint!("Erro ao obter o token: {}", token_response.status());
@@ -42,7 +43,7 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
         eprint!("Detalhes: {}", error_body);
         std::process::exit(1);
     }
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     let token_data: TokenResponse = token_response.json().await?;
     println!("Toke obtido com sucesso! Tipo: {}", token_data.token_type);
     println!("----------------------------------------------------------");

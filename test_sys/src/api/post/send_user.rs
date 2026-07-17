@@ -15,7 +15,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     println!("{:-<60}", "");
     println!("|           INICIANDO O TESTE DE CRIACAO DE USUARIO        |");
     println!("{:-<60}", "");
-    loading();
+
     let api = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
 
@@ -30,11 +30,11 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
 
     let cpf_dinamico = format!("999{}", &timestemp[0..8]);
     let email_dinamico = format!("teste.teste.{}@gmail.com", timestemp);
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
 
     println!("🚀 Buscando usuários com o token de autorização...");
     println!("");
-    thread::sleep(Duration::from_millis(3000));
+
     let dados = serde_json::json!({
     "name": "Teste",
     "email": email_dinamico,
@@ -56,12 +56,11 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
         .send()
         .await?;
 
-    
-
+    loading();
     
     let status = response.status();
     let raw_json = response.text().await?;
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     if status != reqwest::StatusCode::OK && status != reqwest::StatusCode::CREATED{
         println!("❌ O Java retornou Status {}!", status);
         println!("Mensagem do erro do servidor: {}", raw_json);
@@ -81,7 +80,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
             return Err(e.into());
         }
     };
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     println!("✅ Usuário cadastrado temporariamente com o ID: {:?}", usuario_criado.id);
     println!("");
     
@@ -91,7 +90,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     println!("{:-<60}", "");
     println!("|              🧹 Limpando o banco de dados...              |");
     println!("{:-<60}", "");
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
 
     println!("Usuário que está sendo deletado pelo ID: {:?}", usuario_id);
     let response_delete = client
@@ -99,12 +98,13 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     .bearer_auth(token)
     .send()
     .await?;
-    
+    loading();
+
     let status_delete = response_delete.status();
     println!("Status do delete: {}", status_delete);
     println!("");
 
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     if status_delete.is_success() {
         println!("✅ Limpeza do banco de dados realizada com sucesso!");
         println!("Status do Java: {}", status_delete);

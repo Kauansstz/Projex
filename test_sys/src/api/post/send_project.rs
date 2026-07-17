@@ -9,13 +9,12 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     println!("{:-<60}", "");
     println!("|           INICIANDO O TESTE DE CRIACAO DE PROJETO        |");
     println!("{:-<60}", "");
-    loading();
 
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client = login().await?;
 
     println!("⚙ Verificando os valores");
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     let dados = serde_json::json!({
         "titulo": "Teste de criação",
         "descricao": "Teste de descriação",
@@ -31,7 +30,7 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
 
 
     println!("🔑 Autenicando na API do Java");
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
 
     let token = token().await.unwrap();
     let response = client
@@ -40,8 +39,8 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     .json(&dados)
     .send()
     .await?;
+    loading();
 
-    thread::sleep(Duration::from_secs(2));
     let status = response.status();
     println!("Verificando o status da API: {}", status);
     let raw_json = response.text().await?;
@@ -61,7 +60,7 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
         }     
     };
 
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     eprintln!("✅ Projeto cadastrado temporariamente com o ID: {:?}", projeto_criado.id);
     println!("");
 
@@ -70,7 +69,7 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     println!("{:-<60}", "");
     println!("|              🧹 Limpando o banco de dados...              |");
     println!("{:-<60}", "");
-    thread::sleep(Duration::from_secs(2));
+    thread::sleep(Duration::from_secs(1));
     
 
     eprintln!("Projeto que está sendo deletado pelo ID: {:?}", projeto_id);
@@ -80,7 +79,8 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     .bearer_auth(token)
     .send()
     .await?;
-
+    loading();
+    
     let status_delete = responde_delete.status();
     let raw_json = responde_delete.text().await?;
     if !status_delete.is_success(){
