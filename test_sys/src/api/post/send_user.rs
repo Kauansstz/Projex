@@ -3,23 +3,16 @@ use std::thread;
 use std::time::Duration;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::env;
-
 use crate::models::info_user::InfoUser;
-use crate::utils::loading::loading;
 use crate::utils::token::token;
+use std::time::Instant;
 
 
 pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
-
-    println!("{:-<60}", "");
-    println!("|           INICIANDO O TESTE DE CRIACAO DE USUARIO        |");
-    println!("{:-<60}", "");
-
+    let inicio = Instant::now();
     let api = env::var("API_URL").expect("API_URL não encontrada");
     let client = reqwest::Client::new();
-
-    println!("🔑 Autenticando na API Java...");
 
     let token = token().await.unwrap();
     let timestemp = SystemTime::now()
@@ -30,10 +23,6 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
 
     let cpf_dinamico = format!("999{}", &timestemp[0..8]);
     let email_dinamico = format!("teste.teste.{}@gmail.com", timestemp);
-    thread::sleep(Duration::from_secs(1));
-
-    println!("🚀 Buscando usuários com o token de autorização...");
-    println!("");
 
     let dados = serde_json::json!({
     "name": "Teste",
@@ -55,23 +44,20 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
         .json(&dados)
         .send()
         .await?;
-
-    loading();
     
     let status = response.status();
     let raw_json = response.text().await?;
     thread::sleep(Duration::from_secs(1));
-    if status != reqwest::StatusCode::OK && status != reqwest::StatusCode::CREATED{
-        println!("❌ O Java retornou Status {}!", status);
+    if status.clone() != reqwest::StatusCode::OK && status.clone() != reqwest::StatusCode::CREATED{
+        println!("❌ O Java retornou Status {}!", &status.clone());
         println!("Mensagem do erro do servidor: {}", raw_json);
         
-        return Err(format!("Server returned status {}", status).into());
+        return Err(format!("Server returned status {}", &status.clone()).into());
     }
 
     
     let usuario_criado:InfoUser= match serde_json::from_str::<InfoUser>(&raw_json){
         Ok(user)=> {
-            println!("✅ API de criação de usuário respondeu com sucesso!");
             user
         }
         Err(e)=> {
@@ -81,38 +67,29 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
         }
     };
     thread::sleep(Duration::from_secs(1));
-    println!("✅ Usuário cadastrado temporariamente com o ID: {:?}", usuario_criado.id);
-    println!("");
     
-    assert!(status.is_success(), "A API Java não retornou um status de sucesso!");
+    assert!(&status.is_success().clone(), "A API Java não retornou um status de sucesso!");
     let usuario_id = &usuario_criado.id.expect("O Java deveria ter retornado o ID do usuário.");
 
-    println!("{:-<60}", "");
-    println!("|              🧹 Limpando o banco de dados...              |");
-    println!("{:-<60}", "");
     thread::sleep(Duration::from_secs(1));
 
-    println!("Usuário que está sendo deletado pelo ID: {:?}", usuario_id);
     let response_delete = client
     .delete(format!("{}/delete/user/{}", api, usuario_id))
     .bearer_auth(token)
     .send()
     .await?;
-    loading();
 
     let status_delete = response_delete.status();
-    println!("Status do delete: {}", status_delete);
-    println!("");
 
     thread::sleep(Duration::from_secs(1));
     if status_delete.is_success() {
-        println!("✅ Limpeza do banco de dados realizada com sucesso!");
-        println!("Status do Java: {}", status_delete);
-        println!("");
+        print!("Status: {}", status)
     } else {
         eprintln!("❌ Falha ao limpar o banco. Resposta do servidor: {}", status_delete);
-        return Err(format!("Erro no DELETE: {}", status_delete).into());
+        return Err(format!("Erro no DELETE: {} ", status_delete).into());
     }
+    let duracao_user = inicio.elapsed();
+    println!(" | Criar e deletar usuário [OK] | Latencia: {:.2?}", duracao_user);
 
     Ok(())
 }

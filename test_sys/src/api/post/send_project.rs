@@ -1,19 +1,15 @@
 use std::{env, thread, time::Duration};
 use dotenvy::dotenv;
 use reqwest::StatusCode;
-
-use crate::{models::info_project::InfoProject, utils::{loading::loading, login::login, token::token}};
+use std::time::Instant;
+use crate::{models::info_project::InfoProject, utils::{login::login, token::token}};
 
 pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
-    println!("{:-<60}", "");
-    println!("|           INICIANDO O TESTE DE CRIACAO DE PROJETO        |");
-    println!("{:-<60}", "");
-
+    let inicio = Instant::now();
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client = login().await?;
 
-    println!("⚙ Verificando os valores");
     thread::sleep(Duration::from_secs(1));
     let dados = serde_json::json!({
         "titulo": "Teste de criação",
@@ -28,10 +24,6 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
         "dono": 2
     });
 
-
-    println!("🔑 Autenicando na API do Java");
-    thread::sleep(Duration::from_secs(1));
-
     let token = token().await.unwrap();
     let response = client
     .post(format!("{}/create/projeto", api))
@@ -39,10 +31,8 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     .json(&dados)
     .send()
     .await?;
-    loading();
 
     let status = response.status();
-    println!("Verificando o status da API: {}", status);
     let raw_json = response.text().await?;
     if status != StatusCode::CREATED && status != StatusCode::OK {
         println!("Mensagem do erro do servidor: {}", raw_json);
@@ -50,7 +40,6 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
 
     let projeto_criado: InfoProject = match serde_json::from_str(&raw_json) {
         Ok(projetos)=>{
-            eprint!("✅ API de criação de projeto respondeu com sucesso!");
             projetos
         }
         Err(e) =>{
@@ -61,25 +50,14 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     };
 
     thread::sleep(Duration::from_secs(1));
-    eprintln!("✅ Projeto cadastrado temporariamente com o ID: {:?}", projeto_criado.id);
-    println!("");
 
     let projeto_id = &projeto_criado.id.expect("Java deveria ter retornado o ID do projeto");
-
-    println!("{:-<60}", "");
-    println!("|              🧹 Limpando o banco de dados...              |");
-    println!("{:-<60}", "");
-    thread::sleep(Duration::from_secs(1));
     
-
-    eprintln!("Projeto que está sendo deletado pelo ID: {:?}", projeto_id);
-
     let responde_delete = client
     .delete(format!("{}/delete/projeto/{}", api, projeto_id))
     .bearer_auth(token)
     .send()
     .await?;
-    loading();
     
     let status_delete = responde_delete.status();
     let raw_json = responde_delete.text().await?;
@@ -89,8 +67,8 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
         return  Err(format!("Server returned status {}", status_delete ).into());
     }
 
-    eprintln!("✅ Limpeza do banco de dados realizada com sucesso!");
-    eprintln!("Status do Java: {}", status_delete);
-
+    print!("Status: {}", status);
+    let duracao_projeto = inicio.elapsed();
+    println!(" | Criar e deletar projeto [OK] | Latencia: {:.2?}", duracao_projeto);
     Ok(())
 }

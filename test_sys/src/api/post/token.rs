@@ -2,27 +2,18 @@
 use std::thread;
 use std::time::Duration;
 use std::{collections::HashMap, env};
-use std::sync::OnceLock;
 use dotenvy::dotenv;
-use crate::utils::loading::loading;
-use crate::models::token::TokenResponse;
-
-static TOKEN: OnceLock<String> = OnceLock::new();
+use std::time::Instant;
 
 pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
-    dotenv().ok();
-    
-    println!("{:-<60}", "");
-    println!("|           INICIANDO O TESTE DE CRIACAO DE TOKEN          |");
-    println!("{:-<60}", "");
-
+    dotenv().ok();  
+    let inicio = Instant::now();
     let client_id =  env::var("CLIENT_ID").expect("CLIENT_ID não foi encontrado");
     let client_secret = env::var("CLIENT_SECRET").expect("CLIENT_SECRET não foi encontrado");
     let token_url = env::var("TOKEN_URL").expect("TOKEN_URL não foi encontrado");
 
     let client = reqwest::Client::new();
 
-    println!("🔑 Autenicando na API do Java");
     thread::sleep(Duration::from_secs(1));
     let mut params = HashMap::new();
     params.insert("grant_type", "client_credentials");
@@ -34,19 +25,18 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
         .form(&params)
         .send()
         .await?;
-    
-    loading();
 
     if !token_response.status().is_success(){
-        eprint!("Erro ao obter o token: {}", token_response.status());
+        eprint!("Erro ao obter o token: {}", token_response.status().clone());
         let error_body = token_response.text().await?;
         eprint!("Detalhes: {}", error_body);
         std::process::exit(1);
     }
     thread::sleep(Duration::from_secs(1));
-    let token_data: TokenResponse = token_response.json().await?;
-    println!("Toke obtido com sucesso! Tipo: {}", token_data.token_type);
-    println!("----------------------------------------------------------");
+
+    print!("Status: {}", &token_response.status());
+    let duracao_token = inicio.elapsed();
+    println!(" | Criar token [OK] | Latencia: {:.2?}", duracao_token);
 
     
 

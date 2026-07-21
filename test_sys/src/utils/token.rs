@@ -2,8 +2,6 @@
 use std::{collections::HashMap, env};
 use std::sync::OnceLock;
 use dotenvy::dotenv;
-use std::thread;
-use std::time::Duration;
 use crate::models::token::TokenResponse;
 
 static TOKEN: OnceLock<String> = OnceLock::new();
@@ -40,13 +38,6 @@ pub async fn token() -> Result<String, reqwest::Error>{
     }
 
     let token_data: TokenResponse = token_response.json().await?;
-    thread::sleep(Duration::from_secs(2));
-    println!("Toke obtido com sucesso! Tipo: {}", token_data.token_type);
-    thread::sleep(Duration::from_secs(1));
-    println!("{:-<60}", "");
-    thread::sleep(Duration::from_secs(2));
-    println!("Chamando a API principal...");
-    thread::sleep(Duration::from_secs(1));
     let token_str = token_data.access_token.clone();
     let _ = TOKEN.set(token_data.access_token);
     Ok(token_str)
