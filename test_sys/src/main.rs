@@ -1,8 +1,7 @@
 use std::{thread, time::Duration};
-mod api;
+mod domain;
 mod models;
-mod utils;
-mod enum_utils;
+mod common;
 use std::process::Command;
 use std::time::Instant;
 
@@ -34,29 +33,29 @@ async fn main(){
     println!("{}", test_system_art);
     println!("{:=<120}", "");
     let inicio = Instant::now();
-    if let Err(e) = api::get::search_account::
+    if let Err(e) = domain::account::search_account::
     test_get_users_should_return_success().await{
         eprintln!(" | Pesquisar usuário falhou: {}", e);
     } else{
         //Continue
     }
 
-    if let Err(e) = api::post::send_user::test_post_users_and_delete_should_return_success().await {
+    if let Err(e) = domain::account::send_user::test_post_users_and_delete_should_return_success().await {
         eprintln!(" | Criar e deletar usuário falhou: {}", e);
     } else {
         //Continue
     }
-    if let Err(e) = api::post::token::test_post_token_should_return_success().await {
+    if let Err(e) = domain::auth::token::test_post_token_should_return_success().await {
         eprintln!(" | Criar token falhou: {}", e);
     } else {
         //Continue
     }
-    if let Err(e) = api::post::send_project::test_post_project_should_return_success().await {
+    if let Err(e) = domain::project::send_project::test_post_project_should_return_success().await {
         eprintln!(" | Criar e deletar projeto falhou: {}", e);
     } else {
         //Continue
     }
-    if let Err(e) = api::post::send_certificated::test_post_certificated_should_return_success().await {
+    if let Err(e) = domain::certificate::send_certificated::test_post_certificated_should_return_success().await {
         eprintln!(" | Criar e deletar certificado falhou: {}", e);
     } else {
         //Continue

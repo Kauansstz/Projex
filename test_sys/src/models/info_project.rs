@@ -1,4 +1,4 @@
-use crate::utils::status::Status;
+use crate::common::status::Status;
 use crate::models::tecnologia::Tecnologia;
 use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};

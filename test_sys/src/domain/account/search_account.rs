@@ -1,7 +1,7 @@
 use dotenvy::dotenv;
 use std::{env, thread, time::Duration};
 use crate::models::info_user::InfoUser;
-use crate::utils::token::token;
+use crate::common::token::token;
 use std::time::Instant;
 
 

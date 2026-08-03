@@ -2,7 +2,7 @@ use std::{env, thread, time::Duration};
 use dotenvy::dotenv;
 use reqwest::StatusCode;
 use std::time::Instant;
-use crate::{models::info_project::InfoProject, utils::{login::login, token::token}};
+use crate::{models::info_project::InfoProject, common::{login::login, token::token}};
 
 pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();

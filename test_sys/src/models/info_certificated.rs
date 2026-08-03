@@ -1,5 +1,5 @@
-use crate::utils::status::Status;
-use crate::enum_utils::category::Category;
+use crate::common::status::Status;
+use crate::common::category::Category;
 use chrono::{NaiveDate, NaiveDateTime};
 use serde::{Deserialize, Serialize};
 

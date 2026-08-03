@@ -1,4 +1,4 @@
-use crate::{models::info_user, utils::tipo_link::TipoLink};
+use crate::{models::info_user, common::tipo_link::TipoLink};
 use serde::{Deserialize, Serialize};
 
 #[allow(non_snake_case)]

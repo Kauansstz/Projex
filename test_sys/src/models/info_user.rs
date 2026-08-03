@@ -1,4 +1,4 @@
-use crate::utils::genero::Genero;
+use crate::common::genero::Genero;
 use crate::models::link_usuario::LinkUsuario;
 use crate::models::info_project::InfoProject;
 use serde::{Deserialize, Serialize};

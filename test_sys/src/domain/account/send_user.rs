@@ -4,7 +4,7 @@ use std::time::Duration;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::env;
 use crate::models::info_user::InfoUser;
-use crate::utils::token::token;
+use crate::common::token::token;
 use std::time::Instant;
 
 
