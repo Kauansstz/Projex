@@ -36,7 +36,7 @@ pub async fn test_post_token_should_return_success() -> Result<(), Box<dyn ::std
 
     print!("Status: {}", &token_response.status());
     let duracao_token = inicio.elapsed();
-    println!(" | Criar token [OK] | Latencia: {:.2?}", duracao_token);
+    println!(" | Criar token [OK]................ Latencia: {:.2?}", duracao_token);
 
     
 

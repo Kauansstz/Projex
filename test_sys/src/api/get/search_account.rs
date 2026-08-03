@@ -43,6 +43,6 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
         }
     }
     let duracao_search = inicio.elapsed();
-    println!(" | Pesquisar usuário [OK] | Latencia: {:.2?}", duracao_search);
+    println!(" | Pesquisar usuário [OK]................ Latencia: {:.2?}", duracao_search);
     Ok(())
 }

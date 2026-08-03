@@ -75,6 +75,6 @@ pub async fn test_post_certificated_should_return_success() -> Result<(), Box<dy
 
     print!("Status: {}", status);
     let duracao_projeto = inicio.elapsed();
-    println!(" | Criar e deletar certificados [OK] | Latencia: {:.2?}", duracao_projeto);
+    println!(" | Criar e deletar certificados [OK]................ Latencia: {:.2?}", duracao_projeto);
     Ok(())
 }
