@@ -2,6 +2,7 @@ use std::{thread, time::Duration};
 mod api;
 mod models;
 mod utils;
+mod enum_utils;
 use std::process::Command;
 use std::time::Instant;
 
@@ -52,6 +53,11 @@ async fn main(){
     }
     if let Err(e) = api::post::send_project::test_post_project_should_return_success().await {
         eprintln!(" | Criar e deletar projeto falhou: {}", e);
+    } else {
+        //Continue
+    }
+    if let Err(e) = api::post::send_certificated::test_post_certificated_should_return_success().await {
+        eprintln!(" | Criar e deletar certificado falhou: {}", e);
     } else {
         //Continue
     }
