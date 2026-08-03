@@ -89,7 +89,7 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
         return Err(format!("Erro no DELETE: {} ", status_delete).into());
     }
     let duracao_user = inicio.elapsed();
-    println!(" | Criar e deletar usuário [OK]................ Latencia: {:.2?}", duracao_user);
+    println!(" | Criar e deletar usuário [OK].......... Latencia: {:.2?}", duracao_user);
 
     Ok(())
 }

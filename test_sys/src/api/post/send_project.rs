@@ -69,6 +69,6 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
 
     print!("Status: {}", status);
     let duracao_projeto = inicio.elapsed();
-    println!(" | Criar e deletar projeto [OK]................ Latencia: {:.2?}", duracao_projeto);
+    println!(" | Criar e deletar projeto [OK].......... Latencia: {:.2?}", duracao_projeto);
     Ok(())
 }
