@@ -1,6 +1,7 @@
 use std::{thread, time::Duration};
 mod domain;
 mod models;
+mod routes;
 mod common;
 use std::process::Command;
 use std::time::Instant;
@@ -33,6 +34,7 @@ async fn main(){
     println!("{}", test_system_art);
     println!("{:=<120}", "");
     let inicio = Instant::now();
+    println!("Iniciando os testes de api, aguarde...");
     if let Err(e) = domain::account::search_account::
     test_get_users_should_return_success().await{
         eprintln!(" | Pesquisar usuário falhou: {}", e);
@@ -59,6 +61,15 @@ async fn main(){
         eprintln!(" | Criar e deletar certificado falhou: {}", e);
     } else {
         //Continue
+    }
+    println!("Finalizando os testes de api.");
+    print!("");
+    println!("Iniciando os testes de rotas, aguarde...");
+
+    if let Err(e) = routes::home::test_rota_dashboard_should_return_success().await{
+        eprint!("Rota para o dashboard falhou: {}", e)
+    }else {
+        //
     }
 
     let duracao = inicio.elapsed();
