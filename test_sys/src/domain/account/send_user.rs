@@ -49,9 +49,6 @@ pub async fn test_post_users_and_delete_should_return_success() -> Result<(), Bo
     let raw_json = response.text().await?;
     thread::sleep(Duration::from_secs(1));
     if status.clone() != reqwest::StatusCode::OK && status.clone() != reqwest::StatusCode::CREATED{
-        println!("❌ O Java retornou Status {}!", &status.clone());
-        println!("Mensagem do erro do servidor: {}", raw_json);
-        
         return Err(format!("Server returned status {}", &status.clone()).into());
     }
 

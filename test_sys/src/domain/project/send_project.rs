@@ -60,10 +60,7 @@ pub async fn test_post_project_should_return_success() -> Result<(), Box<dyn ::s
     .await?;
     
     let status_delete = responde_delete.status();
-    let raw_json = responde_delete.text().await?;
     if !status_delete.is_success(){
-        println!("❌ O Java retornou Status {}!", status_delete);
-        println!("Mensagem do erro do servidor: {}", raw_json);
         return  Err(format!("Server returned status {}", status_delete ).into());
     }
 

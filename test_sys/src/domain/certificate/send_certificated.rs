@@ -41,7 +41,7 @@ pub async fn test_post_certificated_should_return_success() -> Result<(), Box<dy
     let status = response.status();
     let raw_json = response.text().await?;
     if status != StatusCode::CREATED && status != StatusCode::OK {
-        println!("Mensagem do erro do servidor: {}", raw_json);
+        return Err(format!("Server returned status {}", status).into());
     }
 
     let certificado_criado: InfoCertificated = match serde_json::from_str(&raw_json) {

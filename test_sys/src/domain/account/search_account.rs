@@ -24,10 +24,6 @@ pub async fn test_get_users_should_return_success() -> Result<(), Box<dyn std::e
     
     let status = response.status();
     if status != reqwest::StatusCode::OK {
-        let error_body = response.text().await?;
-        println!("❌ O Java retornou Status {}!", status);
-        println!("Mensagem do erro do servidor: {}", error_body);
-        
         return Err(format!("Server returned status {}", status).into());
     }
     thread::sleep(Duration::from_secs(1));
