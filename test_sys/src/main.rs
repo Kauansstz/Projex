@@ -1,4 +1,3 @@
-use std::process::exit;
 use std::{thread, time::Duration};
 mod domain;
 mod models;
