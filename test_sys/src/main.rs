@@ -11,7 +11,12 @@ use crate::domain::{
     certificate::send_certificated::test_post_certificated_should_return_success,
     project::send_project::test_post_project_should_return_success
 };
-use crate::routes::home::test_rota_dashboard_should_return_success;
+use crate::routes::{
+    home::test_rota_dashboard_should_return_success, 
+    certificate::test_route_certificate_should_return_success, 
+    project::test_route_project_should_return_success,
+    questions_and_response::test_route_questions_and_response_should_return_success
+};
 
 fn clear_terminal() {
     if cfg!(target_os = "windows") {
@@ -75,6 +80,15 @@ async fn main(){
             vec![
                 Box::new(|| {
                     Box::pin(test_rota_dashboard_should_return_success())
+                }),
+                Box::new(|| {
+                    Box::pin(test_route_certificate_should_return_success())
+                }),
+                Box::new(|| {
+                    Box::pin(test_route_project_should_return_success())
+                }),
+                Box::new(|| {
+                    Box::pin(test_route_questions_and_response_should_return_success())
                 }),
             ],
         ),
