@@ -13,9 +13,9 @@ use crate::domain::{
 };
 use crate::routes::{
     home::test_rota_dashboard_should_return_success, 
-    certificate::test_route_certificate_should_return_success, 
-    project::test_route_project_should_return_success,
-    questions_and_response::test_route_questions_and_response_should_return_success
+    certificate::panel_certificate::test_route_certificate_should_return_success, 
+    project::panel_project::test_route_project_should_return_success,
+    questions::questions_and_response::test_route_questions_and_response_should_return_success
 };
 
 fn clear_terminal() {

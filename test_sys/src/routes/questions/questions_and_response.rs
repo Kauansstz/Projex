@@ -14,7 +14,7 @@ pub async fn test_route_questions_and_response_should_return_success() -> Result
 
     let duracao_search = inicio.elapsed();
     print!("Status: {}", status);
-    println!(" | Rota das Questões e Respostas [OK]................ Latencia: {:.2?}", duracao_search);
+    println!(" | Rota das Questões [OK]................ Latencia: {:.2?}", duracao_search);
 
     Ok(())
 }
