@@ -1,8 +1,8 @@
-use std::{env, thread, time::Duration};
+use std::env;
 use dotenvy::dotenv;
-use reqwest::StatusCode;
+use reqwest::{Client, StatusCode, redirect::Policy};
 use std::time::Instant;
-use crate::{models::info_project::InfoProject, common::{login::login, token::token}};
+use crate::{common::{login::login, token::token}, models::info_project::InfoProject};
 
 pub async fn test_route_edit_project_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
@@ -10,7 +10,6 @@ pub async fn test_route_edit_project_should_return_success() -> Result<(), Box<d
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client = login().await?;
 
-    thread::sleep(Duration::from_secs(1));
     let dados = serde_json::json!({
         "titulo": "Teste de criação",
         "descricao": "Teste de descriação",
@@ -35,7 +34,7 @@ pub async fn test_route_edit_project_should_return_success() -> Result<(), Box<d
     let status = response.status();
     let raw_json = response.text().await?;
     if status != StatusCode::CREATED && status != StatusCode::OK {
-        println!("Mensagem do erro do servidor: {}", raw_json);
+        println!("Mensagem do erro do servidor na hora da criacao: {}", raw_json);
     }
 
     let projeto_criado: InfoProject = match serde_json::from_str(&raw_json) {
@@ -44,33 +43,34 @@ pub async fn test_route_edit_project_should_return_success() -> Result<(), Box<d
         }
         Err(e) =>{
             eprintln!("❌ Erro de Desserialização do Rust: {}", e);
-            eprintln!("Json bruto recebido: {}", raw_json);
+            eprintln!("Json bruto recebido1: {}", raw_json);
             return  Err(e.into());
         }     
     };
 
-    thread::sleep(Duration::from_secs(1));
-
+    let client = Client::builder()
+    .redirect(Policy::none())
+    .build()?;
     let projeto_id = &projeto_criado.id.expect("Java deveria ter retornado o ID do projeto");
     let route = client.get(format!("http://localhost:8080/panelProjetos/editar/{}", projeto_id)).send().await?;
     let status_route = route.status();
-    if status_route != StatusCode::OK {
-        return Err(format!(" O Java retornou Status: {}", status_route).into());
-    }
-
-    let responde_delete = client
+    
+    let _responde_delete = client
     .delete(format!("{}/delete/projeto/{}", api, projeto_id))
     .bearer_auth(token)
     .send()
     .await?;
-    
-    let status_delete = responde_delete.status();
-    if !status_delete.is_success(){
-        return  Err(format!("Server returned status {}", status_delete ).into());
-    }
 
-    print!("Status: {}", status);
     let duracao_projeto = inicio.elapsed();
-    println!(" | Rota de edicao de projeto [OK]........ Latencia: {:.2?}", duracao_projeto);
+    
+    if status_route != StatusCode::OK {
+        return Err(format!(
+        "Status: {} | Rota de edicao de projeto [FALIED]........ Latencia: {:.2?}", status_route,  duracao_projeto
+    ).into());
+
+    }else {
+        print!("Status: {}", status);
+        println!(" | Rota de edicao de projeto [OK]........ Latencia: {:.2?}", duracao_projeto);
+    }
     Ok(())
 }

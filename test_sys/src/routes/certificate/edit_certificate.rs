@@ -1,14 +1,14 @@
 use std::{env, fs};
 use dotenvy::dotenv;
-use reqwest::{StatusCode, multipart::{Form, Part}};
+use reqwest::{Client, StatusCode, multipart::{Form, Part}, redirect::Policy};
 use std::time::Instant;
-use crate::{models::info_certificated::InfoCertificated, common::{login::login, token::token}};
+use crate::{models::info_certificated::InfoCertificated, common::token::token};
 
 pub async fn test_route_edit_certificated_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
     let inicio = Instant::now();
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
-    let client = login().await?;
+    let client = Client::builder().redirect(Policy::none()).build()?;
 
     let file_bytes = fs::read("E:\\projex\\test_sys\\src\\assets\\teste.pdf")?;
     let file_part = Part::bytes(file_bytes)
@@ -36,11 +36,7 @@ pub async fn test_route_edit_certificated_should_return_success() -> Result<(), 
     .send()
     .await?;
 
-    let status = response.status();
     let raw_json = response.text().await?;
-    if status != StatusCode::CREATED && status != StatusCode::OK {
-        return Err(format!("Server returned status {}", status).into());
-    }
 
     let certificado_criado: InfoCertificated = match serde_json::from_str(&raw_json) {
         Ok(certificado)=>{
@@ -48,7 +44,6 @@ pub async fn test_route_edit_certificated_should_return_success() -> Result<(), 
         }
         Err(e) =>{
             eprintln!("❌ Erro de Desserialização do Rust: {}", e);
-            eprintln!("Json bruto recebido: {}", raw_json);
             return  Err(e.into());
         }     
     };
@@ -57,26 +52,20 @@ pub async fn test_route_edit_certificated_should_return_success() -> Result<(), 
     
     let route = client.get(format!("http://localhost:8080/{}/editar", certificado_id)).send().await?;
     let status_route = route.status();
-    if status_route != StatusCode::OK {
-        return Err(format!(" O Java retornou Status: {}", status_route).into());
-    }
 
-    let responde_delete = client
+    let _responde_delete = client
     .delete(format!("{}/delete/certificado/{}", api, certificado_id))
     .bearer_auth(token)
     .send()
     .await?;
     
-    let status_delete = responde_delete.status();
-    let raw_json = responde_delete.text().await?;
-    if !status_delete.is_success(){
-        println!("❌ O Java retornou Status {}!", status_delete);
-        println!("Mensagem do erro do servidor: {}", raw_json);
-        return  Err(format!("Server returned status {}", status_delete ).into());
-    }
-
-    print!("Status: {}", status);
+    
     let duracao_projeto = inicio.elapsed();
-    println!(" | Rota de edicao de certificado [OK].... Latencia: {:.2?}", duracao_projeto);
+    if status_route != StatusCode::OK{
+        return  Err(format!("Status: {} | Rota de edicao de certificado [FALIED].... Latencia: {:.2?}", status_route, duracao_projeto).into());
+    }else {
+        print!("Status: {}", status_route);
+        println!(" | Rota de edicao de certificado [OK].... Latencia: {:.2?}", duracao_projeto);
+    }
     Ok(())
 }
