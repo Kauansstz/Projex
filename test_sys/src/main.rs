@@ -142,7 +142,7 @@ async fn main(){
                 }
                 Err(e) =>{
                     teste_return_error += 1;
-                    eprintln!("❌ Teste falhou: {}", e);
+                    eprintln!("{}", e);
                 }
             }
         }
