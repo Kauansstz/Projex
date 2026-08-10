@@ -70,7 +70,7 @@ pub async fn test_route_edit_project_should_return_302() -> Result<(), Box<dyn s
 
     }else {
         print!("Status: {}", status_route);
-        println!(" | Rota de edicao de projeto [OK]........ Latencia: {:.2?}", duracao_projeto);
+        println!(" | Rota de edicao de projeto [OK]..... Latencia: {:.2?}", duracao_projeto);
     }
 
     Ok(())
