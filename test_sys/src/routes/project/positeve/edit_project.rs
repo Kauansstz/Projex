@@ -1,6 +1,6 @@
 use std::env;
 use dotenvy::dotenv;
-use reqwest::{Client, StatusCode, redirect::Policy};
+use reqwest::StatusCode;
 use std::time::Instant;
 use crate::{common::{login::login, token::token}, models::info_project::InfoProject};
 
