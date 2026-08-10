@@ -48,9 +48,6 @@ pub async fn test_route_edit_project_should_return_success() -> Result<(), Box<d
         }     
     };
 
-    let client = Client::builder()
-    .redirect(Policy::none())
-    .build()?;
     let projeto_id = &projeto_criado.id.expect("Java deveria ter retornado o ID do projeto");
     let route = client.get(format!("http://localhost:8080/panelProjetos/editar/{}", projeto_id)).send().await?;
     let status_route = route.status();
