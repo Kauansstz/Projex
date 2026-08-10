@@ -81,7 +81,12 @@ public class NewProjectController {
     }
 
     @GetMapping("/createdProject")
-    public String exibirCard(Model model){
+    public String exibirCard(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+        if (usuarioLogado == null ) {
+            redirectAttributes.addFlashAttribute("Sessão foi encerrada");
+            return "redirect:/login";
+        }
         model.addAttribute("projeto", new InfoProject());
         model.addAttribute("tecnologias", tecnologiaRepository.findAll());
         model.addAttribute("pageTitle", "Cadastrar Projeto");

@@ -26,7 +26,8 @@ use crate::routes::{
     },
     negative::{
         panel_project::test_route_panel_project_should_return_401,
-        edit_project::test_route_edit_project_should_return_302
+        edit_project::test_route_edit_project_should_return_302,
+        register_project::test_route_register_project_should_return_302
     }
     },
     questions::questions_and_response::test_route_questions_and_response_should_return_success,
@@ -138,6 +139,9 @@ async fn main(){
                 }),
                 Box::new(|| {
                     Box::pin(test_route_edit_project_should_return_302())
+                }),
+                Box::new(|| {
+                    Box::pin(test_route_register_project_should_return_302())
                 }),
                 
             ],
