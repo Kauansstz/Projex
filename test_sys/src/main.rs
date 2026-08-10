@@ -23,6 +23,10 @@ use crate::routes::{
         panel_project::test_route_project_should_return_success,
         edit_project::test_route_edit_project_should_return_success,
         register_project::test_route_register_project_should_return_success
+    },
+    negative::{
+        panel_project::test_route_panel_project_should_return_401,
+        edit_project::test_route_edit_project_should_return_302
     }
     },
     questions::questions_and_response::test_route_questions_and_response_should_return_success,
@@ -125,6 +129,17 @@ async fn main(){
                 Box::new(|| {
                     Box::pin(test_route_register_users_should_return_success())
                 }),
+            ],
+        ),(
+            "ROTAS DE NAVEGACAO E DASHBOARD - TESTES NEGATIVOS",
+            vec![
+                Box::new(|| {
+                    Box::pin(test_route_panel_project_should_return_401())
+                }),
+                Box::new(|| {
+                    Box::pin(test_route_edit_project_should_return_302())
+                }),
+                
             ],
         ),
     ];
