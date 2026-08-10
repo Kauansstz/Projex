@@ -39,8 +39,17 @@ public class CertificatedController {
     // LISTAR + BUSCAR
     @GetMapping
     public String listar(Model model,
-                         @RequestParam(required = false) String search, @RequestParam(required = false) Category category, Boolean isPublish) {
+                         @RequestParam(name = "search",required = false) String search, 
+                         @RequestParam(name = "category", required = false) Category category, 
+                         @RequestParam(name = "isPublish", required = false) Boolean isPublish,
+                        HttpServletRequest request,
+                    RedirectAttributes redirectAttributes) {
 
+        InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+        if (usuarioLogado == null) {
+            redirectAttributes.addFlashAttribute("Sessão foi encerrada");
+            return "redirect:/login";
+        }
         List<Certificated> certificados = cardCertificateService.filtrar(search, category, isPublish);
 
         model.addAttribute("certificados", certificados);
@@ -53,7 +62,7 @@ public class CertificatedController {
 
     // EDITAR (TELA)
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
+    public String editar(@PathVariable("id") Long id, Model model) {
         CertificatedRequest certificado = editCardService.buscarPorId(id);
         model.addAttribute("certificado", certificado);
         model.addAttribute("categorias", Category.values());
@@ -63,7 +72,7 @@ public class CertificatedController {
     // EDITAR (POST)
     @PostMapping("/{id}/editar")
     public String atualizar(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @ModelAttribute CertificatedRequest certificado,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
@@ -91,7 +100,7 @@ public class CertificatedController {
 
     // EXCLUIR
     @PostMapping("/{id}/deletar")
-    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String excluir(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
             cardCertificateService.deletar(id);
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Certificado excluído com sucesso!");

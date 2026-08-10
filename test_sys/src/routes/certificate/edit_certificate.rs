@@ -2,7 +2,7 @@ use std::{env, fs};
 use dotenvy::dotenv;
 use reqwest::{Client, StatusCode, multipart::{Form, Part}, redirect::Policy};
 use std::time::Instant;
-use crate::{models::info_certificated::InfoCertificated, common::token::token};
+use crate::{common::{login::login, token::token}, models::info_certificated::InfoCertificated};
 
 pub async fn test_route_edit_certificated_should_return_success() -> Result<(), Box<dyn ::std::error::Error>>{
     dotenv().ok();
@@ -49,8 +49,8 @@ pub async fn test_route_edit_certificated_should_return_success() -> Result<(), 
     };
 
     let certificado_id = &certificado_criado.id.expect("Java deveria ter retornado o ID do projeto");
-    
-    let route = client.get(format!("http://localhost:8080/{}/editar", certificado_id)).send().await?;
+    let client_rota = login().await.unwrap();
+    let route = client_rota.get(format!("http://localhost:8080/{}/editar", certificado_id)).send().await?;
     let status_route = route.status();
 
     let _responde_delete = client

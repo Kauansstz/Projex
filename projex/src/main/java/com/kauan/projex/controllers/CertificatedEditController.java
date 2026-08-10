@@ -28,7 +28,7 @@ public class CertificatedEditController {
     }
 
     @PostMapping("/{id}/editar")
-    public String editProject(@PathVariable Long id ,@ModelAttribute CertificatedRequest certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String editProject(@PathVariable("id") Long id ,@ModelAttribute CertificatedRequest certificado, HttpServletRequest request, RedirectAttributes redirectAttributes){
         try{
             certificado.setId(id);
             certService.infoCertificateEdit(certificado);
@@ -42,7 +42,7 @@ public class CertificatedEditController {
     }
 
     @GetMapping("/{id}/editar")
-    public String exibirCertificado(Model model, @PathVariable Long id, @RequestParam(required = false) Category category, RedirectAttributes redirectAttributes){
+    public String exibirCertificado(Model model, @PathVariable("id") Long id, @RequestParam(name = "category", required = false) Category category, RedirectAttributes redirectAttributes){
          try {
             CertificatedRequest certificado = certService.buscarPorId(id);
             model.addAttribute("certificado", certificado);

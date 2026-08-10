@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import com.kauan.projex.model.Certificated;
 import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.utils.Category;
@@ -20,9 +22,9 @@ public interface CardCertificateRepository extends JpaRepository<Certificated, L
         AND (:isPublish IS NULL OR c.isPublish = :isPublish)
     """)
     List<Certificated> filtrar(
-            String titulo,
-            Category categoria,
-            Boolean isPublish
+            @Param("titulo") String titulo,
+            @Param("categoria") Category categoria,
+            @Param("isPublish") Boolean isPublish
     );
 
     List<Certificated> findByTituloContainingIgnoreCase(String titulo);

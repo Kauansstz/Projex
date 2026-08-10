@@ -1,14 +1,14 @@
 
 use std::time::Instant;
 
-use reqwest::{Client, StatusCode, redirect::Policy};
+use reqwest::StatusCode;
+
+use crate::common::login::login;
 
 
 pub async fn test_route_project_should_return_success() -> Result<(), Box<dyn std::error::Error>>{
     let inicio = Instant::now();
-    let client = Client::builder()
-    .redirect(Policy::none())
-    .build()?;
+    let client = login().await.unwrap();
     let response = client.get("http://localhost:8080/panelProjetos").send().await?;
     let status = response.status();
     

@@ -34,7 +34,7 @@ public class CenterUser {
         this.editService = editService;
     }
 
-    @GetMapping public String listar(Model model, @RequestParam(required = false) String search)
+    @GetMapping public String listar(Model model, @RequestParam(name = "search",required = false) String search)
     {
          List<InfoUser> isAtivo = centerService.buscarPorAtivo(true); 
          if (search != null && !search.isBlank()) 
@@ -79,7 +79,7 @@ public class CenterUser {
 
 
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model){
+    public String editar(@PathVariable("id") Long id, Model model){
 
         InfoUser user = centerService.buscarPorId(id);
         EditUserDTO dto = converterParaDTO(user);
@@ -91,7 +91,7 @@ public class CenterUser {
     }
 
     @PostMapping("/editar/{id}")
-    public String atualizar(@PathVariable Long id,
+    public String atualizar(@PathVariable("id") Long id,
                             @ModelAttribute("user") EditUserDTO dto,
                             BindingResult result,
                             RedirectAttributes redirectAttributes) {

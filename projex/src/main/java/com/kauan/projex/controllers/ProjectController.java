@@ -28,7 +28,7 @@ public class ProjectController {
     // LISTAR + BUSCAR
     @GetMapping
     public String listar(Model model,
-                         @RequestParam(required = false) String search) {
+                         @RequestParam(name = "search",required = false) String search) {
         
         List<InfoProject> isPublish = cardService.buscarPorPublicado(true);
         
@@ -46,7 +46,7 @@ public class ProjectController {
 
     // EDITAR (TELA)
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
+    public String editar(@PathVariable("id") Long id, Model model) {
         InfoProject projeto = cardService.buscarPorId(id);
         model.addAttribute("projeto", projeto);
         return "pages/panelEditProject";
@@ -61,7 +61,7 @@ public class ProjectController {
 
     // EXCLUIR
     @PostMapping("/{id}/deletar")
-    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String excluir(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try{
             cardService.deletar(id);
             redirectAttributes.addFlashAttribute("mensagemSucesso", "Projeto excluído com sucesso!");
