@@ -43,11 +43,12 @@ jobs:
           USER_AUTH: ${{ secrets.USER_AUTH }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
-          mvn spring-boot:run &
+          mvn spring-boot:run > ../app.log 2>&1 &
           
           echo "Aguardando a API inicializar com o H2 na porta 8080..."
           timeout 90s bash -c 'until curl -s http://localhost:8080 > /dev/null; do sleep 2; echo "Aguardando..."; done' || {
             echo "A API falhou ao iniciar ou demorou muito!"
+            cat ../app.log
             exit 1
           }
 
@@ -77,3 +78,7 @@ jobs:
           USER_AUTH: ${{ secrets.USER_AUTH }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: cargo run
+
+      - name: Exibir Logs da API em caso de falha
+        if: failure()
+        run: cat app.log
