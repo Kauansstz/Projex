@@ -1,7 +1,6 @@
 package com.kauan.projex.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,7 +13,7 @@ public class Resposta {
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id")
-    @JsonIgnore
+    @JsonBackReference
     private Pergunta pergunta;
 
     private String descricao;
