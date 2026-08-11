@@ -1,4 +1,4 @@
-use std::{env, thread, time::Duration, fs};
+use std::{env, thread, time::Duration};
 use dotenvy::dotenv;
 use reqwest::{StatusCode, multipart::{Form, Part}};
 use std::time::Instant;
@@ -12,7 +12,7 @@ pub async fn test_post_certificated_should_return_success() -> Result<(), Box<dy
 
     thread::sleep(Duration::from_secs(1));
 
-    let file_bytes = fs::read("E:\\projex\\test_sys\\src\\assets\\teste.pdf")?;
+    let file_bytes = include_bytes!("../../assets/teste.pdf").to_vec();
     let file_part = Part::bytes(file_bytes)
     .file_name("teste.pdf")
     .mime_str("application/pdf")?;
