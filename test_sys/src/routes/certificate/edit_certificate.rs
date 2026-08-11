@@ -1,4 +1,4 @@
-use std::{env, fs};
+use std::env;
 use dotenvy::dotenv;
 use reqwest::{Client, StatusCode, multipart::{Form, Part}, redirect::Policy};
 use std::time::Instant;
@@ -10,7 +10,7 @@ pub async fn test_route_edit_certificated_should_return_success() -> Result<(), 
     let api = env::var("API_URL").expect("API_URL não foi encontrada");
     let client = Client::builder().redirect(Policy::none()).build()?;
 
-    let file_bytes = fs::read("E:\\projex\\test_sys\\src\\assets\\teste.pdf")?;
+    let file_bytes = include_bytes!("../../assets/teste.pdf").to_vec();
     let file_part = Part::bytes(file_bytes)
     .file_name("teste.pdf")
     .mime_str("application/pdf")?;
