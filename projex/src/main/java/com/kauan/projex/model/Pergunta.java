@@ -2,6 +2,8 @@ package com.kauan.projex.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kauan.projex.utils.Category;
 import com.kauan.projex.utils.TipoPergunta;
@@ -28,16 +30,17 @@ public class Pergunta {
     private Integer ordem;
     private Boolean ativo;
 
-
     @Column(name = "nivel", length = 50)
     @JsonProperty("nivel")
     private String nivel;
 
     @OneToMany(mappedBy = "pergunta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Resposta> respostas;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quest_id")
+    @JsonIgnoreProperties({"perguntas", "hibernateLazyInitializer", "handler"})
     private Quest quest;
 
     public Pergunta() {}
@@ -80,10 +83,12 @@ public class Pergunta {
     public String toString() {
         return "Pergunta{" +
                 "id=" + id +
-                ", titulo='" + enunciado + '\'' +
+                ", enunciado='" + enunciado + '\'' +
                 ", nivel='" + nivel + '\'' +
                 ", categoria=" + categoria +
-                ", resposta=" + respostas +
+                ", tipo=" + tipo +
+                ", pontuacao=" + pontuacao +
+                ", ativo=" + ativo +
                 '}';
     }
 
