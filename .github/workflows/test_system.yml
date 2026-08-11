@@ -45,7 +45,11 @@ jobs:
           mvn spring-boot:run &
           
           echo "Aguardando a API inicializar com o H2 na porta 8080..."
-          sleep 25
+          timeout 90s bash -c 'until curl -s http://localhost:8080 > /dev/null; do sleep 2; echo "Aguardando..."; done' || {
+            echo "A API falhou ao iniciar ou demorou muito!"
+            exit 1
+          }
+          
       - name: Verificar Secrets
         env:
           API_URL: ${{ secrets.API_URL }}
