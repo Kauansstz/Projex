@@ -23,10 +23,11 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          
       - name: Build da API
         working-directory: projex
         run: mvn clean package -DskipTests -q
-        
+
       - name: Iniciar API do Projex
         working-directory: projex
         env:
