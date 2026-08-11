@@ -14,6 +14,7 @@ pub async fn test_route_questions_and_response_should_return_success() -> Result
     
     let duracao_search = inicio.elapsed();
     if  status != StatusCode::OK{
+        eprintln!("Ocorreu algum error no servidor: {}", response.text().await?);
         return  Err(format!("Status: {} | Rota das Questões [FALIED]................ Latencia: {:.2?}", status,duracao_search).into());
     }else {
         print!("Status: {}", status);
