@@ -3,3 +3,4 @@ members = [
     "test_sys",
     "monitoring"
 ]
+resolver = "3"
