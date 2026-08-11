@@ -26,12 +26,8 @@ jobs:
 
       - name: Iniciar API do Projex
         run: |
-          # Exemplo para Java/Maven:
-          mvn spring-boot:run &
+          mvn spring-boot:run -f projex\projex\pom.xml &
           
-          # OU exemplo se a API também for Rust:
-          # cd projex_api && cargo run &
-
           echo "Aguardando a API inicializar na porta 8080..."
           sleep 20 # Tempo necessário para a API subir e abrir a porta 8080
 
