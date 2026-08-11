@@ -1,8 +1,12 @@
 package com.kauan.projex.controllers;
 
+import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.model.Pergunta;
 import com.kauan.projex.repository.PerguntaRepository;
-import com.kauan.projex.utils.Category; 
+import com.kauan.projex.utils.Category;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +23,11 @@ public class CentralPerguntasController {
     }
 
     @GetMapping("/centralPerguntas")
-    public String abrirCentralPerguntas(Model model) {
+    public String abrirCentralPerguntas(Model model, HttpServletRequest request) {
+        InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+        if (usuarioLogado == null) {
+            return "redirect:/login";
+        }
         List<Pergunta> perguntas = perguntaRepository.findAll();
         model.addAttribute("perguntas", perguntas);
         model.addAttribute("categorias", Category.values());
