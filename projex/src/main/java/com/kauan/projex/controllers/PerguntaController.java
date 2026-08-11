@@ -3,10 +3,14 @@ import java.util.Collections;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import com.kauan.projex.model.InfoUser;
 import com.kauan.projex.model.Pergunta;
 import com.kauan.projex.model.Resposta;
 import com.kauan.projex.repository.PerguntaRepository;
 import com.kauan.projex.utils.Category;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 import java.util.List;
@@ -26,8 +30,12 @@ public class PerguntaController {
             @RequestParam(value = "categoria", required = false) String categoria,
             @RequestParam(value = "nivel", required = false) String nivel,
             @RequestParam(value = "resposta", required = false) Resposta resposta,
-            Model model) {
-
+            Model model,
+            HttpServletRequest request) {
+        InfoUser usuarioLogado = (InfoUser) request.getSession().getAttribute("usuarioLogado");
+        if (usuarioLogado == null) {
+            return "redirect:/login";
+        }
         if (categoriaStr != null) {
         try {
             Category categoriaEnum = com.kauan.projex.utils.Category.valueOf(categoriaStr);
