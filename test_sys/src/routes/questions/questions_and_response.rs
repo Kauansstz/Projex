@@ -9,7 +9,7 @@ use crate::common::login::login;
 pub async fn test_route_questions_and_response_should_return_success() -> Result<(), Box<dyn std::error::Error>>{
     let inicio = Instant::now();
     let client = login().await.unwrap();
-    let response = client.get("http://localhost:8080/perguntas").send().await?;
+    let response = client.get("http://localhost:8080/centralPerguntas").send().await?;
     let status = response.status();
     
     let duracao_search = inicio.elapsed();
