@@ -27,25 +27,32 @@ jobs:
       - name: Iniciar API do Projex
         working-directory: projex
         env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:projexdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+          SPRING_DATASOURCE_DRIVERCLASSNAME: org.h2.Driver
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD: ""
+          SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+          SPRING_SQL_INIT_MODE: always
+
           API_URL: ${{ secrets.API_URL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           TOKEN_URL: ${{ secrets.TOKEN_URL }}
           USER_AUTH: ${{ secrets.USER_AUTH }}
-          PASSWORD:  ${{ secrets.PASSWORD }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: |
           mvn spring-boot:run &
           
-          echo "Aguardando a API inicializar na porta 8080..."
-          sleep 20 # Tempo necessário para a API subir e abrir a porta 8080
+          echo "Aguardando a API inicializar com o H2 na porta 8080..."
+          sleep 25
 
       - name: Executar Testes no Sistema
         working-directory: test_sys
         env:
-            API_URL: ${{ secrets.API_URL }}
-            CLIENT_ID: ${{ secrets.CLIENT_ID }}
-            CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-            TOKEN_URL: ${{ secrets.TOKEN_URL }}
-            USER_AUTH: ${{ secrets.USER_AUTH }}
-            PASSWORD:  ${{ secrets.PASSWORD }}
+          API_URL: ${{ secrets.API_URL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          TOKEN_URL: ${{ secrets.TOKEN_URL }}
+          USER_AUTH: ${{ secrets.USER_AUTH }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: cargo run
