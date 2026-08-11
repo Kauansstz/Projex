@@ -3,6 +3,7 @@ use crate::common::category::Category;
 use chrono::{NaiveDate, NaiveDateTime};
 use serde::{Deserialize, Serialize};
 
+#[allow(non_snake_case)]
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InfoCertificated {
