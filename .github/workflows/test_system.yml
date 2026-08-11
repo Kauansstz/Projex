@@ -33,6 +33,7 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: ""
           SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
           SPRING_SQL_INIT_MODE: always
+          SPRING_SQL_INIT_DATA_LOCATIONS: classpath:sql/*.sql
 
           API_URL: ${{ secrets.API_URL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
