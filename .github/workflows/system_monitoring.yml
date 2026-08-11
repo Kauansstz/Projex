@@ -1,7 +1,7 @@
 name: Monitoramento do Sistema
 on:
   schedule:
-    - cron: "*/15 * * *"
+    - cron: "*/15 * * * *"
   push:
     branches: ["main", "master"]
   pull_request:
