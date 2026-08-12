@@ -47,7 +47,7 @@ jobs:
           USER_AUTH: ${{ secrets.USER_AUTH }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
-          mvn spring-boot:run > ../app.log 2>&1 &
+          java -jar target/*.jar > ../app.log 2>&1 &
           
           echo "Aguardando a API inicializar com o H2 na porta 8080..."
           timeout 90s bash -c 'until curl -s http://localhost:8080 > /dev/null; do sleep 2; echo "Aguardando..."; done' || {
@@ -87,6 +87,7 @@ jobs:
         if: failure()
         run: cat app.log
   monitoring:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -101,9 +102,9 @@ jobs:
       - name: Testes no sistema
         working-directory: monitoring
         run: cargo test
-        
+
   stop-staging:
-    needs: testes
+    needs: [test, monitoring]
     runs-on: ubuntu-latest
     steps:
       - name: Parar Staging
