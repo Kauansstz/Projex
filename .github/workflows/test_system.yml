@@ -86,3 +86,60 @@ jobs:
       - name: Exibir Logs da API em caso de falha
         if: failure()
         run: cat app.log
+  monitoring:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Testes no sistema
+        working-directory: monitoring
+        run: cargo test
+        
+  stop-staging:
+    needs: testes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parar Staging
+        run: echo "Parando ambiente de staging..."
+
+  update-staging:
+    needs: stop-staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Atualizar Staging
+        run: echo "Atualizando código em staging..."
+
+  start-staging:
+    needs: update-staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Iniciar Staging
+        run: echo "Iniciando ambiente de staging..."
+
+  stop-prod:
+    needs: start-staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parar Produção
+        run: echo "Parando ambiente de produção..."
+
+  deploy:
+    needs: stop-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executar Deploy
+        run: echo "Aplicando artefatos em produção..."
+
+  start-prod:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Iniciar Produção
+        run: echo "Iniciando ambiente de produção..."
