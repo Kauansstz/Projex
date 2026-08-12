@@ -87,7 +87,6 @@ jobs:
         if: failure()
         run: cat app.log
   monitoring:
-    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
